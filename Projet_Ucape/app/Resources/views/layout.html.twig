@@ -1,0 +1,177 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>{% block title %}Ucape{% endblock %}</title>
+
+        {% block stylesheets %}
+        {# On charge le CSS de bootstrap depuis le site directement #}
+
+        <link rel="stylesheet" href="{{ asset('bundle/css/style.css') }}" type="text/css">
+        <link rel="stylesheet" href="{{ asset('vendors/bootstrap/dist/css/bootstrap.css') }}">
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        {% endblock %}
+    </head>
+
+    <body data-spy="scroll" data-target="#menu" data-offset="0">
+
+        <style>
+            body{    background-color: #989898; height: 100vh}
+            .titreLettre{color:#080808; text-shadow: 2px 2px 2px rgba(248, 242, 242, 0.1)}
+            .active{font-weight: 600}
+            li .alert-dark{border-radius: 20px}
+
+
+
+
+            @media only screen and (min-width: 773px) {
+                nav button{display: none}
+            }
+
+            /* Pour les écran de taille égale ou inférieur à 772px */
+            @media only screen and (max-width: 772px) {
+                #header p{font-size: 13px}
+                .jumbotron{height: 150px}
+                nav button{margin-bottom: 10px; box-shadow: 2px 6px 2px rgba(98, 90, 90, 0.8)}
+                nav button:hover{box-shadow: 2px 6px 2px rgba(88, 84, 84, 0.8)}
+                #content{margin-top: 10px; border-radius: 10px; box-shadow: 2px 6px 2px rgba(98, 90, 90, 0.8)}
+
+            }
+
+             /* Pour les écran de taille égale ou inférieur à 530px */
+            @media only screen and (max-width: 530px) {
+                #header h1{font-size: 25px}
+            }
+
+        </style>
+
+        <div class="container">
+
+            <div id="header" class="jumbotron" style="background-color: #ebe9e9">
+
+                <h1 style="font-weight: 600;"><span class="titreLettre">U</span>cape - <span class="titreLettre">S</span>ection</h1>
+
+
+                <div style="float:right" >
+
+                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                    <p>
+                        Connecté en tant que {{ app.user.username|capitalize }}  
+                        {% if app.user.roles[0] == "ROLE_USER" %} (Élève) {%  endif %}
+                        {% if app.user.roles[0] == "ROLE_SUPER_ADMIN" %} (Super Admin) {%  endif %}
+                        {% if app.user.roles[0] == "ROLE_ADMIN" %} (Admin) {%  endif %}
+                        -
+                        <a href="{{ path('fos_user_security_logout') }}">Déconnexion</a></p>
+
+
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+            <div class="row text-center" >
+
+                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+
+                <nav id="menu" class="col-md-3 navbar navbar-light" style="background-color: #dedddd;  border: 2px solid #656161">
+
+
+                    <a class="navbar-brand" href="#">Navigation</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav mr-auto">
+
+
+
+                            {% if is_granted("ROLE_ADMIN") == app.user.roles %}
+
+                            <li class="nav-item"><a class="nav-link" href="">Eléves</a></li>
+                            <li class="nav-item"><a class="nav-link" href="">Profil étudiant détaillé</a></li>
+
+
+                            {% else %}
+
+                            <li {% if app.request.attributes.get('_route') == "choixetablissement" %} class="active alert-dark"{% endif %} class="nav-item"><a  class="nav-link" href="{{ path('choixetablissement') }}">Choix des établissements</a></li>
+                            <li class="nav-item"><a class="nav-link" href="">Profil étudiant détaillé</a></li>
+
+
+                            {% endif %}
+                            <li {% if app.request.attributes.get('_route') == "documentations" %} class="active alert-dark"{% endif %} class="nav-item"><a class="nav-link" href="{{ path('documentations') }}">Documentations</a></li>
+
+
+                        </ul>
+                    </div>
+                </nav>
+
+                {% endif %}
+
+
+                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") == null  %}
+
+                <div id="content" class="col-md-12" style="background-color: #dedddd; height: 350px;  border: 2px solid #656161; padding: 10px">
+
+                    {% else %}
+
+                    <div id="content" class="col-md-9" style="background-color: #dedddd; height: 350px;  border: 2px solid #656161; padding: 10px">
+
+                        {% endif %}
+
+                        {% block body %}
+
+{# On affiche les messages flash que définissent les contrôleurs du bundle #}
+{% for key, messages in app.session.flashbag.all() %}
+{% for message in messages %}
+<div class="alert alert-{{ key }}">
+    {{ message|trans({}, 'FOSUserBundle') }}
+</div>
+{% endfor %}
+{% endfor %}
+
+{# On définit ce block, dans lequel vont venir s'insérer les autres vues du bundle #}
+{% block fos_user_content %}
+{% endblock fos_user_content %}
+        
+
+                        {% endblock %}
+                    </div>
+
+                </div>
+
+
+
+                <footer class="text-center">
+                    <hr>
+
+                    <p>Date d'aujourd'hui {{ 'now'|date("F j, Y, g:i a") }} .</p>
+
+                </footer>
+
+            </div>
+
+            {% block javascripts %}
+            {# Ajoutez ces lignes JavaScript si vous comptez vous servir des fonctionnalités du bootstrap Twitter #}
+            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" ></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" ></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" ></script>
+
+            <script type="text/javascript">
+
+
+                $('#navbarSupportedContent').collapse({
+                    show: true
+                });
+
+            </script>
+
+            {% endblock %}
+
+            </body>
+        </html>

@@ -1,0 +1,47 @@
+# app/config/security.yml
+
+security:
+    encoders:
+        AppBundle\Entity\User: sha512
+
+    role_hierarchy:
+        # Un admin hérite des droits d'auteur 
+        ROLE_ADMIN:       [ROLE_USER, ROLE_CONSULTANT]
+        ROLE_CONSULTANT : ROLE_USER
+        ROLE_USER:        ROLE_USER
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_USER, ROLE_ALLOWED_TO_SWITCH, ROLE_CONSULTANT]
+
+    providers:
+        main:
+            id: fos_user.user_provider.username
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        login:
+            pattern: ^/(login$|register|resetting)
+            anonymous: true    
+        main:
+            pattern:   ^/
+            provider: main
+            form_login:
+                csrf_token_generator: security.csrf.token_manager
+                login_path: fos_user_security_login
+                check_path: fos_user_security_check  
+                use_referer: true
+                remember_me: true
+                default_target_path: /
+            logout:          true
+            anonymous:       true
+            remember_me:
+                lifetime: 604800 # 1 week in seconds
+                secret:     %secret% # %secret% est un paramètre de parameter
+            switch_user:     true
+
+    access_control:
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, role: ROLE_SUPER_ADMIN }
+        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+
+
