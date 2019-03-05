@@ -21,12 +21,6 @@ class Pays
      */
     private $id;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="pay_id", type="integer", unique=true)
-     */
-    private $payId;
 
     /**
      * @var string
@@ -44,30 +38,6 @@ class Pays
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set payId
-     *
-     * @param integer $payId
-     *
-     * @return Pays
-     */
-    public function setPayId($payId)
-    {
-        $this->payId = $payId;
-
-        return $this;
-    }
-
-    /**
-     * Get payId
-     *
-     * @return int
-     */
-    public function getPayId()
-    {
-        return $this->payId;
     }
 
     /**
