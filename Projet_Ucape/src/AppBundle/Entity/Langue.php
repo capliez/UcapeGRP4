@@ -22,13 +22,6 @@ class Langue
     private $id;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="lan_id", type="integer", unique=true)
-     */
-    private $lanId;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="lan_libelle", type="string", length=255, unique=true)
@@ -46,29 +39,7 @@ class Langue
         return $this->id;
     }
 
-    /**
-     * Set lanId
-     *
-     * @param integer $lanId
-     *
-     * @return Langue
-     */
-    public function setLanId($lanId)
-    {
-        $this->lanId = $lanId;
-
-        return $this;
-    }
-
-    /**
-     * Get lanId
-     *
-     * @return int
-     */
-    public function getLanId()
-    {
-        return $this->lanId;
-    }
+    
 
     /**
      * Set lanLibelle
