@@ -77,11 +77,11 @@
             <div class="row text-center" >
 
                 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-
+                <!-- menu latéral du site -->
                 <nav id="menu" class="col-md-3 navbar navbar-light" style="background-color: #dedddd;  border: 2px solid #656161">
 
 
-                    <a class="navbar-brand" href="#">Navigation</a>
+                    <a class="navbar-brand" href="/">Navigation</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
@@ -93,7 +93,7 @@
 
                             {% if is_granted("ROLE_ADMIN") == app.user.roles %}
 
-                            <li class="nav-item"><a class="nav-link" href="">Eléves</a></li>
+                            <li class="nav-item"><a class="nav-link" href="">Elèves</a></li>
                             <li class="nav-item"><a class="nav-link" href="">Profil étudiant détaillé</a></li>
 
 

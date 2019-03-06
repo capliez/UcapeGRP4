@@ -28,10 +28,9 @@ class FormController extends Controller
     {
         $pays = new pays();
 
-
         /* Creation du formulaire pour l'ajout d'un nouveau pays dans la bdd */
         $form = $this->createFormBuilder($pays)
-            ->add('pay_libelle', TextType::class, ['label' => 'Nom du pays'])
+            ->add('pay_libelle', TextType::class, ['label' => 'Nom du pays :'])
             ->add('save', SubmitType::class, ['label' => 'Envoie'])
             ->getForm();
 
@@ -67,10 +66,9 @@ class FormController extends Controller
     {
         $langue = new Langue();
 
-
         /* Creation du formulaire pour l'ajout d'un nouveau pays dans la bdd */
         $form = $this->createFormBuilder($langue)
-            ->add('lan_libelle', TextType::class, ['label' => 'Intitulle de la langue'])
+            ->add('lan_libelle', TextType::class, ['label' => 'Intitulle de la langue :'])
             ->add('save', SubmitType::class, ['label' => 'Envoie'])
             ->getForm();
 
