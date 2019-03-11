@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Symfony Standard Edition
 ========================
 
@@ -67,3 +68,7 @@ Enjoy!
 [11]: https://symfony.com/doc/3.2/logging.html
 [12]: https://symfony.com/doc/3.2/assetic/asset_management.html
 [13]: https://symfony.com/doc/current/bundles/SensioGeneratorBundle/index.html
+=======
+Salut toi
+EEEEEEEE
+>>>>>>> f8c86db53fe3e93378b1541f568f04bf406ec063
