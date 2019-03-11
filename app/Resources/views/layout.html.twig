@@ -7,6 +7,10 @@
 
         <title>{% block title %}Ucape{% endblock %}</title>
 
+
+        <!-- Font google -->
+        <link href="https://fonts.googleapis.com/css?family=Dancing+Script" rel="stylesheet">
+
         {% block stylesheets %}
         <link rel="stylesheet" href="{{ asset('vendors/bootstrap/dist/css/bootstrap.css') }}">
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
@@ -17,7 +21,9 @@
 
     <body data-spy="scroll" data-target="#menu" data-offset="0">
 
-        <div class="container">
+      
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+          <div class="container">
 
             <div id="header" class="jumbotron" >
 
@@ -42,6 +48,12 @@
                 </div>
 
             </div>
+            {% else %}
+             <div class="container-fluid">
+
+            {% endif %}
+
+
 
             <div class="row text-center" >
 
@@ -83,13 +95,11 @@
                 {% endif %}
 
 
-                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") == null  %}
+                {% if is_granted("IS_AUTHENTICATED_REMEMBERED")  %}
 
                 <div id="content" class="col-md-12" >
 
-                    {% else %}
-
-                    <div id="content" class="col-md-9">
+       
 
                         {% endif %}
 
@@ -116,24 +126,25 @@
 
 
 
-                <footer class="text-center">
+                {# <footer class="text-center">
                     <hr>
 
-                    <p>Date d'aujourd'hui {{ 'now'|date("F j, Y, g:i a") }} .</p>
-
-                </footer>
+                    {# <p>Date d'aujourd'hui {{ 'now'|date("F j, Y, g:i a") }} .</p> #}
+{# 
+                </footer> #}
 
             </div>
 
             {% block javascripts %}
+
             {# Ajoutez ces lignes JavaScript si vous comptez vous servir des fonctionnalités du bootstrap Twitter #}
             <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" ></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" ></script>
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" ></script>
 
-            <script type="text/javascript">
+            <script src="{{ asset('assets/js/script.js') }}"></script>
 
-
+            <script>
                 $('#navbarSupportedContent').collapse({
                     show: true
                 });

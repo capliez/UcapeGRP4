@@ -5,39 +5,46 @@
 {% block fos_user_content %}
 
 
-<style>
+<div id="login" >
+    <a class="logo" href="#"><h3>Ucape</h3></a>
 
-    #content{border-radius: 15px;font-weight: 600}
+    <form class="form-signin container"  style=" text-align: center" action="{{ path("fos_user_security_check") }}" method="post">
+        {% if csrf_token %}
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+        {% endif %}
 
-</style>
+        <label class="label-login" for="username">{{ 'security.login.username'|trans }} :</label>
+        <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}" required="required" autocomplete="username" placeholder="{{ 'security.login.username'|trans }}" />
 
-<form class="form-signin"  style=" text-align: center" action="{{ path("fos_user_security_check") }}" method="post">
-    {% if csrf_token %}
-    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
-    {% endif %}
+        <br/>
 
-    <label for="username">{{ 'security.login.username'|trans }} :</label>
-    <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}" required="required" autocomplete="username" placeholder="{{ 'security.login.username'|trans }}" />
+        <label class="label-login" for="password">{{ 'security.login.password'|trans }} :</label>
+        <input placeholder="{{ 'security.login.password'|trans }}" class="form-control" type="password" id="password" name="_password" required="required" autocomplete="current-password" />
 
-    <br/>
+        <br/>
 
-    <label for="password">{{ 'security.login.password'|trans }} :</label>
-    <input placeholder="{{ 'security.login.password'|trans }}" class="form-control" type="password" id="password" name="_password" required="required" autocomplete="current-password" />
+        <input class="form-check-label" type="checkbox" id="remember_me" name="_remember_me" value="on" />
+        <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
 
-    <br/>
+        <br/>
 
-    <input class="form-check-label" type="checkbox" id="remember_me" name="_remember_me" value="on" />
-    <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
+        <input  type="submit" class="btn btn-login btn-lg btn-block btn-valider" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
 
-    <br/>
+    {# 
+        <a href="{{ path('fos_user_resetting_request') }}">Mot de passe oublié</a> #}
 
-    <input  type="submit" class="btn btn-login btn-lg btn-block btn-valider" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
+    </form>
 
-{# 
-    <a href="{{ path('fos_user_resetting_request') }}">Mot de passe oublié</a> #}
+    <div class="footer">
 
-</form>
+        <div>
+            <small>&copy; 2019 Groupe4. Tous droits réservés.</small>
+        </div>
 
+        
+    </div>
+
+</div>
 {% if error %}
 
 <br/>

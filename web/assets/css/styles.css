@@ -6,9 +6,6 @@ body{    background-color: #eff1f2;; height: 100vh}
 li .alert-dark{border-radius: 20px}
 #navbarSupportedContent {display:block}
 
-.btn-login {background-color: #00aff0;color: white; border-color: #fefefe}
-.btn-login:hover{border-color: rgb(185, 176, 176)}
-
 #menu{height: 350px; background-color: white;  border: 2px solid #656161}
 
 #content{background-color: white; height: 350px;  border: 2px solid #656161; padding: 10px}
@@ -17,4 +14,61 @@ li .alert-dark{border-radius: 20px}
 
 #choixEtablissement input[type="checkbox"]{
     margin: 5px
+}
+
+
+/* Login */
+
+#login{
+    background-color: #eff1f2;
+    height: 100vh;
+    padding-top: 100px;
+    margin: 0 auto;
+    width: 100%
+}
+
+#login form{
+  margin: 0 auto;
+  width: 500px;
+  background-color: white;
+  padding: 40px;
+  max-width: 100%;
+}
+
+#login form .label-login{
+  float: left;
+}
+
+#login form label{
+  font-size: 13px
+}
+
+#login .btn-login {transition: all .25s ease-in;background-color: #00aff0;color: white; border-color: #fefefe}
+#login .btn-login:hover{border-color: rgb(185, 176, 176)}
+
+
+#login  .logo h3{
+  color: #00aff0;
+  font-size: 3.75rem;
+  font-family: 'Dancing Script', cursive;
+  font-weight: 600;
+}
+
+#login .logo:hover{
+    color: #00aff0;
+    text-decoration: none
+}
+#login .logo{
+  left: 0;
+  margin: 0 auto;
+  position: absolute;
+  right: 0;
+  width: 110.5px;
+  z-index: 1;
+  top: 57px;
+}
+
+#login .footer{
+ text-align: center;
+ margin-top: 25px
 }

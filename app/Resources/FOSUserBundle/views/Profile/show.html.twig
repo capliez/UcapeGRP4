@@ -1,15 +1,56 @@
 {%  extends "layout.html.twig" %}
+
 {% trans_default_domain 'FOSUserBundle' %}
 
 {% block fos_user_content %}
 
 
-<div class="fos_user_user_show">
-    
-    <p>{{ 'profile.show.username'|trans }}: {{ user.username }}</p>
-    <p>{{ 'profile.show.email'|trans }}: {{ user.email }}</p>
+<div id="login" >
+    <a class="logo" href="#"><img src="{{asset('assets/images/hero/logoNoir.png')}}"></a>
 
-    
+    <form class="form-signin container"  style=" text-align: center" action="{{ path("fos_user_security_check") }}" method="post">
+        {% if csrf_token %}
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+        {% endif %}
+
+        <label class="label-login" for="username">{{ 'security.login.username'|trans }} :</label>
+        <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}" required="required" autocomplete="username" placeholder="{{ 'security.login.username'|trans }}" />
+
+        <br/>
+
+        <label class="label-login" for="password">{{ 'security.login.password'|trans }} :</label>
+        <input placeholder="{{ 'security.login.password'|trans }}" class="form-control" type="password" id="password" name="_password" required="required" autocomplete="current-password" />
+
+        <br/>
+
+        <input class="form-check-label" type="checkbox" id="remember_me" name="_remember_me" value="on" />
+        <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
+
+        <br/>
+
+        <input  type="submit" class="btn btn-login btn-lg btn-block btn-valider" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
+
+    {# 
+        <a href="{{ path('fos_user_resetting_request') }}">Mot de passe oublié</a> #}
+
+    </form>
+
+    <div class="footer">
+
+        <div>
+            <small>&copy; 2019 Alexis Capliez. Tous droits réservés.</small>
+        </div>
+
+        <a target="_blank" href="https://fr.linkedin.com/in/alexis-capliez-30873a150"><i class="fab fa-linkedin"></i></a></li>
+        
+    </div>
+
 </div>
+
+{% if error %}
+
+<br/>
+<div class="alert alert-danger" style="font-weight: bold" role="alert" >{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+{% endif %}
 
 {% endblock fos_user_content %}
