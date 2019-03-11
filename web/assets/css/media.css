@@ -1,0 +1,18 @@
+@media only screen and (min-width: 773px) {
+    /* nav button{display: none} */
+ }
+
+ /* Pour les écran de taille égale ou inférieur à 772px */
+ @media only screen and (max-width: 772px) {
+     #header p{font-size: 13px}
+     .jumbotron{height: 150px}
+     /* nav button{margin-bottom: 10px; box-shadow: 2px 6px 2px rgba(98, 90, 90, 0.8)}
+     nav button:hover{box-shadow: 2px 6px 2px rgba(88, 84, 84, 0.8)} */
+     #content{margin-top: 10px; border-radius: 10px; box-shadow: 2px 6px 2px rgba(98, 90, 90, 0.8)}
+
+ }
+
+  /* Pour les écran de taille égale ou inférieur à 530px */
+ @media only screen and (max-width: 530px) {
+     #header h1{font-size: 25px}
+ }

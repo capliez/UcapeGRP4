@@ -4,6 +4,7 @@
 
 {% block fos_user_content %}
 
+
 <style>
 
     #content{border-radius: 15px;font-weight: 600}
@@ -30,10 +31,10 @@
 
     <br/>
 
-    <input  type="submit" class="btn btn-primary btn-lg btn-block btn-valider" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
+    <input  type="submit" class="btn btn-login btn-lg btn-block btn-valider" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
 
-
-    <a href="{{ path('fos_user_resetting_request') }}">Mot de passe oublié</a>
+{# 
+    <a href="{{ path('fos_user_resetting_request') }}">Mot de passe oublié</a> #}
 
 </form>
 
