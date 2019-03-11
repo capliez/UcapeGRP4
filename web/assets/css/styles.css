@@ -1,14 +1,19 @@
 /* GENERAL */
-body{    background-color: #989898; height: 100vh}
+body{    background-color: #eff1f2;; height: 100vh}
 
 .titreLettre{color:#080808; text-shadow: 2px 2px 2px rgba(248, 242, 242, 0.1)}
 .active{font-weight: 600}
 li .alert-dark{border-radius: 20px}
 #navbarSupportedContent {display:block}
 
-.btn-login {background-color: #fefefe; border-color: #fefefe}
+.btn-login {background-color: #00aff0;color: white; border-color: #fefefe}
 .btn-login:hover{border-color: rgb(185, 176, 176)}
 
+#menu{height: 350px; background-color: white;  border: 2px solid #656161}
+
+#content{background-color: white; height: 350px;  border: 2px solid #656161; padding: 10px}
+
+#header{background-color: white}
 
 #choixEtablissement input[type="checkbox"]{
     margin: 5px

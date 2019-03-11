@@ -19,7 +19,7 @@
 
         <div class="container">
 
-            <div id="header" class="jumbotron" style="background-color: #ebe9e9">
+            <div id="header" class="jumbotron" >
 
                 <h1 style="font-weight: 600;"><span class="titreLettre">U</span>cape - <span class="titreLettre">S</span>ection</h1>
 
@@ -47,7 +47,7 @@
 
                 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
 
-                <nav id="menu" class="col-md-3 navbar navbar-light" style="height: 350px; background-color: #dedddd;  border: 2px solid #656161">
+                <nav id="menu" class="col-md-3 navbar navbar-light" >
 
 
                     <a class="navbar-brand" href="#">Navigation</a>
@@ -85,11 +85,11 @@
 
                 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") == null  %}
 
-                <div id="content" class="col-md-12" style="background-color: #dedddd; height: 350px;  border: 2px solid #656161; padding: 10px">
+                <div id="content" class="col-md-12" >
 
                     {% else %}
 
-                    <div id="content" class="col-md-9" style="background-color: #dedddd; height: 550px;  border: 2px solid #656161; padding: 10px">
+                    <div id="content" class="col-md-9">
 
                         {% endif %}
 
