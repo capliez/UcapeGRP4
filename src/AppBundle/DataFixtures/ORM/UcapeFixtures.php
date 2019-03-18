@@ -133,7 +133,6 @@ class UcapeFixtures implements FixtureInterface, ContainerAwareInterface
             
             $manager->persist($langue);
         }
-
         $manager->flush();
     }
 }

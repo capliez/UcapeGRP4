@@ -7,12 +7,12 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Classe
+ * Langue
  *
- * @ORM\Table(name="classe")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ClasseRepository")
+ * @ORM\Table(name="langue")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\LangueRepository")
  */
-class Classe
+class Langue
 {
     /**
      * @var int
@@ -26,19 +26,20 @@ class Classe
     /**
      * @var string
      *
-     * @ORM\Column(name="cla_libelle", type="string", length=255)
+     * @ORM\Column(name="lan_libelle", type="string", length=255, unique=true)
      */
     private $libelle;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Eleve", mappedBy="classe")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Examinateur", mappedBy="langue")
      */
-    private $eleves;
+    private $examinateurs;
 
     public function __construct()
     {
-        $this->eleves = new ArrayCollection();
+        $this->examinateurs = new ArrayCollection();
     }
+
 
     /**
      * Get id
@@ -50,12 +51,13 @@ class Classe
         return $this->id;
     }
 
+
     /**
      * Set libelle
      *
      * @param string $libelle
      *
-     * @return Classe
+     * @return Langue
      */
     public function setLibelle($libelle)
     {
@@ -75,30 +77,30 @@ class Classe
     }
 
     /**
-     * @return Collection|Eleve[]
+     * @return Collection|Examinateur[]
      */
-    public function getEleves(): Collection
+    public function getExaminateurs(): Collection
     {
-        return $this->eleves;
+        return $this->examinateurs;
     }
 
-    public function addEleve(Eleve $elefe): self
+    public function addExaminateur(Examinateur $examinateur): self
     {
-        if (!$this->eleves->contains($elefe)) {
-            $this->eleves[] = $elefe;
-            $elefe->setClasse($this);
+        if (!$this->examinateurs->contains($examinateur)) {
+            $this->examinateurs[] = $examinateur;
+            $examinateur->setLangue($this);
         }
 
         return $this;
     }
 
-    public function removeEleve(Eleve $elefe): self
+    public function removeExaminateur(Examinateur $examinateur): self
     {
-        if ($this->eleves->contains($elefe)) {
-            $this->eleves->removeElement($elefe);
+        if ($this->examinateurs->contains($examinateur)) {
+            $this->examinateurs->removeElement($examinateur);
             // set the owning side to null (unless already changed)
-            if ($elefe->getClasse() === $this) {
-                $elefe->setClasse(null);
+            if ($examinateur->getLangue() === $this) {
+                $examinateur->setLangue(null);
             }
         }
 
