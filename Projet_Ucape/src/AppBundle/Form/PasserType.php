@@ -6,21 +6,21 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ClasseType extends AbstractType
+class PasserType extends AbstractType
 {
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('libelle');
+        $builder->add('date')->add('note')->add('appreciation')->add('langue')->add('eleve')->add('examinateur');
     }/**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Classe'
+            'data_class' => 'AppBundle\Entity\Passer'
         ));
     }
 
@@ -29,7 +29,7 @@ class ClasseType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'appbundle_classe';
+        return 'appbundle_passer';
     }
 
 

@@ -6,21 +6,21 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ClasseType extends AbstractType
+class ChoixType extends AbstractType
 {
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('libelle');
+        $builder->add('eleve')->add('pays');
     }/**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Classe'
+            'data_class' => 'AppBundle\Entity\Choix'
         ));
     }
 
@@ -29,7 +29,7 @@ class ClasseType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'appbundle_classe';
+        return 'appbundle_choix';
     }
 
 

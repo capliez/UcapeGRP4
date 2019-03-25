@@ -2,6 +2,8 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,172 +24,202 @@ class Eleve
     private $id;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="ele_id", type="integer", unique=true)
-     */
-    private $eleId;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="ele_nom", type="string", length=255)
      */
-    private $eleNom;
+    private $nom;
 
     /**
      * @var string
      *
      * @ORM\Column(name="ele_prenom", type="string", length=255)
      */
-    private $elePrenom;
+    private $prenom;
 
     /**
      * @var string
      *
      * @ORM\Column(name="ele_sexe", type="string", length=255)
      */
-    private $eleSexe;
+    private $sexe;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="ele_date_naissance", type="date")
      */
-    private $eleDateNaissance;
+    private $dateNaissance;
 
     /**
      * @var int
      *
      * @ORM\Column(name="ele_promo", type="integer")
      */
-    private $elePromo;
+    private $promo;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="ele_email", type="string", length=255, unique=true)
+     * @ORM\Column(name="ele_email", type="string", length=255)
      */
-    private $eleEmail;
+    private $email;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="ele_email_parent", type="string", length=255, unique=true)
+     * @ORM\Column(name="ele_email_parent", type="string", length=255)
      */
-    private $eleEmailParent;
+    private $emailParent;
 
     /**
      * @var string
      *
      * @ORM\Column(name="ele_mdp", type="string", length=255)
      */
-    private $eleMdp;
+    private $mdp;
 
     /**
      * @var string
      *
      * @ORM\Column(name="ele_commentaire_general", type="text")
      */
-    private $eleCommentaireGeneral;
+    private $commentaireGeneral;
 
     /**
      * @var bool
      *
      * @ORM\Column(name="ele_terre_des_langues", type="boolean")
      */
-    private $eleTerreDesLangues;
+    private $terreDesLangues;
 
     /**
      * @var string
      *
      * @ORM\Column(name="ele_commentaire_choix", type="text")
      */
-    private $eleCommentaireChoix;
+    private $commentaireChoix;
 
     /**
      * @var bool
      *
      * @ORM\Column(name="ele_visa_parent", type="boolean")
      */
-    private $eleVisaParent;
+    private $visaParent;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="ele_UE2_date", type="date")
      */
-    private $eleUE2Date;
+    private $UE2Date;
 
     /**
      * @var string
      *
      * @ORM\Column(name="ele_UE2_theme_dossier", type="string", length=255)
      */
-    private $eleUE2ThemeDossier;
+    private $UE2ThemeDossier;
 
     /**
      * @var float
      *
      * @ORM\Column(name="ele_UE2_note", type="float", nullable=true)
      */
-    private $eleUE2Note;
+    private $UE2Note;
 
     /**
      * @var string
      *
      * @ORM\Column(name="ele_UE2_appreciation", type="text")
      */
-    private $eleUE2Appreciation;
+    private $UE2Appreciation;
 
     /**
      * @var string
      *
      * @ORM\Column(name="ele_type", type="string", length=1)
      */
-    private $eleType;
+    private $type;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="ele_UE1_date", type="date")
      */
-    private $eleUE1Date;
+    private $UE1Date;
 
     /**
      * @var float
      *
      * @ORM\Column(name="ele_UE1_note", type="float", nullable=true)
      */
-    private $eleUE1Note;
+    private $UE1Note;
 
     /**
      * @var string
-     *
+     
      * @ORM\Column(name="ele_UE1_Appreciation", type="text", nullable=true)
      */
-    private $eleUE1Appreciation;
+    private $UE1Appreciation;
 
     /**
      * @var bool
      *
      * @ORM\Column(name="ele_obtention_diplome", type="boolean", nullable=true)
      */
-    private $eleObtentionDiplome;
+    private $obtentionDiplome;
 
     /**
      * @var string
      *
      * @ORM\Column(name="ele_mention", type="string", length=255, nullable=true)
      */
-    private $eleMention;
+    private $mention;
 
     /**
      * @var string
      *
      * @ORM\Column(name="ele_commentaire", type="text", nullable=true)
      */
-    private $eleCommentaire;
+    private $commentaire;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $anneeEntreePromo;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $aVoyage;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Classe", inversedBy="eleves")
+     */
+    private $classe;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Choix", mappedBy="eleve")
+     */
+    private $choix;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Proposition", mappedBy="eleve")
+     */
+    private $propositions;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Passer", mappedBy="eleve")
+     */
+    private $passages;
+
+    public function __construct()
+    {
+        $this->choix = new ArrayCollection();
+        $this->propositions = new ArrayCollection();
+        $this->passages = new ArrayCollection();
+    }
 
 
     /**
@@ -201,579 +233,684 @@ class Eleve
     }
 
     /**
-     * Set eleId
+     * Set nom
      *
-     * @param integer $eleId
+     * @param string $nom
      *
      * @return Eleve
      */
-    public function setEleId($eleId)
+    public function setNom($nom)
     {
-        $this->eleId = $eleId;
+        $this->nom = $nom;
 
         return $this;
     }
 
     /**
-     * Get eleId
+     * Get nom
+     *
+     * @return string
+     */
+    public function getNom()
+    {
+        return $this->nom;
+    }
+
+    /**
+     * Set prenom
+     *
+     * @param string $prenom
+     *
+     * @return Eleve
+     */
+    public function setPrenom($prenom)
+    {
+        $this->prenom = $prenom;
+
+        return $this;
+    }
+
+    /**
+     * Get prenom
+     *
+     * @return string
+     */
+    public function getPrenom()
+    {
+        return $this->prenom;
+    }
+
+    /**
+     * Set sexe
+     *
+     * @param string $sexe
+     *
+     * @return Eleve
+     */
+    public function setSexe($sexe)
+    {
+        $this->sexe = $sexe;
+
+        return $this;
+    }
+
+    /**
+     * Get sexe
+     *
+     * @return string
+     */
+    public function getSexe()
+    {
+        return $this->sexe;
+    }
+
+    /**
+     * Set dateNaissance
+     *
+     * @param \DateTime $dateNaissance
+     *
+     * @return Eleve
+     */
+    public function setDateNaissance($dateNaissance)
+    {
+        $this->dateNaissance = $dateNaissance;
+
+        return $this;
+    }
+
+    /**
+     * Get dateNaissance
+     *
+     * @return \DateTime
+     */
+    public function getDateNaissance()
+    {
+        return $this->dateNaissance;
+    }
+
+    /**
+     * Set promo
+     *
+     * @param integer $promo
+     *
+     * @return Eleve
+     */
+    public function setPromo($promo)
+    {
+        $this->promo = $promo;
+
+        return $this;
+    }
+
+    /**
+     * Get promo
      *
      * @return int
      */
-    public function getEleId()
+    public function getPromo()
     {
-        return $this->eleId;
+        return $this->promo;
     }
 
     /**
-     * Set eleNom
+     * Set email
      *
-     * @param string $eleNom
+     * @param string $email
      *
      * @return Eleve
      */
-    public function setEleNom($eleNom)
+    public function setEmail($email)
     {
-        $this->eleNom = $eleNom;
+        $this->email = $email;
 
         return $this;
     }
 
     /**
-     * Get eleNom
+     * Get email
      *
      * @return string
      */
-    public function getEleNom()
+    public function getEmail()
     {
-        return $this->eleNom;
+        return $this->email;
     }
 
     /**
-     * Set elePrenom
+     * Set emailParent
      *
-     * @param string $elePrenom
+     * @param string $emailParent
      *
      * @return Eleve
      */
-    public function setElePrenom($elePrenom)
+    public function setEmailParent($emailParent)
     {
-        $this->elePrenom = $elePrenom;
+        $this->emailParent = $emailParent;
 
         return $this;
     }
 
     /**
-     * Get elePrenom
+     * Get emailParent
      *
      * @return string
      */
-    public function getElePrenom()
+    public function getEmailParent()
     {
-        return $this->elePrenom;
+        return $this->emailParent;
     }
 
     /**
-     * Set eleSexe
+     * Set mdp
      *
-     * @param string $eleSexe
+     * @param string $mdp
      *
      * @return Eleve
      */
-    public function setEleSexe($eleSexe)
+    public function setMdp($mdp)
     {
-        $this->eleSexe = $eleSexe;
+        $this->mdp = $mdp;
 
         return $this;
     }
 
     /**
-     * Get eleSexe
+     * Get mdp
      *
      * @return string
      */
-    public function getEleSexe()
+    public function getMdp()
     {
-        return $this->eleSexe;
+        return $this->mdp;
     }
 
     /**
-     * Set eleDateNaissance
+     * Set commentaireGeneral
      *
-     * @param \DateTime $eleDateNaissance
+     * @param string $commentaireGeneral
      *
      * @return Eleve
      */
-    public function setEleDateNaissance($eleDateNaissance)
+    public function setCommentaireGeneral($commentaireGeneral)
     {
-        $this->eleDateNaissance = $eleDateNaissance;
+        $this->commentaireGeneral = $commentaireGeneral;
 
         return $this;
     }
 
     /**
-     * Get eleDateNaissance
-     *
-     * @return \DateTime
-     */
-    public function getEleDateNaissance()
-    {
-        return $this->eleDateNaissance;
-    }
-
-    /**
-     * Set elePromo
-     *
-     * @param integer $elePromo
-     *
-     * @return Eleve
-     */
-    public function setElePromo($elePromo)
-    {
-        $this->elePromo = $elePromo;
-
-        return $this;
-    }
-
-    /**
-     * Get elePromo
-     *
-     * @return int
-     */
-    public function getElePromo()
-    {
-        return $this->elePromo;
-    }
-
-    /**
-     * Set eleEmail
-     *
-     * @param string $eleEmail
-     *
-     * @return Eleve
-     */
-    public function setEleEmail($eleEmail)
-    {
-        $this->eleEmail = $eleEmail;
-
-        return $this;
-    }
-
-    /**
-     * Get eleEmail
+     * Get commentaireGeneral
      *
      * @return string
      */
-    public function getEleEmail()
+    public function getCommentaireGeneral()
     {
-        return $this->eleEmail;
+        return $this->commentaireGeneral;
     }
 
     /**
-     * Set eleEmailParent
+     * Set terreDesLangues
      *
-     * @param string $eleEmailParent
+     * @param boolean $terreDesLangues
      *
      * @return Eleve
      */
-    public function setEleEmailParent($eleEmailParent)
+    public function setTerreDesLangues($terreDesLangues)
     {
-        $this->eleEmailParent = $eleEmailParent;
+        $this->terreDesLangues = $terreDesLangues;
 
         return $this;
     }
 
     /**
-     * Get eleEmailParent
-     *
-     * @return string
-     */
-    public function getEleEmailParent()
-    {
-        return $this->eleEmailParent;
-    }
-
-    /**
-     * Set eleMdp
-     *
-     * @param string $eleMdp
-     *
-     * @return Eleve
-     */
-    public function setEleMdp($eleMdp)
-    {
-        $this->eleMdp = $eleMdp;
-
-        return $this;
-    }
-
-    /**
-     * Get eleMdp
-     *
-     * @return string
-     */
-    public function getEleMdp()
-    {
-        return $this->eleMdp;
-    }
-
-    /**
-     * Set eleCommentaireGeneral
-     *
-     * @param string $eleCommentaireGeneral
-     *
-     * @return Eleve
-     */
-    public function setEleCommentaireGeneral($eleCommentaireGeneral)
-    {
-        $this->eleCommentaireGeneral = $eleCommentaireGeneral;
-
-        return $this;
-    }
-
-    /**
-     * Get eleCommentaireGeneral
-     *
-     * @return string
-     */
-    public function getEleCommentaireGeneral()
-    {
-        return $this->eleCommentaireGeneral;
-    }
-
-    /**
-     * Set eleTerreDesLangues
-     *
-     * @param boolean $eleTerreDesLangues
-     *
-     * @return Eleve
-     */
-    public function setEleTerreDesLangues($eleTerreDesLangues)
-    {
-        $this->eleTerreDesLangues = $eleTerreDesLangues;
-
-        return $this;
-    }
-
-    /**
-     * Get eleTerreDesLangues
+     * Get terreDesLangues
      *
      * @return bool
      */
-    public function getEleTerreDesLangues()
+    public function getTerreDesLangues()
     {
-        return $this->eleTerreDesLangues;
+        return $this->terreDesLangues;
     }
 
     /**
-     * Set eleCommentaireChoix
+     * Set commentaireChoix
      *
-     * @param string $eleCommentaireChoix
+     * @param string $commentaireChoix
      *
      * @return Eleve
      */
-    public function setEleCommentaireChoix($eleCommentaireChoix)
+    public function setCommentaireChoix($commentaireChoix)
     {
-        $this->eleCommentaireChoix = $eleCommentaireChoix;
+        $this->commentaireChoix = $commentaireChoix;
 
         return $this;
     }
 
     /**
-     * Get eleCommentaireChoix
+     * Get commentaireChoix
      *
      * @return string
      */
-    public function getEleCommentaireChoix()
+    public function getCommentaireChoix()
     {
-        return $this->eleCommentaireChoix;
+        return $this->commentaireChoix;
     }
 
     /**
-     * Set eleVisaParent
+     * Set visaParent
      *
-     * @param boolean $eleVisaParent
+     * @param boolean $visaParent
      *
      * @return Eleve
      */
-    public function setEleVisaParent($eleVisaParent)
+    public function setVisaParent($visaParent)
     {
-        $this->eleVisaParent = $eleVisaParent;
+        $this->visaParent = $visaParent;
 
         return $this;
     }
 
     /**
-     * Get eleVisaParent
+     * Get visaParent
      *
      * @return bool
      */
-    public function getEleVisaParent()
+    public function getVisaParent()
     {
-        return $this->eleVisaParent;
+        return $this->visaParent;
     }
 
     /**
-     * Set eleUE2Date
+     * Set UE2Date
      *
-     * @param \DateTime $eleUE2Date
+     * @param \DateTime $UE2Date
      *
      * @return Eleve
      */
-    public function setEleUE2Date($eleUE2Date)
+    public function setUE2Date($UE2Date)
     {
-        $this->eleUE2Date = $eleUE2Date;
+        $this->UE2Date = $UE2Date;
 
         return $this;
     }
 
     /**
-     * Get eleUE2Date
+     * Get UE2Date
      *
      * @return \DateTime
      */
-    public function getEleUE2Date()
+    public function getUE2Date()
     {
-        return $this->eleUE2Date;
+        return $this->UE2Date;
     }
 
     /**
-     * Set eleUE2ThemeDossier
+     * Set UE2ThemeDossier
      *
-     * @param string $eleUE2ThemeDossier
+     * @param string $UE2ThemeDossier
      *
      * @return Eleve
      */
-    public function setEleUE2ThemeDossier($eleUE2ThemeDossier)
+    public function setUE2ThemeDossier($UE2ThemeDossier)
     {
-        $this->eleUE2ThemeDossier = $eleUE2ThemeDossier;
+        $this->UE2ThemeDossier = $UE2ThemeDossier;
 
         return $this;
     }
 
     /**
-     * Get eleUE2ThemeDossier
+     * Get UE2ThemeDossier
      *
      * @return string
      */
-    public function getEleUE2ThemeDossier()
+    public function getUE2ThemeDossier()
     {
-        return $this->eleUE2ThemeDossier;
+        return $this->UE2ThemeDossier;
     }
 
     /**
-     * Set eleUE2Note
+     * Set UE2Note
      *
-     * @param float $eleUE2Note
+     * @param float $UE2Note
      *
      * @return Eleve
      */
-    public function setEleUE2Note($eleUE2Note)
+    public function setUE2Note($UE2Note)
     {
-        $this->eleUE2Note = $eleUE2Note;
+        $this->UE2Note = $UE2Note;
 
         return $this;
     }
 
     /**
-     * Get eleUE2Note
+     * Get UE2Note
      *
      * @return float
      */
-    public function getEleUE2Note()
+    public function getUE2Note()
     {
-        return $this->eleUE2Note;
+        return $this->UE2Note;
     }
 
     /**
-     * Set eleUE2Appreciation
+     * Set UE2Appreciation
      *
-     * @param string $eleUE2Appreciation
+     * @param string $UE2Appreciation
      *
      * @return Eleve
      */
-    public function setEleUE2Appreciation($eleUE2Appreciation)
+    public function setUE2Appreciation($UE2Appreciation)
     {
-        $this->eleUE2Appreciation = $eleUE2Appreciation;
+        $this->UE2Appreciation = $UE2Appreciation;
 
         return $this;
     }
 
     /**
-     * Get eleUE2Appreciation
+     * Get UE2Appreciation
      *
      * @return string
      */
-    public function getEleUE2Appreciation()
+    public function getUE2Appreciation()
     {
-        return $this->eleUE2Appreciation;
+        return $this->UE2Appreciation;
     }
 
     /**
-     * Set eleType
+     * Set type
      *
-     * @param string $eleType
+     * @param string $type
      *
      * @return Eleve
      */
-    public function setEleType($eleType)
+    public function setType($type)
     {
-        $this->eleType = $eleType;
+        $this->type = $type;
 
         return $this;
     }
 
     /**
-     * Get eleType
+     * Get type
      *
      * @return string
      */
-    public function getEleType()
+    public function getType()
     {
-        return $this->eleType;
+        return $this->type;
     }
 
     /**
-     * Set eleUE1Date
+     * Set UE1Date
      *
-     * @param \DateTime $eleUE1Date
+     * @param \DateTime $UE1Date
      *
      * @return Eleve
      */
-    public function setEleUE1Date($eleUE1Date)
+    public function setUE1Date($UE1Date)
     {
-        $this->eleUE1Date = $eleUE1Date;
+        $this->UE1Date = $UE1Date;
 
         return $this;
     }
 
     /**
-     * Get eleUE1Date
+     * Get UE1Date
      *
      * @return \DateTime
      */
-    public function getEleUE1Date()
+    public function getUE1Date()
     {
-        return $this->eleUE1Date;
+        return $this->UE1Date;
     }
 
     /**
-     * Set eleUE1Note
+     * Set UE1Note
      *
-     * @param float $eleUE1Note
+     * @param float $UE1Note
      *
      * @return Eleve
      */
-    public function setEleUE1Note($eleUE1Note)
+    public function setUE1Note($UE1Note)
     {
-        $this->eleUE1Note = $eleUE1Note;
+        $this->UE1Note = $UE1Note;
 
         return $this;
     }
 
     /**
-     * Get eleUE1Note
+     * Get UE1Note
      *
      * @return float
      */
-    public function getEleUE1Note()
+    public function getUE1Note()
     {
-        return $this->eleUE1Note;
+        return $this->UE1Note;
     }
 
     /**
-     * Set eleUE1Appreciation
+     * Set UE1Appreciation
      *
-     * @param string $eleUE1Appreciation
+     * @param string $UE1Appreciation
      *
      * @return Eleve
      */
-    public function setEleUE1Appreciation($eleUE1Appreciation)
+    public function setUE1Appreciation($UE1Appreciation)
     {
-        $this->eleUE1Appreciation = $eleUE1Appreciation;
+        $this->UE1Appreciation = $UE1Appreciation;
 
         return $this;
     }
 
     /**
-     * Get eleUE1Appreciation
+     * Get UE1Appreciation
      *
      * @return string
      */
-    public function getEleUE1Appreciation()
+    public function getUE1Appreciation()
     {
-        return $this->eleUE1Appreciation;
+        return $this->UE1Appreciation;
     }
 
     /**
-     * Set eleObtentionDiplome
+     * Set obtentionDiplome
      *
-     * @param boolean $eleObtentionDiplome
+     * @param boolean $obtentionDiplome
      *
      * @return Eleve
      */
-    public function setEleObtentionDiplome($eleObtentionDiplome)
+    public function setObtentionDiplome($obtentionDiplome)
     {
-        $this->eleObtentionDiplome = $eleObtentionDiplome;
+        $this->obtentionDiplome = $obtentionDiplome;
 
         return $this;
     }
 
     /**
-     * Get eleObtentionDiplome
+     * Get obtentionDiplome
      *
      * @return bool
      */
-    public function getEleObtentionDiplome()
+    public function getObtentionDiplome()
     {
-        return $this->eleObtentionDiplome;
+        return $this->obtentionDiplome;
     }
 
     /**
-     * Set eleMention
+     * Set mention
      *
-     * @param string $eleMention
+     * @param string $mention
      *
      * @return Eleve
      */
-    public function setEleMention($eleMention)
+    public function setMention($mention)
     {
-        $this->eleMention = $eleMention;
+        $this->mention = $mention;
 
         return $this;
     }
 
     /**
-     * Get eleMention
+     * Get mention
      *
      * @return string
      */
-    public function getEleMention()
+    public function getMention()
     {
-        return $this->eleMention;
+        return $this->mention;
     }
 
     /**
-     * Set eleCommentaire
+     * Set commentaire
      *
-     * @param string $eleCommentaire
+     * @param string $commentaire
      *
      * @return Eleve
      */
-    public function setEleCommentaire($eleCommentaire)
+    public function setCommentaire($commentaire)
     {
-        $this->eleCommentaire = $eleCommentaire;
+        $this->commentaire = $commentaire;
 
         return $this;
     }
 
     /**
-     * Get eleCommentaire
+     * Get commentaire
      *
      * @return string
      */
-    public function getEleCommentaire()
+    public function getCommentaire()
     {
-        return $this->eleCommentaire;
+        return $this->commentaire;
+    }
+
+    public function getAnneeEntreePromo(): ?string
+    {
+        return $this->anneeEntreePromo;
+    }
+
+    public function setAnneeEntreePromo(?string $anneeEntreePromo): self
+    {
+        $this->anneeEntreePromo = $anneeEntreePromo;
+
+        return $this;
+    }
+
+    public function getAVoyage(): ?bool
+    {
+        return $this->aVoyage;
+    }
+
+    public function setAVoyage(?bool $aVoyage): self
+    {
+        $this->aVoyage = $aVoyage;
+
+        return $this;
+    }
+
+    public function getClasse(): ?Classe
+    {
+        return $this->classe;
+    }
+
+    public function setClasse(?Classe $classe): self
+    {
+        $this->classe = $classe;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Choix[]
+     */
+    public function getChoix(): Collection
+    {
+        return $this->choix;
+    }
+
+    public function addChoix(Choix $choix): self
+    {
+        if (!$this->choix->contains($choix)) {
+            $this->choix[] = $choix;
+            $choix->setEleve($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChoix(Choix $choix): self
+    {
+        if ($this->choix->contains($choix)) {
+            $this->choix->removeElement($choix);
+            // set the owning side to null (unless already changed)
+            if ($choix->getEleve() === $this) {
+                $choix->setEleve(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Proposition[]
+     */
+    public function getPropositions(): Collection
+    {
+        return $this->propositions;
+    }
+
+    public function addProposition(Proposition $proposition): self
+    {
+        if (!$this->propositions->contains($proposition)) {
+            $this->propositions[] = $proposition;
+            $proposition->setEleve($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProposition(Proposition $proposition): self
+    {
+        if ($this->propositions->contains($proposition)) {
+            $this->propositions->removeElement($proposition);
+            // set the owning side to null (unless already changed)
+            if ($proposition->getEleve() === $this) {
+                $proposition->setEleve(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Passer[]
+     */
+    public function getPassages(): Collection
+    {
+        return $this->passages;
+    }
+
+    public function addPassage(Passer $passage): self
+    {
+        if (!$this->passages->contains($passage)) {
+            $this->passages[] = $passage;
+            $passage->setEleve($this);
+        }
+
+        return $this;
+    }
+
+    public function removePassage(Passer $passage): self
+    {
+        if ($this->passages->contains($passage)) {
+            $this->passages->removeElement($passage);
+            // set the owning side to null (unless already changed)
+            if ($passage->getEleve() === $this) {
+                $passage->setEleve(null);
+            }
+        }
+
+        return $this;
     }
 }
 

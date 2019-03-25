@@ -2,6 +2,8 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,67 +24,75 @@ class Etablissement
     private $id;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="eta_id", type="integer", unique=true)
-     */
-    private $etaId;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="eta_libelle", type="string", length=255)
      */
-    private $etaLibelle;
+    private $libelle;
 
     /**
      * @var string
      *
      * @ORM\Column(name="eta_nom", type="string", length=255)
      */
-    private $etaNom;
+    private $nom;
 
     /**
      * @var string
      *
      * @ORM\Column(name="eta_telephone", type="string", length=255, unique=true)
      */
-    private $etaTelephone;
+    private $telephone;
 
     /**
      * @var string
      *
      * @ORM\Column(name="eta_email", type="string", length=255, unique=true)
      */
-    private $etaEmail;
+    private $email;
 
     /**
      * @var string
      *
      * @ORM\Column(name="eta_responsable", type="string", length=255)
      */
-    private $etaResponsable;
+    private $responsable;
 
     /**
      * @var string
      *
      * @ORM\Column(name="eta_numero", type="string", length=255, unique=true)
      */
-    private $etaNumero;
+    private $numero;
 
     /**
      * @var string
      *
      * @ORM\Column(name="eta_rue", type="string", length=255)
      */
-    private $etaRue;
+    private $rue;
 
     /**
      * @var string
      *
      * @ORM\Column(name="eta_ville", type="string", length=255)
      */
-    private $etaVille;
+    private $ville;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Pays", inversedBy="etablissements")
+     */
+    private $pays;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Proposition", mappedBy="etablissement")
+     */
+    private $propositions;
+
+    public function __construct()
+    {
+        $this->propositions = new ArrayCollection();
+    }
 
 
     /**
@@ -96,219 +106,238 @@ class Etablissement
     }
 
     /**
-     * Set etaId
+     * Set libelle
      *
-     * @param integer $etaId
+     * @param string $libelle
      *
      * @return Etablissement
      */
-    public function setEtaId($etaId)
+    public function setLibelle($libelle)
     {
-        $this->etaId = $etaId;
+        $this->libelle = $libelle;
 
         return $this;
     }
 
     /**
-     * Get etaId
-     *
-     * @return int
-     */
-    public function getEtaId()
-    {
-        return $this->etaId;
-    }
-
-    /**
-     * Set etaLibelle
-     *
-     * @param string $etaLibelle
-     *
-     * @return Etablissement
-     */
-    public function setEtaLibelle($etaLibelle)
-    {
-        $this->etaLibelle = $etaLibelle;
-
-        return $this;
-    }
-
-    /**
-     * Get etaLibelle
+     * Get libelle
      *
      * @return string
      */
-    public function getEtaLibelle()
+    public function getLibelle()
     {
-        return $this->etaLibelle;
+        return $this->libelle;
     }
 
     /**
-     * Set etaNom
+     * Set nom
      *
-     * @param string $etaNom
+     * @param string $nom
      *
      * @return Etablissement
      */
-    public function setEtaNom($etaNom)
+    public function setNom($nom)
     {
-        $this->etaNom = $etaNom;
+        $this->nom = $nom;
 
         return $this;
     }
 
     /**
-     * Get etaNom
+     * Get nom
      *
      * @return string
      */
-    public function getEtaNom()
+    public function getNom()
     {
-        return $this->etaNom;
+        return $this->nom;
     }
 
     /**
-     * Set etaTelephone
+     * Set telephone
      *
-     * @param string $etaTelephone
+     * @param string $telephone
      *
      * @return Etablissement
      */
-    public function setEtaTelephone($etaTelephone)
+    public function setTelephone($telephone)
     {
-        $this->etaTelephone = $etaTelephone;
+        $this->telephone = $telephone;
 
         return $this;
     }
 
     /**
-     * Get etaTelephone
+     * Get telephone
      *
      * @return string
      */
-    public function getEtaTelephone()
+    public function getTelephone()
     {
-        return $this->etaTelephone;
+        return $this->telephone;
     }
 
     /**
-     * Set etaEmail
+     * Set email
      *
-     * @param string $etaEmail
+     * @param string $email
      *
      * @return Etablissement
      */
-    public function setEtaEmail($etaEmail)
+    public function setEmail($email)
     {
-        $this->etaEmail = $etaEmail;
+        $this->email = $email;
 
         return $this;
     }
 
     /**
-     * Get etaEmail
+     * Get email
      *
      * @return string
      */
-    public function getEtaEmail()
+    public function getEmail()
     {
-        return $this->etaEmail;
+        return $this->email;
     }
 
     /**
-     * Set etaResponsable
+     * Set responsable
      *
-     * @param string $etaResponsable
+     * @param string $responsable
      *
      * @return Etablissement
      */
-    public function setEtaResponsable($etaResponsable)
+    public function setResponsable($responsable)
     {
-        $this->etaResponsable = $etaResponsable;
+        $this->responsable = $responsable;
 
         return $this;
     }
 
     /**
-     * Get etaResponsable
+     * Get responsable
      *
      * @return string
      */
-    public function getEtaResponsable()
+    public function getResponsable()
     {
-        return $this->etaResponsable;
+        return $this->responsable;
     }
 
     /**
-     * Set etaNumero
+     * Set numero
      *
-     * @param string $etaNumero
+     * @param string $numero
      *
      * @return Etablissement
      */
-    public function setEtaNumero($etaNumero)
+    public function setNumero($numero)
     {
-        $this->etaNumero = $etaNumero;
+        $this->numero = $numero;
 
         return $this;
     }
 
     /**
-     * Get etaNumero
+     * Get numero
      *
      * @return string
      */
-    public function getEtaNumero()
+    public function getNumero()
     {
-        return $this->etaNumero;
+        return $this->numero;
     }
 
     /**
-     * Set etaRue
+     * Set rue
      *
-     * @param string $etaRue
+     * @param string $rue
      *
      * @return Etablissement
      */
-    public function setEtaRue($etaRue)
+    public function setRue($rue)
     {
-        $this->etaRue = $etaRue;
+        $this->rue = $rue;
 
         return $this;
     }
 
     /**
-     * Get etaRue
+     * Get rue
      *
      * @return string
      */
-    public function getEtaRue()
+    public function getRue()
     {
-        return $this->etaRue;
+        return $this->rue;
     }
 
     /**
-     * Set etaVille
+     * Set ville
      *
-     * @param string $etaVille
+     * @param string $ville
      *
      * @return Etablissement
      */
-    public function setEtaVille($etaVille)
+    public function setVille($ville)
     {
-        $this->etaVille = $etaVille;
+        $this->ville = $ville;
 
         return $this;
     }
 
     /**
-     * Get etaVille
+     * Get ville
      *
      * @return string
      */
-    public function getEtaVille()
+    public function getVille()
     {
-        return $this->etaVille;
+        return $this->ville;
+    }
+
+    public function getPays(): ?Pays
+    {
+        return $this->pays;
+    }
+
+    public function setPays(?Pays $pays): self
+    {
+        $this->pays = $pays;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Proposition[]
+     */
+    public function getPropositions(): Collection
+    {
+        return $this->propositions;
+    }
+
+    public function addProposition(Proposition $proposition): self
+    {
+        if (!$this->propositions->contains($proposition)) {
+            $this->propositions[] = $proposition;
+            $proposition->setEtablissement($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProposition(Proposition $proposition): self
+    {
+        if ($this->propositions->contains($proposition)) {
+            $this->propositions->removeElement($proposition);
+            // set the owning side to null (unless already changed)
+            if ($proposition->getEtablissement() === $this) {
+                $proposition->setEtablissement(null);
+            }
+        }
+
+        return $this;
     }
 }
 

@@ -26,28 +26,38 @@ class Proposition
      *
      * @ORM\Column(name="pro_est_acceptee", type="boolean")
      */
-    private $proEstAcceptee;
+    private $estAcceptee;
 
     /**
      * @var string
      *
      * @ORM\Column(name="pro_commentaire", type="text")
      */
-    private $proCommentaire;
+    private $commentaire;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="pro_date_depart", type="date")
      */
-    private $proDateDepart;
+    private $dateDepart;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="pro_date_fin", type="date")
      */
-    private $proDateFin;
+    private $dateFin;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Eleve", inversedBy="propositions")
+     */
+    private $eleve;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Etablissement", inversedBy="propositions")
+     */
+    private $etablissement;
 
 
     /**
@@ -61,99 +71,123 @@ class Proposition
     }
 
     /**
-     * Set proEstAcceptee
+     * Set estAcceptee
      *
-     * @param boolean $proEstAcceptee
+     * @param boolean $estAcceptee
      *
      * @return Proposition
      */
-    public function setProEstAcceptee($proEstAcceptee)
+    public function setEstAcceptee($estAcceptee)
     {
-        $this->proEstAcceptee = $proEstAcceptee;
+        $this->estAcceptee = $estAcceptee;
 
         return $this;
     }
 
     /**
-     * Get proEstAcceptee
+     * Get estAcceptee
      *
      * @return bool
      */
-    public function getProEstAcceptee()
+    public function getEstAcceptee()
     {
-        return $this->proEstAcceptee;
+        return $this->estAcceptee;
     }
 
     /**
-     * Set proCommentaire
+     * Set commentaire
      *
-     * @param string $proCommentaire
+     * @param string $commentaire
      *
      * @return Proposition
      */
-    public function setProCommentaire($proCommentaire)
+    public function setCommentaire($commentaire)
     {
-        $this->proCommentaire = $proCommentaire;
+        $this->commentaire = $commentaire;
 
         return $this;
     }
 
     /**
-     * Get proCommentaire
+     * Get commentaire
      *
      * @return string
      */
-    public function getProCommentaire()
+    public function getCommentaire()
     {
-        return $this->proCommentaire;
+        return $this->commentaire;
     }
 
     /**
-     * Set proDateDepart
+     * Set dateDepart
      *
-     * @param \DateTime $proDateDepart
+     * @param \DateTime $dateDepart
      *
      * @return Proposition
      */
-    public function setProDateDepart($proDateDepart)
+    public function setDateDepart($dateDepart)
     {
-        $this->proDateDepart = $proDateDepart;
+        $this->dateDepart = $dateDepart;
 
         return $this;
     }
 
     /**
-     * Get proDateDepart
+     * Get dateDepart
      *
      * @return \DateTime
      */
-    public function getProDateDepart()
+    public function getDateDepart()
     {
-        return $this->proDateDepart;
+        return $this->dateDepart;
     }
 
     /**
-     * Set proDateFin
+     * Set dateFin
      *
-     * @param \DateTime $proDateFin
+     * @param \DateTime $dateFin
      *
      * @return Proposition
      */
-    public function setProDateFin($proDateFin)
+    public function setDateFin($dateFin)
     {
-        $this->proDateFin = $proDateFin;
+        $this->dateFin = $dateFin;
 
         return $this;
     }
 
     /**
-     * Get proDateFin
+     * Get dateFin
      *
      * @return \DateTime
      */
-    public function getProDateFin()
+    public function getDateFin()
     {
-        return $this->proDateFin;
+        return $this->dateFin;
+    }
+
+    public function getEleve(): ?Eleve
+    {
+        return $this->eleve;
+    }
+
+    public function setEleve(?Eleve $eleve): self
+    {
+        $this->eleve = $eleve;
+
+        return $this;
+    }
+
+    public function getEtablissement(): ?Etablissement
+    {
+        return $this->etablissement;
+    }
+
+    public function setEtablissement(?Etablissement $etablissement): self
+    {
+        $this->etablissement = $etablissement;
+
+        return $this;
     }
 }
 

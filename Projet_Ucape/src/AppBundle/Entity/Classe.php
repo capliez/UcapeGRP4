@@ -2,6 +2,8 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,19 +24,21 @@ class Classe
     private $id;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="cla_id", type="integer", unique=true)
-     */
-    private $claId;
-
-    /**
      * @var string
      *
-     * @ORM\Column(name="cla_libelle", type="string", length=255, unique=true)
+     * @ORM\Column(name="cla_libelle", type="string", length=255)
      */
-    private $claLibelle;
+    private $libelle;
 
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Eleve", mappedBy="classe")
+     */
+    private $eleves;
+
+    public function __construct()
+    {
+        $this->eleves = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -47,51 +51,58 @@ class Classe
     }
 
     /**
-     * Set claId
+     * Set libelle
      *
-     * @param integer $claId
+     * @param string $libelle
      *
      * @return Classe
      */
-    public function setClaId($claId)
+    public function setLibelle($libelle)
     {
-        $this->claId = $claId;
+        $this->libelle = $libelle;
 
         return $this;
     }
 
     /**
-     * Get claId
-     *
-     * @return int
-     */
-    public function getClaId()
-    {
-        return $this->claId;
-    }
-
-    /**
-     * Set claLibelle
-     *
-     * @param string $claLibelle
-     *
-     * @return Classe
-     */
-    public function setClaLibelle($claLibelle)
-    {
-        $this->claLibelle = $claLibelle;
-
-        return $this;
-    }
-
-    /**
-     * Get claLibelle
+     * Get libelle
      *
      * @return string
      */
-    public function getClaLibelle()
+    public function getLibelle()
     {
-        return $this->claLibelle;
+        return $this->libelle;
+    }
+
+    /**
+     * @return Collection|Eleve[]
+     */
+    public function getEleves(): Collection
+    {
+        return $this->eleves;
+    }
+
+    public function addEleve(Eleve $elefe): self
+    {
+        if (!$this->eleves->contains($elefe)) {
+            $this->eleves[] = $elefe;
+            $elefe->setClasse($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEleve(Eleve $elefe): self
+    {
+        if ($this->eleves->contains($elefe)) {
+            $this->eleves->removeElement($elefe);
+            // set the owning side to null (unless already changed)
+            if ($elefe->getClasse() === $this) {
+                $elefe->setClasse(null);
+            }
+        }
+
+        return $this;
     }
 }
 

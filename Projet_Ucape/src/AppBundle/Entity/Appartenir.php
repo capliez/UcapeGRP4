@@ -26,14 +26,14 @@ class Appartenir
      *
      * @ORM\Column(name="app_voyage", type="boolean")
      */
-    private $appVoyage;
+    private $voyage;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="app_annee", type="date")
      */
-    private $appAnnee;
+    private $annee;
 
 
     /**
@@ -47,51 +47,51 @@ class Appartenir
     }
 
     /**
-     * Set appVoyage
+     * Set voyage
      *
-     * @param boolean $appVoyage
+     * @param boolean $voyage
      *
      * @return Appartenir
      */
-    public function setAppVoyage($appVoyage)
+    public function setVoyage($voyage)
     {
-        $this->appVoyage = $appVoyage;
+        $this->voyage = $voyage;
 
         return $this;
     }
 
     /**
-     * Get appVoyage
+     * Get voyage
      *
      * @return bool
      */
-    public function getAppVoyage()
+    public function getVoyage()
     {
-        return $this->appVoyage;
+        return $this->voyage;
     }
 
     /**
-     * Set appAnnee
+     * Set annee
      *
-     * @param \DateTime $appAnnee
+     * @param \DateTime $annee
      *
      * @return Appartenir
      */
-    public function setAppAnnee($appAnnee)
+    public function setAnnee($annee)
     {
-        $this->appAnnee = $appAnnee;
+        $this->annee = $annee;
 
         return $this;
     }
 
     /**
-     * Get appAnnee
+     * Get annee
      *
      * @return \DateTime
      */
-    public function getAppAnnee()
+    public function getAnnee()
     {
-        return $this->appAnnee;
+        return $this->annee;
     }
 }
 

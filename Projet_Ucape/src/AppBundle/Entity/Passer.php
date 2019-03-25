@@ -26,21 +26,36 @@ class Passer
      *
      * @ORM\Column(name="pas_date", type="date")
      */
-    private $pasDate;
+    private $date;
 
     /**
      * @var float
      *
      * @ORM\Column(name="pas_note", type="float")
      */
-    private $pasNote;
+    private $note;
 
     /**
      * @var string
      *
      * @ORM\Column(name="pas_appreciation", type="text")
      */
-    private $pasAppreciation;
+    private $appreciation;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Langue")
+     */
+    private $langue;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Eleve", inversedBy="passages")
+     */
+    private $eleve;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Examinateur")
+     */
+    private $examinateur;
 
 
     /**
@@ -54,75 +69,111 @@ class Passer
     }
 
     /**
-     * Set pasDate
+     * Set date
      *
-     * @param \DateTime $pasDate
+     * @param \DateTime $date
      *
      * @return Passer
      */
-    public function setPasDate($pasDate)
+    public function setDate($date)
     {
-        $this->pasDate = $pasDate;
+        $this->date = $date;
 
         return $this;
     }
 
     /**
-     * Get pasDate
+     * Get date
      *
      * @return \DateTime
      */
-    public function getPasDate()
+    public function getDate()
     {
-        return $this->pasDate;
+        return $this->date;
     }
 
     /**
-     * Set pasNote
+     * Set note
      *
-     * @param float $pasNote
+     * @param float $note
      *
      * @return Passer
      */
-    public function setPasNote($pasNote)
+    public function setNote($note)
     {
-        $this->pasNote = $pasNote;
+        $this->note = $note;
 
         return $this;
     }
 
     /**
-     * Get pasNote
+     * Get note
      *
      * @return float
      */
-    public function getPasNote()
+    public function getNote()
     {
-        return $this->pasNote;
+        return $this->note;
     }
 
     /**
-     * Set pasAppreciation
+     * Set appreciation
      *
-     * @param string $pasAppreciation
+     * @param string $appreciation
      *
      * @return Passer
      */
-    public function setPasAppreciation($pasAppreciation)
+    public function setAppreciation($appreciation)
     {
-        $this->pasAppreciation = $pasAppreciation;
+        $this->appreciation = $appreciation;
 
         return $this;
     }
 
     /**
-     * Get pasAppreciation
+     * Get appreciation
      *
      * @return string
      */
-    public function getPasAppreciation()
+    public function getAppreciation()
     {
-        return $this->pasAppreciation;
+        return $this->appreciation;
+    }
+
+    public function getLangue(): ?Langue
+    {
+        return $this->langue;
+    }
+
+    public function setLangue(?Langue $langue): self
+    {
+        $this->langue = $langue;
+
+        return $this;
+    }
+
+    public function getEleve(): ?Eleve
+    {
+        return $this->eleve;
+    }
+
+    public function setEleve(?Eleve $eleve): self
+    {
+        $this->eleve = $eleve;
+
+        return $this;
+    }
+
+    public function getExaminateur(): ?Examinateur
+    {
+        return $this->examinateur;
+    }
+
+    public function setExaminateur(?Examinateur $examinateur): self
+    {
+        $this->examinateur = $examinateur;
+
+        return $this;
     }
 }
 

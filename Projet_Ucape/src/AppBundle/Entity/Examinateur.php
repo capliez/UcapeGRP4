@@ -22,32 +22,30 @@ class Examinateur
     private $id;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="exa_id", type="integer", unique=true)
-     */
-    private $exaId;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="exa_nom", type="string", length=255)
      */
-    private $exaNom;
+    private $nom;
 
     /**
      * @var string
      *
      * @ORM\Column(name="exa_prenom", type="string", length=255)
      */
-    private $exaPrenom;
+    private $prenom;
 
     /**
      * @var string
      *
      * @ORM\Column(name="exa_telephone", type="string", length=255, unique=true)
      */
-    private $exaTelephone;
+    private $telephone;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Langue", inversedBy="examinateurs")
+     */
+    private $langue;
 
 
     /**
@@ -61,99 +59,87 @@ class Examinateur
     }
 
     /**
-     * Set exaId
+     * Set nom
      *
-     * @param integer $exaId
+     * @param string $nom
      *
      * @return Examinateur
      */
-    public function setExaId($exaId)
+    public function setNom($nom)
     {
-        $this->exaId = $exaId;
+        $this->nom = $nom;
 
         return $this;
     }
 
     /**
-     * Get exaId
-     *
-     * @return int
-     */
-    public function getExaId()
-    {
-        return $this->exaId;
-    }
-
-    /**
-     * Set exaNom
-     *
-     * @param string $exaNom
-     *
-     * @return Examinateur
-     */
-    public function setExaNom($exaNom)
-    {
-        $this->exaNom = $exaNom;
-
-        return $this;
-    }
-
-    /**
-     * Get exaNom
+     * Get nom
      *
      * @return string
      */
-    public function getExaNom()
+    public function getNom()
     {
-        return $this->exaNom;
+        return $this->nom;
     }
 
     /**
-     * Set exaPrenom
+     * Set prenom
      *
-     * @param string $exaPrenom
+     * @param string $prenom
      *
      * @return Examinateur
      */
-    public function setExaPrenom($exaPrenom)
+    public function setPrenom($prenom)
     {
-        $this->exaPrenom = $exaPrenom;
+        $this->prenom = $prenom;
 
         return $this;
     }
 
     /**
-     * Get exaPrenom
+     * Get prenom
      *
      * @return string
      */
-    public function getExaPrenom()
+    public function getPrenom()
     {
-        return $this->exaPrenom;
+        return $this->prenom;
     }
 
     /**
-     * Set exaTelephone
+     * Set telephone
      *
-     * @param string $exaTelephone
+     * @param string $telephone
      *
      * @return Examinateur
      */
-    public function setExaTelephone($exaTelephone)
+    public function setTelephone($telephone)
     {
-        $this->exaTelephone = $exaTelephone;
+        $this->telephone = $telephone;
 
         return $this;
     }
 
     /**
-     * Get exaTelephone
+     * Get telephone
      *
      * @return string
      */
-    public function getExaTelephone()
+    public function getTelephone()
     {
-        return $this->exaTelephone;
+        return $this->telephone;
+    }
+
+    public function getLangue(): ?Langue
+    {
+        return $this->langue;
+    }
+
+    public function setLangue(?Langue $langue): self
+    {
+        $this->langue = $langue;
+
+        return $this;
     }
 }
 

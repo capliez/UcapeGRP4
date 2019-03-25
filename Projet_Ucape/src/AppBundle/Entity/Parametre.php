@@ -26,21 +26,21 @@ class Parametre
      *
      * @ORM\Column(name="par_annee_promo", type="integer", unique=true)
      */
-    private $parAnneePromo;
+    private $anneePromo;
 
     /**
      * @var string
      *
      * @ORM\Column(name="par_theme_europe_promo", type="string", length=255, unique=true)
      */
-    private $parThemeEuropePromo;
+    private $themeEuropePromo;
 
     /**
      * @var string
      *
      * @ORM\Column(name="par_chemin_DSP", type="string", length=255, unique=true)
      */
-    private $parCheminDSP;
+    private $cheminDSP;
 
 
     /**
@@ -54,75 +54,75 @@ class Parametre
     }
 
     /**
-     * Set parAnneePromo
+     * Set anneePromo
      *
-     * @param integer $parAnneePromo
+     * @param integer $anneePromo
      *
      * @return Parametre
      */
-    public function setParAnneePromo($parAnneePromo)
+    public function setAnneePromo($anneePromo)
     {
-        $this->parAnneePromo = $parAnneePromo;
+        $this->anneePromo = $anneePromo;
 
         return $this;
     }
 
     /**
-     * Get parAnneePromo
+     * Get anneePromo
      *
      * @return int
      */
-    public function getParAnneePromo()
+    public function getAnneePromo()
     {
-        return $this->parAnneePromo;
+        return $this->anneePromo;
     }
 
     /**
-     * Set parThemeEuropePromo
+     * Set themeEuropePromo
      *
-     * @param string $parThemeEuropePromo
+     * @param string $themeEuropePromo
      *
      * @return Parametre
      */
-    public function setParThemeEuropePromo($parThemeEuropePromo)
+    public function setThemeEuropePromo($themeEuropePromo)
     {
-        $this->parThemeEuropePromo = $parThemeEuropePromo;
+        $this->themeEuropePromo = $themeEuropePromo;
 
         return $this;
     }
 
     /**
-     * Get parThemeEuropePromo
+     * Get themeEuropePromo
      *
      * @return string
      */
-    public function getParThemeEuropePromo()
+    public function getThemeEuropePromo()
     {
-        return $this->parThemeEuropePromo;
+        return $this->themeEuropePromo;
     }
 
     /**
-     * Set parCheminDSP
+     * Set cheminDSP
      *
-     * @param string $parCheminDSP
+     * @param string $cheminDSP
      *
      * @return Parametre
      */
-    public function setParCheminDSP($parCheminDSP)
+    public function setCheminDSP($cheminDSP)
     {
-        $this->parCheminDSP = $parCheminDSP;
+        $this->cheminDSP = $cheminDSP;
 
         return $this;
     }
 
     /**
-     * Get parCheminDSP
+     * Get cheminDSP
      *
      * @return string
      */
-    public function getParCheminDSP()
+    public function getCheminDSP()
     {
-        return $this->parCheminDSP;
+        return $this->cheminDSP;
     }
 }
 

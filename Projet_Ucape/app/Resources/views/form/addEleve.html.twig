@@ -14,21 +14,24 @@
     {{ form_row(form.eleEmail) }}
     {{ form_row(form.eleEmailParent) }}
     {{ form_row(form.eleMdp) }}
+    {{ form_row(form.eleType) }}
 </div>
 <br>
 {{ form_row(form.eleCommentaireGeneral) }}
 {{ form_row(form.eleTerreDesLangues) }}
 {{ form_row(form.eleCommentaireChoix) }}
 {{ form_row(form.eleVisaParent) }}
-{{ form_row(form.eleUE2Date) }}
-{{ form_row(form.eleUE2Note) }}
-{{ form_row(form.eleUE2Appreciation) }}
-{{ form_row(form.eleType) }}
+<div >
+    <h2> epreuve </h2>
 {{ form_row(form.eleUE1Date) }}
 {{ form_row(form.eleUE1Note) }}
 {{ form_row(form.eleUE1Appreciation) }}
+{{ form_row(form.eleUE2Date) }}
+{{ form_row(form.eleUE2Note) }}
+{{ form_row(form.eleUE2Appreciation) }}
 {{ form_row(form.eleObtentionDiplome) }}
 {{ form_row(form.eleMention) }}
+</div>
 {{ form_row(form.eleCommentaire) }}
 {{ form_row(form.save) }}
 {{ form_end(form) }}

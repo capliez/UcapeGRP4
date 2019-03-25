@@ -2,6 +2,8 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -26,7 +28,17 @@ class Langue
      *
      * @ORM\Column(name="lan_libelle", type="string", length=255, unique=true)
      */
-    private $lanLibelle;
+    private $libelle;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Examinateur", mappedBy="langue")
+     */
+    private $examinateurs;
+
+    public function __construct()
+    {
+        $this->examinateurs = new ArrayCollection();
+    }
 
 
     /**
@@ -39,30 +51,60 @@ class Langue
         return $this->id;
     }
 
-    
 
     /**
-     * Set lanLibelle
+     * Set libelle
      *
-     * @param string $lanLibelle
+     * @param string $libelle
      *
      * @return Langue
      */
-    public function setLanLibelle($lanLibelle)
+    public function setLibelle($libelle)
     {
-        $this->lanLibelle = $lanLibelle;
+        $this->libelle = $libelle;
 
         return $this;
     }
 
     /**
-     * Get lanLibelle
+     * Get libelle
      *
      * @return string
      */
-    public function getLanLibelle()
+    public function getLibelle()
     {
-        return $this->lanLibelle;
+        return $this->libelle;
+    }
+
+    /**
+     * @return Collection|Examinateur[]
+     */
+    public function getExaminateurs(): Collection
+    {
+        return $this->examinateurs;
+    }
+
+    public function addExaminateur(Examinateur $examinateur): self
+    {
+        if (!$this->examinateurs->contains($examinateur)) {
+            $this->examinateurs[] = $examinateur;
+            $examinateur->setLangue($this);
+        }
+
+        return $this;
+    }
+
+    public function removeExaminateur(Examinateur $examinateur): self
+    {
+        if ($this->examinateurs->contains($examinateur)) {
+            $this->examinateurs->removeElement($examinateur);
+            // set the owning side to null (unless already changed)
+            if ($examinateur->getLangue() === $this) {
+                $examinateur->setLangue(null);
+            }
+        }
+
+        return $this;
     }
 }
 
