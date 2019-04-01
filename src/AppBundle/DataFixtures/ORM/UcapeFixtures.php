@@ -14,6 +14,7 @@ use AppBundle\Entity\Examinateur;
 use AppBundle\Entity\Langue;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Pays;
+use AppBundle\Entity\Promotion;
 use AppBundle\Entity\Proposition;
 
 class UcapeFixtures implements FixtureInterface, ContainerAwareInterface
@@ -62,6 +63,24 @@ class UcapeFixtures implements FixtureInterface, ContainerAwareInterface
 
             $manager->persist($userRandom);
         }
+
+        $arrayTest = [];
+        $arrayClasse = ["2nde 3", "2nde 2", "2nde 1", "1ère 3", "1ère 2", "1ère 1", "T S", "T ES", "T STMG", "T L"];
+        for ($j = 0; $j < 10 ; $j++) {
+            $classe = new Classe();
+            $classe->setLibelle($arrayClasse[$j]);
+            $manager->persist($classe);
+            $arrayTest[$j+1] = $classe;
+        }
+
+        $arrayPromo = [];
+        $arrayPromotion = ["2013","2014","2015"];
+        for ($j = 0; $j < 3 ; $j++) {
+            $promo = new Promotion();
+            $promo->setAnnee($arrayPromotion[$j]);
+            $manager->persist($promo);
+            $arrayPromo[$j+1] = $promo;
+        }
         for ($l=1;$l <=150; $l++)
         {
             $eleve = new Eleve();
@@ -69,7 +88,7 @@ class UcapeFixtures implements FixtureInterface, ContainerAwareInterface
             $eleve->setPrenom($faker->firstName());
             $eleve->setSexe($faker->randomElement($array = array ('g','f')));
             $eleve->setDateNaissance($faker->dateTime());
-            $eleve->setPromo($faker->year($max = 'now'));
+            //$eleve->setPromo($faker->year($max = 'now'));
             $eleve->setEmail($faker->email());
             $eleve->setEmailParent($faker->email());
             $eleve->setMdp($faker->password());
@@ -82,7 +101,8 @@ class UcapeFixtures implements FixtureInterface, ContainerAwareInterface
             $eleve->setUE2Note($faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 20));
             $eleve->setUE2Appreciation($faker->word());
             $eleve->setType($faker->boolean());
-
+            $eleve->setClasse($arrayTest[rand(1,9)]);
+            $eleve->setPromotion($arrayPromo[rand(1,3)]);
             $manager->persist($eleve);
 
             if ($eleve->getType() == true)
@@ -107,14 +127,6 @@ class UcapeFixtures implements FixtureInterface, ContainerAwareInterface
             $etablissement->setVille($faker->city());
             
             $manager->persist($etablissement);
-        }
-
-        $arrayClasse = ["Seconde 3", "Seconde 2", "Seconde 1", "Première 3", "Première 2", "Première 1", "Terminale 3", "Terminale 2", "Terminale 1", "Terminale 4"];
-        for ($j = 0; $j < 10 ; $j++) {
-            $classe = new Classe();
-            $classe->setLibelle($arrayClasse[$j]);
-
-            $manager->persist($classe);
         }
 
         for ($j = 0; $j < 10 ; $j++) {

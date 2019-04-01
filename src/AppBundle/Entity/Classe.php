@@ -35,6 +35,11 @@ class Classe
      */
     private $eleves;
 
+    public function __toString()
+    {
+        return $this->libelle;
+    }
+    
     public function __construct()
     {
         $this->eleves = new ArrayCollection();

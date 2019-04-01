@@ -52,13 +52,6 @@ class Eleve
     private $dateNaissance;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="ele_promo", type="integer")
-     */
-    private $promo;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="ele_email", type="string", length=255)
@@ -82,42 +75,42 @@ class Eleve
     /**
      * @var string
      *
-     * @ORM\Column(name="ele_commentaire_general", type="text")
+     * @ORM\Column(name="ele_commentaire_general", type="text", nullable = true)
      */
     private $commentaireGeneral;
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="ele_terre_des_langues", type="boolean")
+     * @ORM\Column(name="ele_terre_des_langues", type="boolean", nullable=true)
      */
     private $terreDesLangues;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="ele_commentaire_choix", type="text")
+     * @ORM\Column(name="ele_commentaire_choix", type="text",nullable=true)
      */
     private $commentaireChoix;
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="ele_visa_parent", type="boolean")
+     * @ORM\Column(name="ele_visa_parent", type="boolean",nullable=true)
      */
     private $visaParent;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="ele_UE2_date", type="date")
+     * @ORM\Column(name="ele_UE2_date", type="date", nullable=true)
      */
     private $UE2Date;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="ele_UE2_theme_dossier", type="string", length=255)
+     * @ORM\Column(name="ele_UE2_theme_dossier", type="string", length=255, nullable=true)
      */
     private $UE2ThemeDossier;
 
@@ -131,21 +124,21 @@ class Eleve
     /**
      * @var string
      *
-     * @ORM\Column(name="ele_UE2_appreciation", type="text")
+     * @ORM\Column(name="ele_UE2_appreciation", type="text", nullable=true)
      */
     private $UE2Appreciation;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="ele_type", type="string", length=1)
+     * @ORM\Column(name="ele_type", type="string", length=1, nullable=true)
      */
     private $type;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="ele_UE1_date", type="date")
+     * @ORM\Column(name="ele_UE1_date", type="date", nullable=true)
      */
     private $UE1Date;
 
@@ -185,11 +178,6 @@ class Eleve
     private $commentaire;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $anneeEntreePromo;
-
-    /**
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $aVoyage;
@@ -214,6 +202,11 @@ class Eleve
      */
     private $passages;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Promotion", inversedBy="eleves")
+     */
+    private $promotion;
+    
     public function __construct()
     {
         $this->choix = new ArrayCollection();
@@ -784,18 +777,6 @@ class Eleve
         return $this->commentaire;
     }
 
-    public function getAnneeEntreePromo(): ?string
-    {
-        return $this->anneeEntreePromo;
-    }
-
-    public function setAnneeEntreePromo(?string $anneeEntreePromo): self
-    {
-        $this->anneeEntreePromo = $anneeEntreePromo;
-
-        return $this;
-    }
-
     public function getAVoyage(): ?bool
     {
         return $this->aVoyage;
@@ -909,6 +890,18 @@ class Eleve
                 $passage->setEleve(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPromotion(): ?Promotion
+    {
+        return $this->promotion;
+    }
+
+    public function setPromotion(?Promotion $promotion): self
+    {
+        $this->promotion = $promotion;
 
         return $this;
     }

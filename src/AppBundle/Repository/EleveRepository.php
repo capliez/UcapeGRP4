@@ -10,4 +10,23 @@ namespace AppBundle\Repository;
  */
 class EleveRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * @param $nom_prenom
+     * @return Product[]
+     */
+    public function findByFilter($nom_prenom)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT * FROM eleve p
+            WHERE p.ele_nom LIKE :nom_prenom
+            OR p.ele_prenom LIKE :nom_prenom
+            ORDER BY p.classe_id ASC
+            ';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['nom_prenom' => $nom_prenom]);
+
+        return $stmt->fetchAll();
+    }
 }

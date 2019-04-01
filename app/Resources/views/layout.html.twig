@@ -16,7 +16,21 @@
     </head>
 
     <body data-spy="scroll" data-target="#menu" data-offset="0">
-
+            <div role="dialog" class="modal fade" id="confirmModal">
+                    <div class="modal-content">
+                        <dv class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h3>Confirmation de la suppression</h3>
+                        </div>
+                        <div class="modal-body">
+                            <p>Êtes-vous sûr de vouloir supprimer cet élément ?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="#" class="btn" id="confirmModalNo">Annuler</a>
+                            <a href="#" class="btn btn-primary" id="confirmModalYes">Confirmer</a>
+                        </div>
+                    </div>
+                </div>
         <div class="container">
 
             <div id="header" class="jumbotron" style="background-color: #ebe9e9">
@@ -62,7 +76,7 @@
 
                             {% if is_granted("ROLE_ADMIN") == app.user.roles %}
 
-                            <li class="nav-item"><a class="nav-link" href="">Eléves</a></li>
+                            <li {% if app.request.attributes.get('_route') == "eleves" %} class="active alert-dark"{% endif %}  class="nav-item"><a class="nav-link" href="{{ path('eleves') }}">Elèves</a></li>
                             <li class="nav-item"><a class="nav-link" href="">Profil étudiant détaillé</a></li>
 
 
@@ -89,7 +103,7 @@
 
                     {% else %}
 
-                    <div id="content" class="col-md-9" style="background-color: #dedddd; height: 550px;  border: 2px solid #656161; padding: 10px">
+                    <div id="content" class="col-md-9" style="background-color: #dedddd; height: 100%;  border: 2px solid #656161; padding: 10px">
 
                         {% endif %}
 
@@ -107,8 +121,6 @@
                             {# On définit ce block, dans lequel vont venir s'insérer les autres vues du bundle #}
                             {% block fos_user_content %}
                             {% endblock fos_user_content %}
-        
-
                         {% endblock %}
                     </div>
 
@@ -127,10 +139,9 @@
 
             {% block javascripts %}
             {# Ajoutez ces lignes JavaScript si vous comptez vous servir des fonctionnalités du bootstrap Twitter #}
-            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" ></script>
+            <script src="http://code.jquery.com/jquery-2.1.4.min.js" integrity="sha256-8WqyJLuWKRBVhxXIL1jBDD7SDxU936oZkCnxQbWwJVw="crossorigin="anonymous"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" ></script>
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" ></script>
-
             <script type="text/javascript">
 
 
@@ -138,9 +149,39 @@
                     show: true
                 });
 
+                var theHREF;
+
+                $(".confirmModalLink").click(function(e) {
+                    e.preventDefault();
+                    theHREF = $(this).attr("href");
+                    $("#confirmModal").modal("show");
+
+                });
+
+                $("#confirmModalNo").click(function(e) {
+                    $("#confirmModal").modal("hide");
+                });
+
+                $("#confirmModalYes").click(function(e) {
+                    window.location.href = theHREF;
+                });
+
             </script>
-
+            <div role="dialog" class="modal fade" id="confirmModal">
+                    <div class="modal-content">
+                        <dv class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h3>Confirmation de la suppression</h3>
+                        </div>
+                        <div class="modal-body">
+                            <p>Êtes-vous sûr de vouloir supprimer cet élément ?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="#" class="btn" id="confirmModalNo">Annuler</a>
+                            <a href="#" class="btn btn-primary" id="confirmModalYes">Confirmer</a>
+                        </div>
+                    </div>
+                </div>
             {% endblock %}
-
             </body>
         </html>
