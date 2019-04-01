@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Eleve
  *
  * @ORM\Table(name="eleve")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\EleveRepository")
+ * @ORM\Entity
  */
 class Eleve
 {

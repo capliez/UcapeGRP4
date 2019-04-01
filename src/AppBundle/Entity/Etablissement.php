@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Etablissement
  *
  * @ORM\Table(name="etablissement")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\EtablissementRepository")
+ * @ORM\Entity
  */
 class Etablissement
 {
@@ -93,6 +93,7 @@ class Etablissement
     {
         $this->propositions = new ArrayCollection();
     }
+
 
 
     /**
@@ -338,6 +339,10 @@ class Etablissement
         }
 
         return $this;
+    }
+
+    public function __toString() {
+        return $this->name;
     }
 }
 

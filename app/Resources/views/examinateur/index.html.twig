@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Examinateurs list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Telephone</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for examinateur in examinateurs %}
+            <tr>
+                <td><a href="{{ path('examinateur_show', { 'id': examinateur.id }) }}">{{ examinateur.id }}</a></td>
+                <td>{{ examinateur.nom }}</td>
+                <td>{{ examinateur.prenom }}</td>
+                <td>{{ examinateur.telephone }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('examinateur_show', { 'id': examinateur.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('examinateur_edit', { 'id': examinateur.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('examinateur_new') }}">Create a new examinateur</a>
+        </li>
+    </ul>
+{% endblock %}

@@ -1,0 +1,128 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Eleve</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ eleve.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ eleve.nom }}</td>
+            </tr>
+            <tr>
+                <th>Prenom</th>
+                <td>{{ eleve.prenom }}</td>
+            </tr>
+            <tr>
+                <th>Sexe</th>
+                <td>{{ eleve.sexe }}</td>
+            </tr>
+            <tr>
+                <th>Datenaissance</th>
+                <td>{% if eleve.dateNaissance %}{{ eleve.dateNaissance|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Promo</th>
+                <td>{{ eleve.promo }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ eleve.email }}</td>
+            </tr>
+            <tr>
+                <th>Emailparent</th>
+                <td>{{ eleve.emailParent }}</td>
+            </tr>
+            <tr>
+                <th>Mdp</th>
+                <td>{{ eleve.mdp }}</td>
+            </tr>
+            <tr>
+                <th>Commentairegeneral</th>
+                <td>{{ eleve.commentaireGeneral }}</td>
+            </tr>
+            <tr>
+                <th>Terredeslangues</th>
+                <td>{% if eleve.terreDesLangues %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Commentairechoix</th>
+                <td>{{ eleve.commentaireChoix }}</td>
+            </tr>
+            <tr>
+                <th>Visaparent</th>
+                <td>{% if eleve.visaParent %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Ue2date</th>
+                <td>{% if eleve.UE2Date %}{{ eleve.UE2Date|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Ue2themedossier</th>
+                <td>{{ eleve.UE2ThemeDossier }}</td>
+            </tr>
+            <tr>
+                <th>Ue2note</th>
+                <td>{{ eleve.UE2Note }}</td>
+            </tr>
+            <tr>
+                <th>Ue2appreciation</th>
+                <td>{{ eleve.UE2Appreciation }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ eleve.type }}</td>
+            </tr>
+            <tr>
+                <th>Ue1date</th>
+                <td>{% if eleve.UE1Date %}{{ eleve.UE1Date|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Ue1note</th>
+                <td>{{ eleve.UE1Note }}</td>
+            </tr>
+            <tr>
+                <th>Ue1appreciation</th>
+                <td>{{ eleve.UE1Appreciation }}</td>
+            </tr>
+            <tr>
+                <th>Obtentiondiplome</th>
+                <td>{% if eleve.obtentionDiplome %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Mention</th>
+                <td>{{ eleve.mention }}</td>
+            </tr>
+            <tr>
+                <th>Commentaire</th>
+                <td>{{ eleve.commentaire }}</td>
+            </tr>
+            <tr>
+                <th>Anneeentreepromo</th>
+                <td>{{ eleve.anneeEntreePromo }}</td>
+            </tr>
+            <tr>
+                <th>Avoyage</th>
+                <td>{% if eleve.aVoyage %}Yes{% else %}No{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('eleve_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('eleve_edit', { 'id': eleve.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

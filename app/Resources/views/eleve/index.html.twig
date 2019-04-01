@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Eleves list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Sexe</th>
+                <th>Datenaissance</th>
+                <th>Promo</th>
+                <th>Email</th>
+                <th>Emailparent</th>
+                <th>Mdp</th>
+                <th>Commentairegeneral</th>
+                <th>Terredeslangues</th>
+                <th>Commentairechoix</th>
+                <th>Visaparent</th>
+                <th>Ue2date</th>
+                <th>Ue2themedossier</th>
+                <th>Ue2note</th>
+                <th>Ue2appreciation</th>
+                <th>Type</th>
+                <th>Ue1date</th>
+                <th>Ue1note</th>
+                <th>Ue1appreciation</th>
+                <th>Obtentiondiplome</th>
+                <th>Mention</th>
+                <th>Commentaire</th>
+                <th>Anneeentreepromo</th>
+                <th>Avoyage</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for eleve in eleves %}
+            <tr>
+                <td><a href="{{ path('eleve_show', { 'id': eleve.id }) }}">{{ eleve.id }}</a></td>
+                <td>{{ eleve.nom }}</td>
+                <td>{{ eleve.prenom }}</td>
+                <td>{{ eleve.sexe }}</td>
+                <td>{% if eleve.dateNaissance %}{{ eleve.dateNaissance|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ eleve.promo }}</td>
+                <td>{{ eleve.email }}</td>
+                <td>{{ eleve.emailParent }}</td>
+                <td>{{ eleve.mdp }}</td>
+                <td>{{ eleve.commentaireGeneral }}</td>
+                <td>{% if eleve.terreDesLangues %}Yes{% else %}No{% endif %}</td>
+                <td>{{ eleve.commentaireChoix }}</td>
+                <td>{% if eleve.visaParent %}Yes{% else %}No{% endif %}</td>
+                <td>{% if eleve.UE2Date %}{{ eleve.UE2Date|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ eleve.UE2ThemeDossier }}</td>
+                <td>{{ eleve.UE2Note }}</td>
+                <td>{{ eleve.UE2Appreciation }}</td>
+                <td>{{ eleve.type }}</td>
+                <td>{% if eleve.UE1Date %}{{ eleve.UE1Date|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ eleve.UE1Note }}</td>
+                <td>{{ eleve.UE1Appreciation }}</td>
+                <td>{% if eleve.obtentionDiplome %}Yes{% else %}No{% endif %}</td>
+                <td>{{ eleve.mention }}</td>
+                <td>{{ eleve.commentaire }}</td>
+                <td>{{ eleve.anneeEntreePromo }}</td>
+                <td>{% if eleve.aVoyage %}Yes{% else %}No{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('eleve_show', { 'id': eleve.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('eleve_edit', { 'id': eleve.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('eleve_new') }}">Create a new eleve</a>
+        </li>
+    </ul>
+{% endblock %}
