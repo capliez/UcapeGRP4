@@ -2,6 +2,8 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -15,25 +17,33 @@ class Classe
     /**
      * @var int
      *
-     * @ORM\Column(name="id_classe", type="integer")
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="Appartenir", mappedBy="classes")
-     */
-    private $appartenir;
-
-
-    /**
      * @var string
      *
-     * @ORM\Column(name="libelle_classe", type="string", length=50)
+     * @ORM\Column(name="cla_libelle", type="string", length=255)
      */
-    private $libelleClasse;
+    private $libelle;
 
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Eleve", mappedBy="classe")
+     */
+    private $eleves;
+
+    public function __toString()
+    {
+        return $this->libelle;
+    }
+    
+    public function __construct()
+    {
+        $this->eleves = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -46,91 +56,58 @@ class Classe
     }
 
     /**
-     * Set libelleClasse
+     * Set libelle
      *
-     * @param string $libelleClasse
+     * @param string $libelle
      *
      * @return Classe
      */
-    public function setLibelleClasse($libelleClasse)
+    public function setLibelle($libelle)
     {
-        $this->libelleClasse = $libelleClasse;
+        $this->libelle = $libelle;
 
         return $this;
     }
 
     /**
-     * Get libelleClasse
+     * Get libelle
      *
      * @return string
      */
-    public function getLibelleClasse()
+    public function getLibelle()
     {
-        return $this->libelleClasse;
+        return $this->libelle;
     }
 
     /**
-     * Get idClasse
-     *
-     * @return integer
+     * @return Collection|Eleve[]
      */
-    public function getIdClasse()
+    public function getEleves(): Collection
     {
-        return $this->idClasse;
+        return $this->eleves;
     }
 
-    /**
-     * Set appartenir
-     *
-     * @param \AppBundle\Entity\Appartenir $appartenir
-     *
-     * @return Classe
-     */
-    public function setAppartenir(\AppBundle\Entity\Appartenir $appartenir = null)
+    public function addEleve(Eleve $elefe): self
     {
-        $this->appartenir = $appartenir;
+        if (!$this->eleves->contains($elefe)) {
+            $this->eleves[] = $elefe;
+            $elefe->setClasse($this);
+        }
 
         return $this;
     }
 
-    /**
-     * Get appartenir
-     *
-     * @return \AppBundle\Entity\Appartenir
-     */
-    public function getAppartenir()
+    public function removeEleve(Eleve $elefe): self
     {
-        return $this->appartenir;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->appartenir = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add appartenir
-     *
-     * @param \AppBundle\Entity\Appartenir $appartenir
-     *
-     * @return Classe
-     */
-    public function addAppartenir(\AppBundle\Entity\Appartenir $appartenir)
-    {
-        $this->appartenir[] = $appartenir;
+        if ($this->eleves->contains($elefe)) {
+            $this->eleves->removeElement($elefe);
+            // set the owning side to null (unless already changed)
+            if ($elefe->getClasse() === $this) {
+                $elefe->setClasse(null);
+            }
+        }
 
         return $this;
-    }
-
-    /**
-     * Remove appartenir
-     *
-     * @param \AppBundle\Entity\Appartenir $appartenir
-     */
-    public function removeAppartenir(\AppBundle\Entity\Appartenir $appartenir)
-    {
-        $this->appartenir->removeElement($appartenir);
     }
 }
+

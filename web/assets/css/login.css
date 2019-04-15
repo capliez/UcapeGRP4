@@ -1,0 +1,42 @@
+/* Login */
+
+#login{
+    background-color: #eff1f2;
+    padding-top: 90px;
+    margin: 0 auto;
+    width: 67%;
+    margin-bottom: 20px;
+}
+#login form{
+    width: 500px;
+    background-color: white;
+    padding: 40px;
+    max-width: 100%;
+}
+#login form .label-login{
+    float: left;
+}
+#login form label{
+    font-size: 13px
+}
+#login .btn-login {transition: all .25s ease-in;background-color: #363a41;color: white; border-color: #fefefe}
+#login .btn-login:hover{border-color: rgb(185, 176, 176)}
+#login  .logo h3{
+    color: #363a41;
+    font-size: 5.75rem;
+    font-family: 'Dancing Script', cursive;
+    font-weight: 600;
+}
+#login .logo:hover{
+    color: #00aff0;
+    text-decoration: none
+}
+
+#login .footer{
+    text-align: center;
+    margin-top: 25px
+}
+#login .alert{
+    margin-top: 15px;
+    padding: 5px;
+}

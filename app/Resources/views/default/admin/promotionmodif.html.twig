@@ -1,0 +1,54 @@
+{% extends '::layout.html.twig' %}
+
+{% block body %}
+
+    <div class="content-base">
+
+        <div class="btn-retour">
+
+            <a class="btn btn-default" href="{{ path('promotion') }}">Retour</a>
+
+        </div>
+
+        {% for message in app.flashes('Info') %}
+            <div class="flash-info flash-info-choix
+            {% if erreur == true %}
+            alert-danger
+{% endif %} alert-success
+">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        {{ form_start(form) }}
+
+
+
+        {{ form_row(form.libelle) }}
+
+        {{ form_row(form.theme) }}
+        {{ form_row(form.chemin) }}
+
+        {{ form_row(form.annee) }}
+
+
+        {{ form_row(form.submit) }}
+
+        <div class="form-group">
+
+            <input type="reset" class="btn-annule btn btn-default" class="form-control" name="annuler" value="Annuler">
+
+        </div>
+
+        {{ form_end(form) }}
+
+
+
+
+
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}

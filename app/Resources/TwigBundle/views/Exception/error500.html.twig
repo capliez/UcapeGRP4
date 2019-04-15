@@ -1,0 +1,28 @@
+{% extends 'layoutError.html.twig' %}
+
+{% block body %}
+
+    <style>
+
+        .page-404{text-align: center; margin-top: 220px}
+        @media (max-width: 667px) {
+            p{font-size: 14px !important;}
+            h1{font-size: 40px !important;}
+        }
+        h1{font-size: 60px}
+        p{font-size: 20px}
+        body{background: #eff1f2}
+
+    </style>
+
+
+    <div class="page-404">
+
+        <h1>{{ status_code }} - Un problème technique est survenu</h1>
+        <p>
+            Merci de revenir plus-tard.
+        </p><br/>
+        <a href="{{ path('homepage') }}"><img src="{{ asset('logo.png') }}" alt="logo"></a>
+
+    </div>
+{% endblock %}

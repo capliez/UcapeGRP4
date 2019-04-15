@@ -23,10 +23,40 @@ class User extends BaseUser
     protected $id;
 
 
+    /**
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Eleve", mappedBy="user")
+     */
+    private $eleve;
+
+
     public function __construct()
     {
         parent::__construct();
         // your own logic
     }
 
+
+    /**
+     * Set eleve
+     *
+     * @param \AppBundle\Entity\Eleve $eleve
+     *
+     * @return User
+     */
+    public function setEleve(\AppBundle\Entity\Eleve $eleve = null)
+    {
+        $this->eleve = $eleve;
+
+        return $this;
+    }
+
+    /**
+     * Get eleve
+     *
+     * @return \AppBundle\Entity\Eleve
+     */
+    public function getEleve()
+    {
+        return $this->eleve;
+    }
 }

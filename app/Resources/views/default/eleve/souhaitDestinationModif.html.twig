@@ -1,0 +1,64 @@
+{% extends '::layout.html.twig' %}
+
+{% block body %}
+
+    <div class=" text-center content-base" id="choixEtablissement">
+        <p class="tab-pane-titre"> Souhaits de la destination </p>
+
+
+        {% for message in app.flashes('Info') %}
+            <div class="flash-info flash-info-choix
+            {% if erreur == true %}
+            alert-danger
+{% endif %} alert-success
+">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+
+    <div class="modif-choix">
+
+
+
+            {{ form_start(form) }}
+
+            <div>
+
+                {{ form_row(form.choix1) }}
+                {{ form_row(form.choix2) }}
+                {{ form_row(form.choix3) }}
+
+            </div>
+            <div>
+                {{ form_row(form.terreDesLangues) }}
+                {{ form_row(form.commentaireChoix) }}
+                {{ form_row(form.visaParent) }}
+            </div>
+
+            {{ form_row(form.submit) }}
+
+        <div class="form-group">
+
+            <input type="reset" class="btn-annule btnAnnulModif btn btn-default" class="form-control" name="annuler" value="Annuler">
+
+        </div>
+
+            {{ form_end(form) }}
+
+</div>
+
+
+
+    </div>
+
+
+
+
+
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+

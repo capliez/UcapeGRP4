@@ -1,0 +1,28 @@
+{% extends 'layout.html.twig' %}
+
+{% block body %}
+
+    <style>
+
+        #panel-menu{display: none}
+        .page-404{text-align: center; margin-top: 220px}
+        @media (max-width: 667px) {
+            p{font-size: 14px !important;}
+            h1{font-size: 40px !important;}
+        }
+        .fa-frown{font-size: 70px}
+        h1{font-size: 60px}
+        p{font-size: 20px}
+    </style>
+
+
+    <div class="page-404">
+
+        <h1>{{ status_code }} - Vous n'avez pas la permission</h1>
+        <p>
+            Merci de vous rediriger vers la page d'accueil <a href="{{ path('homepage') }}">Ici</a>.
+        </p><br/>
+        <i class="fas fa-frown"></i>
+
+    </div>
+{% endblock %}

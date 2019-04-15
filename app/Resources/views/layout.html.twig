@@ -1,157 +1,293 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="fr">
+
     <head>
+
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>{% block title %}Ucape{% endblock %}</title>
+        <title>
+            {% block title %}
+                Ucape
+                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
 
+
+                    {% if app.user.roles[0] == "ROLE_ELEVE" %} - Élève {%  endif %}
+                    {% if app.user.roles[0] == "ROLE_CONSULTANT" %} - Consultant {%  endif %}
+                    {% if app.user.roles[0] == "ROLE_ADMIN" %} - Administrateur {%  endif %}
+
+                {% endif %}
+            {% endblock %}
+        </title>
+
+        <link rel="stylesheet" href="{{asset('assets/css/vendor/bootstrap.min.css')}}">
 
         <!-- Font google -->
         <link href="https://fonts.googleapis.com/css?family=Dancing+Script" rel="stylesheet">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
 
         {% block stylesheets %}
-        <link rel="stylesheet" href="{{ asset('vendors/bootstrap/dist/css/bootstrap.css') }}">
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <link rel="icon" type="image/x-icon" href="{{ asset('logo.png') }}" />
         <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}" type="text/css">
         <link rel="stylesheet" href="{{ asset('assets/css/media.css') }}" type="text/css">
+        <link rel="stylesheet" href="{{ asset('assets/css/login.css') }}" type="text/css">
         {% endblock %}
+
     </head>
 
-    <body data-spy="scroll" data-target="#menu" data-offset="0">
+    <body>
+    
 
-      
-            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-          <div class="container">
+      <div class="navbar navbar-fixed-top">
+        <div class="container-fluid">
+          <div class="navbar-header">
 
-            <div id="header" class="jumbotron" >
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand logo-ucapeNav" href="{{ path('homepage') }}"><img src="{{ asset('logo.png') }}" alt="logo"></a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
 
-                <h1 style="font-weight: 600;"><span class="titreLettre">U</span>cape - <span class="titreLettre">S</span>ection</h1>
+            <ul class="nav navbar-nav navbar-right">
+
+              <div class="sous-menu">
+                  {% if is_granted("IS_AUTHENTICATED_REMEMBERED") == null %}
+
+                  <a href="{{ path('fos_user_security_login') }}"> <i class="fas fa-sign-in-alt"></i> Connexion</a>
+                  {% endif %}
+                  {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+
+                  <p class="dropdown-roles">
+                  {% if app.user.roles[0] == "ROLE_ELEVE" %} Élève {%  endif %}
+                  {% if app.user.roles[0] == "ROLE_ADMIN" %} Administrateur {%  endif %}
+                  {% if app.user.roles[0] == "ROLE_CONSULTANT" %} Consultant {%  endif %}
+
+                </p>
+                <p>{{app.user.username}}</p>
+                <hr>
+                <a href="{{ path('fos_user_profile_show') }}">Profil</a><br/>
+                <a href="{{ path('fos_user_security_logout') }}">Déconnexion</a>
+                  {% endif %}
+              </div>
 
 
-                <div style="float:right" >
+                <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-circle"></i></a>
+                  <ul class="dropdown-menu">
+                      {% if is_granted("IS_AUTHENTICATED_REMEMBERED") == null %}
 
-                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                    <p>
-                        Connecté en tant que {{ app.user.username|capitalize }}  
-                        {% if app.user.roles[0] == "ROLE_USER" %} (Élève) {%  endif %}
-                        {% if app.user.roles[0] == "ROLE_SUPER_ADMIN" %} (Super Admin) {%  endif %}
-                        {% if app.user.roles[0] == "ROLE_ADMIN" %} (Admin) {%  endif %}
-                        -
-                        <a href="{{ path('fos_user_security_logout') }}">Déconnexion</a></p>
+                      <li><a href="{{ path('fos_user_security_login') }}"> <i class="fas fa-sign-in-alt"></i> Connexion</a></li>
+                      {% endif %}
+                      {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
 
-
-
-                    {% endif %}
-
-                </div>
-
+                      <li><a href="{{ path('fos_user_profile_show') }}">Profil</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li class="dropdown-header dropdown-roles">
+                      {% if app.user.roles[0] == "ROLE_ELEVE" %} Élève {%  endif %}
+                      {% if app.user.roles[0] == "ROLE_ADMIN" %} Administrateur {%  endif %}
+                      {% if app.user.roles[0] == "ROLE_CONSULTANT" %} Consultant {%  endif %}
+                    </li>
+                     <li><a href="{{ path('fos_user_security_logout') }}">Déconnexion</a></li>
+                      {% endif %}
+                   </ul>
+                 </li>
+             </ul>
             </div>
-            {% else %}
-             <div class="container-fluid">
+          </div>
+        </div>
 
-            {% endif %}
-
-
-
-            <div class="row text-center" >
-
-                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-
-                <nav id="menu" class="col-md-3 navbar navbar-light" >
+        <div id="panel">
+            <div id="panel-menu">
+                    <div class="panel">
 
 
-                    <a class="navbar-brand" href="#">Navigation</a>
-                <!--  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button> -->
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a href="{{ path('homepage') }}" >
+                                    <i class="fas  fa-home"></i> Accueil
+                                </a>
+                            </h4>
+                        </div>
 
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav mr-auto">
-
-
-
-                            {% if is_granted("ROLE_ADMIN") == app.user.roles %}
-
-                            <li class="nav-item"><a class="nav-link" href="">Eléves</a></li>
-                            <li class="nav-item"><a class="nav-link" href="">Profil étudiant détaillé</a></li>
-
-
-                            {% else %}
-
-                            <li {% if app.request.attributes.get('_route') == "choixetablissement" %} class="active alert-dark"{% endif %} class="nav-item"><a  class="nav-link" href="{{ path('choixetablissement') }}">Choix des établissements</a></li>
-                            <li class="nav-item"><a class="nav-link" href="">Profil étudiant détaillé</a></li>
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a href="#" >
+                                    <i class="fas fa-folder-open"></i> Documents
+                                </a>
+                            </h4>
+                        </div>
 
 
-                            {% endif %}
-                            <li {% if app.request.attributes.get('_route') == "documentations" %} class="active alert-dark"{% endif %} class="nav-item"><a class="nav-link" href="{{ path('documentations') }}">Documentations</a></li>
+                        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+
+                        {% if app.user.roles[0] == "ROLE_ADMIN" %}
+
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a href="#listeeleve" data-parent="#accordion" data-toggle="collapse" class="accordion-toggle collapsed">
+                                        <i class="fas fa-user-graduate"></i> Liste des éléves
+                                    </a>
+                                </h4>
+                            </div>
+
+                            <div class="panel-collapse collapse" id="listeeleve">
+                                <div class="panel-body">
+                                    <a href="#" aria-selected="false" class="list-group-item">
+                                        <i class="fas fa-plus "></i> Edition éléve
+                                    </a>
+                                </div>
+                                <div class="panel-body">
+                                    <a href="#" aria-selected="false" class="list-group-item">
+                                        <i class="fas fa-plus "></i> Affection d'un éléve
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a href="#" >
+                                        <i class="fas fa-tasks"></i> Gestion évaluations EU
+                                    </a>
+                                </h4>
+                            </div>
+
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a href="{{ path('promotion') }}" >
+                                        <i class="fas fa-percentage"></i> Promotions
+                                    </a>
+                                </h4>
+                            </div>
+
+                        {%  endif %}
 
 
-                        </ul>
+                        {% if app.user.roles[0] == "ROLE_ELEVE" %}
+
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a href="#" >
+                                        <i class="fas fa-user-graduate"></i> Fiche éléve
+                                    </a>
+                                </h4>
+                            </div>
+
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a href="{{ path('choixdestination') }}" >
+                                        <i class="fas fa-university"></i> Choix Etablissement
+
+                                        {% if submited == true %} <i title="choix éffectué" class="fas fa-check"></i> {% endif %}
+
+                                    </a>
+                                </h4>
+                            </div>
+
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a href="#" >
+                                        <i class="fas fa-tasks"></i> Consultation EU
+                                    </a>
+                                </h4>
+                            </div>
+
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a href="#" >
+                                        <i class="fas fa-book-open"></i> Propositions
+                                    </a>
+                                </h4>
+                            </div>
+
+                        {%  endif %}
+
+
+                        {% if app.user.roles[0] == "ROLE_CONSULTANT" %}
+
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a href="#listeeleve" data-parent="#accordion" data-toggle="collapse" class="accordion-toggle collapsed">
+                                        <i class="fas fa-user-graduate"></i> Liste des éléves
+                                    </a>
+                                </h4>
+                            </div>
+
+                            <div class="panel-collapse collapse" id="listeeleve">
+                                <div class="panel-body">
+                                    <a href="#" aria-selected="false" class="list-group-item">
+                                        <i class="fas fa-plus "></i> Edition éléve
+                                    </a>
+                                </div>
+                            </div>
+                        {% endif %}
+{% endif %}
+
                     </div>
-                </nav>
-
-                {% endif %}
-
-
-                {% if is_granted("IS_AUTHENTICATED_REMEMBERED")  %}
-
-                <div id="content" class="col-md-9" >
+            </div>
+        </div>
 
        
 
-                        {% endif %}
-
-                        {% block body %}
-
-                            {# On affiche les messages flash que définissent les contrôleurs du bundle #}
-                            {% for key, messages in app.session.flashbag.all() %}
-                                {% for message in messages %}
-                                    <div class="alert alert-{{ key }}">
-                                        {{ message|trans({}, 'FOSUserBundle') }}
-                                    </div>
-                                {% endfor %}
-                            {% endfor %}
-
-                            {# On définit ce block, dans lequel vont venir s'insérer les autres vues du bundle #}
-                            {% block fos_user_content %}
-                            {% endblock fos_user_content %}
-        
-
-                        {% endblock %}
-                    </div>
-
+        {% block body %}
+         {# On affiche les messages flash que définissent les contrôleurs du bundle #}
+        {% for key, messages in app.session.flashbag.all() %}
+            {% for message in messages %}
+                <div class="alert alert-{{ key }}">
+                    {{ message|trans({}, 'FOSUserBundle') }}
                 </div>
+            {% endfor %}
+        {% endfor %}
+
+        {# On définit ce block, dans lequel vont venir s'insérer les autres vues du bundle #}
+        {% block fos_user_content %}
+        {% endblock fos_user_content %}
+ 
+        
+        {% endblock %}
 
 
 
-                {# <footer class="text-center">
-                    <hr>
+  
 
-                    {# <p>Date d'aujourd'hui {{ 'now'|date("F j, Y, g:i a") }} .</p> #}
-{# 
-                </footer> #}
 
-            </div>
+        {% block javascripts %}
 
-            {% block javascripts %}
-
-            {# Ajoutez ces lignes JavaScript si vous comptez vous servir des fonctionnalités du bootstrap Twitter #}
             <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" ></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" ></script>
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" ></script>
 
             <script src="{{ asset('assets/js/script.js') }}"></script>
 
+
             <script>
-                $('#navbarSupportedContent').collapse({
-                    show: true
+
+                var theHREF;
+
+                $(".confirmModalLink").click(function(e) {
+                    e.preventDefault();
+                    theHREF = $(this).attr("href");
+                    $("#confirmModal").modal("show");
+                    $('#confirmModal').removeClass('fade');
                 });
+
+                $("#confirmModalNo").click(function(e) {
+                    $("#confirmModal").modal("hide");
+                    $('#confirmModal').addClass('fade');
+
+                });
+
+                $("#confirmModalYes").click(function(e) {
+                    window.location.href = theHREF;
+                });
+
 
             </script>
 
-            {% endblock %}
+        {% endblock %}
 
-            </body>
-        </html>
+    </body>
+</html>

@@ -1,0 +1,66 @@
+{% extends '::layout.html.twig' %}
+
+{% block body %}
+
+<div id="promotion" class="content-base">
+
+    <a href="{{ path('promotionajout') }}" class="btn btn-default promo-ajouter">Ajouter</a>
+
+    <table class="table table-striped">
+        <thead >
+        <tr>
+            <th scope="col" class="promo-th-id">ID</th>
+            <th scope="col">Année</th>
+            <th scope="col">Description</th>
+            <th scope="col">Thème</th>
+            <th scope="col">Chemin</th>
+            <th scope="col">Paramètre</th>
+        </tr>
+        </thead>
+        <tbody>
+
+    {% for p in promotion %}
+
+            <tr class="tr-valeur">
+                <th class="promo-th-id" scope="row">{{ p.id }}</th>
+                <td>{{ p.annee }}</td>
+                <td>{{ p.libelle }}</td>
+                <td>{{ p.theme }}</td>
+                <td>{% if p.chemin == null %} ... {% endif %}
+                    {{ p.chemin }}</td>
+                <td>
+                    <a class="btn btn-primary" href="{{path('promotionmodif', { id: p.id}) }}">Modifier</a>
+                    <a class="btn btn-danger confirmModalLink" href="{{path('promotionsupp', { id: p.id}) }}">Supprimer</a>
+                </td>
+            </tr>
+
+    {% endfor %}
+
+        </tbody>
+    </table>
+
+
+    <div class="modal  fade" id="confirmModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h3>Confirmation de la suppression</h3>
+                </div>
+                <div class="modal-body">
+                    <p>Etes-vous sûr de vouloir supprimer cet élément ?</p>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn" id="confirmModalNo">Non</a>
+                    <a href="#" class="btn btn-primary" id="confirmModalYes">Oui</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}

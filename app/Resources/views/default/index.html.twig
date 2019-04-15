@@ -2,12 +2,48 @@
 
 {% block body %}
 
+<div id="panel-content">
+    <div class="tab-content">
+        <div class="tab-pane fade active in" id="accueilpanel" role="tabpanel" aria-labelledby="nav-contact-tab">
+            <p class="tab-pane-titre">Actualité</p>
 
+            <hr/>
 
+            <div class="info-actualite">
+                <p class="titre-actualite">Le 01/04/2019</p>
+                <p> Au programme, rien d'intéressant :)  </p>
+                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+
+                {% if app.user.roles[0] == "ROLE_ADMIN" %}
+                    <div class="admin-actualite-outils">
+                        <i class="fas fa-plus"></i>
+                        <i class="fas fa-pen"></i>
+                        <i class="fas fa-trash-alt"></i>
+                    </div>
+                {% endif %}
+                {% endif %}
+            </div>
+
+            <div class="info-actualite">
+                <p class="titre-actualite">Le 30/03/2019</p>
+                <p> Début de la marche à pied </p>
+                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+
+                {% if app.user.roles[0] == "ROLE_ADMIN" %}
+                    <div class="admin-actualite-outils" >
+                        <i class="fas fa-plus"></i>
+                        <i class="fas fa-pen"></i>
+                        <i class="fas fa-trash-alt"></i>
+                    </div>
+                {% endif %}
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+</div>
 
 {% endblock %}
 
-{% block stylesheets %}
-    {{ parent() }}
-{% endblock %}
+
   

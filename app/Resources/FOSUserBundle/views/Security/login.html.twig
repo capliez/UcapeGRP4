@@ -6,15 +6,15 @@
 
 
 <div id="login" >
-    <a class="logo" href="#"><h3>Ucape</h3></a>
+    <a class="logo" href="{{ path("fos_user_security_login") }}"><h3>Ucape</h3></a>
 
     <form class="form-signin container"  style=" text-align: center" action="{{ path("fos_user_security_check") }}" method="post">
         {% if csrf_token %}
         <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
         {% endif %}
 
-        <label class="label-login" for="username">{{ 'security.login.username'|trans }} :</label>
-        <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}" required="required" autocomplete="username" placeholder="{{ 'security.login.username'|trans }}" />
+        <label class="label-login" for="username">{{ 'profile.show.email'|trans }} :</label>
+        <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}" required="required" autocomplete="username" placeholder="{{ 'profile.show.email'|trans }}" />
 
         <br/>
 
@@ -28,7 +28,34 @@
 
         <br/>
 
-        <input  type="submit" class="btn btn-login btn-lg btn-block btn-valider" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
+        <input data-loading-text="Chargement..."  type="submit" class="btn btn-login btn-lg btn-block btn-valider" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
+
+        {% if error %}
+        <div class="alert alert-danger" style="font-weight: bold" role="alert" >{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+
+        <div class="compte">
+
+            <div style="margin-top: 10px;">
+
+                <a style="cursor: pointer" onclick="
+                remplirInputEmail('username', 'technicien@lyceestvincent.fr');
+                remplirInputMdp('password', 'admin');
+                "><img width="50" src="{{ asset('assets/images/admin.png') }}" alt="admin" title="admin"></a>
+
+                <a style="cursor: pointer" onclick="
+                remplirInputEmail('username', 'capliezalexis@yahoo.fr');
+                remplirInputMdp('password', 'alexis');
+                "><img width="50" src="{{ asset('assets/images/eleve.png') }}" alt="eleve" title="eleve"></a>
+
+                <a style="cursor: pointer" onclick="
+                remplirInputEmail('username', 'consultant@yahoo.fr');
+                remplirInputMdp('password', 'consultant');
+                "><img width="50" src="{{ asset('assets/images/consultant.png') }}" alt="consultant" title="consultant"></a>
+
+            </div>
+
+        </div>
 
     {# 
         <a href="{{ path('fos_user_resetting_request') }}">Mot de passe oublié</a> #}
@@ -45,10 +72,15 @@
     </div>
 
 </div>
-{% if error %}
 
-<br/>
-<div class="alert alert-danger" style="font-weight: bold" role="alert" >{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-{% endif %}
+    <script type="text/javascript">
+        function remplirInputEmail(id,txt) {
+            document.getElementById(id).value = txt;
+        }
+        function remplirInputMdp(id,txt) {
+            document.getElementById(id).value = txt;
+        }
+    </script>
+
 
 {% endblock fos_user_content %}

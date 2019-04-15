@@ -2,7 +2,10 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Eleve
@@ -15,129 +18,204 @@ class Eleve
     /**
      * @var int
      *
-     * @ORM\Column(name="id_eleve", type="integer")
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="nom_eleve", type="string", length=50)
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\User", inversedBy="eleve")
      */
-    private $nomEleve;
-
-
-    /**
-     * @ORM\OneToMany(targetEntity="Appartenir", mappedBy="eleves")
-     */
-    private $appartenir;
+    private $user;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="prenom_eleve", type="string", length=50)
+     * @ORM\Column(name="ele_nom", type="string", length=255)
      */
-    private $prenomEleve;
+    private $nom;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="sexe_eleve", type="string", length=50)
+     * @ORM\Column(name="ele_prenom", type="string", length=255)
      */
-    private $sexeEleve;
+    private $prenom;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ele_sexe", type="string", length=255)
+     */
+    private $sexe;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="dateNaissance_eleve", type="date")
+     * @ORM\Column(name="ele_date_naissance", type="date")
      */
-    private $dateNaissanceEleve;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="promo_eleve", type="integer")
-     */
-    private $promoEleve;
+    private $dateNaissance;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="email_eleve", type="string", length=50)
+     * @ORM\Column(name="ele_email", type="string", length=255)
      */
-    private $emailEleve;
+    private $email;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="emailParent_eleve", type="string", length=50)
+     * @ORM\Column(name="ele_email_parent", type="string", length=255)
      */
-    private $emailParentEleve;
+    private $emailParent;
+
+
 
     /**
      * @var string
      *
-     * @ORM\Column(name="mdp_eleve", type="string", length=50)
+     * @ORM\Column(name="ele_commentaire_general", type="text", nullable = true)
      */
-    private $mdpEleve;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="commentaireGeneral_eleve", type="text")
-     */
-    private $commentaireGeneralEleve;
+    private $commentaireGeneral;
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="terreDesLangues_eleve", type="boolean")
+     * @ORM\Column(name="ele_terre_des_langues", type="boolean", nullable=true)
      */
-    private $terreDesLanguesEleve;
+    private $terreDesLangues;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="commentaireChoix_eleve", type="text")
+     * @Assert\NotBlank()
+     * @Assert\Length(min=5)
+     * @ORM\Column(name="ele_commentaire_choix", type="text",nullable=true)
      */
-    private $commentaireChoixEleve;
+    private $commentaireChoix;
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="visaParent_eleve", type="boolean")
+     * @ORM\Column(name="ele_visa_parent", type="boolean",nullable=true)
      */
-    private $visaParentEleve;
+    private $visaParent;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="UE2DATE_eleve", type="date")
+     * @ORM\Column(name="ele_UE2_date", type="date", nullable=true)
      */
-    private $uE2DATEEleve;
+    private $UE2Date;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="UE2ThemeDossier_eleve", type="string", length=50)
+     * @ORM\Column(name="ele_UE2_theme_dossier", type="string", length=255, nullable=true)
      */
-    private $uE2ThemeDossierEleve;
+    private $UE2ThemeDossier;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="UE2Note_eleve", type="float")
+     * @ORM\Column(name="ele_UE2_note", type="float", nullable=true)
      */
-    private $uE2NoteEleve;
+    private $UE2Note;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="UE2_Appreciations_eleve", type="text")
+     * @ORM\Column(name="ele_UE2_appreciation", type="text", nullable=true)
      */
-    private $uE2AppreciationsEleve;
+    private $UE2Appreciation;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ele_type", type="string", length=1, nullable=true)
+     */
+    private $type;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="ele_UE1_date", type="date", nullable=true)
+     */
+    private $UE1Date;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="ele_UE1_note", type="float", nullable=true)
+     */
+    private $UE1Note;
+
+    /**
+     * @var string
+     
+     * @ORM\Column(name="ele_UE1_Appreciation", type="text", nullable=true)
+     */
+    private $UE1Appreciation;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="ele_obtention_diplome", type="boolean", nullable=true)
+     */
+    private $obtentionDiplome;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ele_mention", type="string", length=255, nullable=true)
+     */
+    private $mention;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ele_commentaire", type="text", nullable=true)
+     */
+    private $commentaire;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $aVoyage;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Classe", inversedBy="eleves")
+     */
+    private $classe;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Choix", mappedBy="eleve", cascade={"persist"})
+     */
+    private $choix;
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Proposition", mappedBy="eleve")
+     */
+    private $propositions;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Passer", mappedBy="eleve")
+     */
+    private $passages;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Promotion", inversedBy="eleves")
+     */
+    private $promotion;
+    
+    public function __construct()
+    {
+        $this->choix = new ArrayCollection();
+        $this->propositions = new ArrayCollection();
+        $this->passages = new ArrayCollection();
+    }
 
 
     /**
@@ -151,451 +229,685 @@ class Eleve
     }
 
     /**
-     * Set nomEleve
+     * Set nom
      *
-     * @param string $nomEleve
+     * @param string $nom
      *
      * @return Eleve
      */
-    public function setNomEleve($nomEleve)
+    public function setNom($nom)
     {
-        $this->nomEleve = $nomEleve;
+        $this->nom = $nom;
 
         return $this;
     }
 
     /**
-     * Get nomEleve
+     * Get nom
      *
      * @return string
      */
-    public function getNomEleve()
+    public function getNom()
     {
-        return $this->nomEleve;
+        return $this->nom;
     }
 
     /**
-     * Set prenomEleve
+     * Set prenom
      *
-     * @param string $prenomEleve
+     * @param string $prenom
      *
      * @return Eleve
      */
-    public function setPrenomEleve($prenomEleve)
+    public function setPrenom($prenom)
     {
-        $this->prenomEleve = $prenomEleve;
+        $this->prenom = $prenom;
 
         return $this;
     }
 
     /**
-     * Get prenomEleve
+     * Get prenom
      *
      * @return string
      */
-    public function getPrenomEleve()
+    public function getPrenom()
     {
-        return $this->prenomEleve;
+        return $this->prenom;
     }
 
     /**
-     * Set sexeEleve
+     * Set sexe
      *
-     * @param string $sexeEleve
+     * @param string $sexe
      *
      * @return Eleve
      */
-    public function setSexeEleve($sexeEleve)
+    public function setSexe($sexe)
     {
-        $this->sexeEleve = $sexeEleve;
+        $this->sexe = $sexe;
 
         return $this;
     }
 
     /**
-     * Get sexeEleve
+     * Get sexe
      *
      * @return string
      */
-    public function getSexeEleve()
+    public function getSexe()
     {
-        return $this->sexeEleve;
+        return $this->sexe;
     }
 
     /**
-     * Set dateNaissanceEleve
+     * Set dateNaissance
      *
-     * @param \DateTime $dateNaissanceEleve
+     * @param \DateTime $dateNaissance
      *
      * @return Eleve
      */
-    public function setDateNaissanceEleve($dateNaissanceEleve)
+    public function setDateNaissance($dateNaissance)
     {
-        $this->dateNaissanceEleve = $dateNaissanceEleve;
+        $this->dateNaissance = $dateNaissance;
 
         return $this;
     }
 
     /**
-     * Get dateNaissanceEleve
+     * Get dateNaissance
      *
      * @return \DateTime
      */
-    public function getDateNaissanceEleve()
+    public function getDateNaissance()
     {
-        return $this->dateNaissanceEleve;
+        return $this->dateNaissance;
     }
 
     /**
-     * Set promoEleve
+     * Set promo
      *
-     * @param integer $promoEleve
+     * @param integer $promo
      *
      * @return Eleve
      */
-    public function setPromoEleve($promoEleve)
+    public function setPromo($promo)
     {
-        $this->promoEleve = $promoEleve;
+        $this->promo = $promo;
 
         return $this;
     }
 
     /**
-     * Get promoEleve
+     * Get promo
      *
      * @return int
      */
-    public function getPromoEleve()
+    public function getPromo()
     {
-        return $this->promoEleve;
+        return $this->promo;
     }
 
     /**
-     * Set emailEleve
+     * Set email
      *
-     * @param string $emailEleve
+     * @param string $email
      *
      * @return Eleve
      */
-    public function setEmailEleve($emailEleve)
+    public function setEmail($email)
     {
-        $this->emailEleve = $emailEleve;
+        $this->email = $email;
 
         return $this;
     }
 
     /**
-     * Get emailEleve
+     * Get email
      *
      * @return string
      */
-    public function getEmailEleve()
+    public function getEmail()
     {
-        return $this->emailEleve;
+        return $this->email;
     }
 
     /**
-     * Set emailParentEleve
+     * Set emailParent
      *
-     * @param string $emailParentEleve
+     * @param string $emailParent
      *
      * @return Eleve
      */
-    public function setEmailParentEleve($emailParentEleve)
+    public function setEmailParent($emailParent)
     {
-        $this->emailParentEleve = $emailParentEleve;
+        $this->emailParent = $emailParent;
 
         return $this;
     }
 
     /**
-     * Get emailParentEleve
+     * Get emailParent
      *
      * @return string
      */
-    public function getEmailParentEleve()
+    public function getEmailParent()
     {
-        return $this->emailParentEleve;
+        return $this->emailParent;
     }
 
+
     /**
-     * Set mdpEleve
+     * Set commentaireGeneral
      *
-     * @param string $mdpEleve
+     * @param string $commentaireGeneral
      *
      * @return Eleve
      */
-    public function setMdpEleve($mdpEleve)
+    public function setCommentaireGeneral($commentaireGeneral)
     {
-        $this->mdpEleve = $mdpEleve;
+        $this->commentaireGeneral = $commentaireGeneral;
 
         return $this;
     }
 
     /**
-     * Get mdpEleve
+     * Get commentaireGeneral
      *
      * @return string
      */
-    public function getMdpEleve()
+    public function getCommentaireGeneral()
     {
-        return $this->mdpEleve;
+        return $this->commentaireGeneral;
     }
 
     /**
-     * Set commentaireGeneralEleve
+     * Set terreDesLangues
      *
-     * @param string $commentaireGeneralEleve
+     * @param boolean $terreDesLangues
      *
      * @return Eleve
      */
-    public function setCommentaireGeneralEleve($commentaireGeneralEleve)
+    public function setTerreDesLangues($terreDesLangues)
     {
-        $this->commentaireGeneralEleve = $commentaireGeneralEleve;
+        $this->terreDesLangues = $terreDesLangues;
 
         return $this;
     }
 
     /**
-     * Get commentaireGeneralEleve
-     *
-     * @return string
-     */
-    public function getCommentaireGeneralEleve()
-    {
-        return $this->commentaireGeneralEleve;
-    }
-
-    /**
-     * Set terreDesLanguesEleve
-     *
-     * @param boolean $terreDesLanguesEleve
-     *
-     * @return Eleve
-     */
-    public function setTerreDesLanguesEleve($terreDesLanguesEleve)
-    {
-        $this->terreDesLanguesEleve = $terreDesLanguesEleve;
-
-        return $this;
-    }
-
-    /**
-     * Get terreDesLanguesEleve
+     * Get terreDesLangues
      *
      * @return bool
      */
-    public function getTerreDesLanguesEleve()
+    public function getTerreDesLangues()
     {
-        return $this->terreDesLanguesEleve;
+        return $this->terreDesLangues;
     }
 
     /**
-     * Set commentaireChoixEleve
+     * Set commentaireChoix
      *
-     * @param string $commentaireChoixEleve
+     * @param string $commentaireChoix
      *
      * @return Eleve
      */
-    public function setCommentaireChoixEleve($commentaireChoixEleve)
+    public function setCommentaireChoix($commentaireChoix)
     {
-        $this->commentaireChoixEleve = $commentaireChoixEleve;
+        $this->commentaireChoix = $commentaireChoix;
 
         return $this;
     }
 
     /**
-     * Get commentaireChoixEleve
+     * Get commentaireChoix
      *
      * @return string
      */
-    public function getCommentaireChoixEleve()
+    public function getCommentaireChoix()
     {
-        return $this->commentaireChoixEleve;
+        return $this->commentaireChoix;
     }
 
     /**
-     * Set visaParentEleve
+     * Set visaParent
      *
-     * @param boolean $visaParentEleve
+     * @param boolean $visaParent
      *
      * @return Eleve
      */
-    public function setVisaParentEleve($visaParentEleve)
+    public function setVisaParent($visaParent)
     {
-        $this->visaParentEleve = $visaParentEleve;
+        $this->visaParent = $visaParent;
 
         return $this;
     }
 
     /**
-     * Get visaParentEleve
+     * Get visaParent
      *
      * @return bool
      */
-    public function getVisaParentEleve()
+    public function getVisaParent()
     {
-        return $this->visaParentEleve;
+        return $this->visaParent;
     }
 
     /**
-     * Set uE2DATEEleve
+     * Set UE2Date
      *
-     * @param \DateTime $uE2DATEEleve
+     * @param \DateTime $UE2Date
      *
      * @return Eleve
      */
-    public function setUE2DATEEleve($uE2DATEEleve)
+    public function setUE2Date($UE2Date)
     {
-        $this->uE2DATEEleve = $uE2DATEEleve;
+        $this->UE2Date = $UE2Date;
 
         return $this;
     }
 
     /**
-     * Get uE2DATEEleve
+     * Get UE2Date
      *
      * @return \DateTime
      */
-    public function getUE2DATEEleve()
+    public function getUE2Date()
     {
-        return $this->uE2DATEEleve;
+        return $this->UE2Date;
     }
 
     /**
-     * Set uE2ThemeDossierEleve
+     * Set UE2ThemeDossier
      *
-     * @param string $uE2ThemeDossierEleve
+     * @param string $UE2ThemeDossier
      *
      * @return Eleve
      */
-    public function setUE2ThemeDossierEleve($uE2ThemeDossierEleve)
+    public function setUE2ThemeDossier($UE2ThemeDossier)
     {
-        $this->uE2ThemeDossierEleve = $uE2ThemeDossierEleve;
+        $this->UE2ThemeDossier = $UE2ThemeDossier;
 
         return $this;
     }
 
     /**
-     * Get uE2ThemeDossierEleve
+     * Get UE2ThemeDossier
      *
      * @return string
      */
-    public function getUE2ThemeDossierEleve()
+    public function getUE2ThemeDossier()
     {
-        return $this->uE2ThemeDossierEleve;
+        return $this->UE2ThemeDossier;
     }
 
     /**
-     * Set uE2NoteEleve
+     * Set UE2Note
      *
-     * @param float $uE2NoteEleve
+     * @param float $UE2Note
      *
      * @return Eleve
      */
-    public function setUE2NoteEleve($uE2NoteEleve)
+    public function setUE2Note($UE2Note)
     {
-        $this->uE2NoteEleve = $uE2NoteEleve;
+        $this->UE2Note = $UE2Note;
 
         return $this;
     }
 
     /**
-     * Get uE2NoteEleve
+     * Get UE2Note
      *
      * @return float
      */
-    public function getUE2NoteEleve()
+    public function getUE2Note()
     {
-        return $this->uE2NoteEleve;
+        return $this->UE2Note;
     }
 
     /**
-     * Set uE2AppreciationsEleve
+     * Set UE2Appreciation
      *
-     * @param string $uE2AppreciationsEleve
+     * @param string $UE2Appreciation
      *
      * @return Eleve
      */
-    public function setUE2AppreciationsEleve($uE2AppreciationsEleve)
+    public function setUE2Appreciation($UE2Appreciation)
     {
-        $this->uE2AppreciationsEleve = $uE2AppreciationsEleve;
+        $this->UE2Appreciation = $UE2Appreciation;
 
         return $this;
     }
 
     /**
-     * Get uE2AppreciationsEleve
+     * Get UE2Appreciation
      *
      * @return string
      */
-    public function getUE2AppreciationsEleve()
+    public function getUE2Appreciation()
     {
-        return $this->uE2AppreciationsEleve;
+        return $this->UE2Appreciation;
     }
 
     /**
-     * Get idEleve
+     * Set type
      *
-     * @return integer
-     */
-    public function getIdEleve()
-    {
-        return $this->idEleve;
-    }
-
-    /**
-     * Set appartenir
-     *
-     * @param \AppBundle\Entity\Appartenir $appartenir
+     * @param string $type
      *
      * @return Eleve
      */
-    public function setAppartenir(\AppBundle\Entity\Appartenir $appartenir = null)
+    public function setType($type)
     {
-        $this->appartenir = $appartenir;
+        $this->type = $type;
 
         return $this;
     }
 
     /**
-     * Get appartenir
+     * Get type
      *
-     * @return \AppBundle\Entity\Appartenir
+     * @return string
      */
-    public function getAppartenir()
+    public function getType()
     {
-        return $this->appartenir;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->appartenir = new \Doctrine\Common\Collections\ArrayCollection();
+        return $this->type;
     }
 
     /**
-     * Add appartenir
+     * Set UE1Date
      *
-     * @param \AppBundle\Entity\Appartenir $appartenir
+     * @param \DateTime $UE1Date
      *
      * @return Eleve
      */
-    public function addAppartenir(\AppBundle\Entity\Appartenir $appartenir)
+    public function setUE1Date($UE1Date)
     {
-        $this->appartenir[] = $appartenir;
+        $this->UE1Date = $UE1Date;
 
         return $this;
     }
 
     /**
-     * Remove appartenir
+     * Get UE1Date
      *
-     * @param \AppBundle\Entity\Appartenir $appartenir
+     * @return \DateTime
      */
-    public function removeAppartenir(\AppBundle\Entity\Appartenir $appartenir)
+    public function getUE1Date()
     {
-        $this->appartenir->removeElement($appartenir);
+        return $this->UE1Date;
     }
+
+    /**
+     * Set UE1Note
+     *
+     * @param float $UE1Note
+     *
+     * @return Eleve
+     */
+    public function setUE1Note($UE1Note)
+    {
+        $this->UE1Note = $UE1Note;
+
+        return $this;
+    }
+
+    /**
+     * Get UE1Note
+     *
+     * @return float
+     */
+    public function getUE1Note()
+    {
+        return $this->UE1Note;
+    }
+
+    /**
+     * Set UE1Appreciation
+     *
+     * @param string $UE1Appreciation
+     *
+     * @return Eleve
+     */
+    public function setUE1Appreciation($UE1Appreciation)
+    {
+        $this->UE1Appreciation = $UE1Appreciation;
+
+        return $this;
+    }
+
+    /**
+     * Get UE1Appreciation
+     *
+     * @return string
+     */
+    public function getUE1Appreciation()
+    {
+        return $this->UE1Appreciation;
+    }
+
+    /**
+     * Set obtentionDiplome
+     *
+     * @param boolean $obtentionDiplome
+     *
+     * @return Eleve
+     */
+    public function setObtentionDiplome($obtentionDiplome)
+    {
+        $this->obtentionDiplome = $obtentionDiplome;
+
+        return $this;
+    }
+
+    /**
+     * Get obtentionDiplome
+     *
+     * @return bool
+     */
+    public function getObtentionDiplome()
+    {
+        return $this->obtentionDiplome;
+    }
+
+    /**
+     * Set mention
+     *
+     * @param string $mention
+     *
+     * @return Eleve
+     */
+    public function setMention($mention)
+    {
+        $this->mention = $mention;
+
+        return $this;
+    }
+
+    /**
+     * Get mention
+     *
+     * @return string
+     */
+    public function getMention()
+    {
+        return $this->mention;
+    }
+
+    /**
+     * Set commentaire
+     *
+     * @param string $commentaire
+     *
+     * @return Eleve
+     */
+    public function setCommentaire($commentaire)
+    {
+        $this->commentaire = $commentaire;
+
+        return $this;
+    }
+
+    /**
+     * Get commentaire
+     *
+     * @return string
+     */
+    public function getCommentaire()
+    {
+        return $this->commentaire;
+    }
+
+    public function getAVoyage(): ?bool
+    {
+        return $this->aVoyage;
+    }
+
+    public function setAVoyage(?bool $aVoyage): self
+    {
+        $this->aVoyage = $aVoyage;
+
+        return $this;
+    }
+
+    public function getClasse(): ?Classe
+    {
+        return $this->classe;
+    }
+
+    public function setClasse(?Classe $classe): self
+    {
+        $this->classe = $classe;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Choix[]
+     */
+    public function getChoix(): Collection
+    {
+        return $this->choix;
+    }
+
+    public function addChoix(Choix $choix): self
+    {
+        if (!$this->choix->contains($choix)) {
+            $this->choix[] = $choix;
+            $choix->setEleve($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChoix(Choix $choix): self
+    {
+        if ($this->choix->contains($choix)) {
+            $this->choix->removeElement($choix);
+            // set the owning side to null (unless already changed)
+            if ($choix->getEleve() === $this) {
+                $choix->setEleve(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Proposition[]
+     */
+    public function getPropositions(): Collection
+    {
+        return $this->propositions;
+    }
+
+    public function addProposition(Proposition $proposition): self
+    {
+        if (!$this->propositions->contains($proposition)) {
+            $this->propositions[] = $proposition;
+            $proposition->setEleve($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProposition(Proposition $proposition): self
+    {
+        if ($this->propositions->contains($proposition)) {
+            $this->propositions->removeElement($proposition);
+            // set the owning side to null (unless already changed)
+            if ($proposition->getEleve() === $this) {
+                $proposition->setEleve(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Passer[]
+     */
+    public function getPassages(): Collection
+    {
+        return $this->passages;
+    }
+
+    public function addPassage(Passer $passage): self
+    {
+        if (!$this->passages->contains($passage)) {
+            $this->passages[] = $passage;
+            $passage->setEleve($this);
+        }
+
+        return $this;
+    }
+
+    public function removePassage(Passer $passage): self
+    {
+        if ($this->passages->contains($passage)) {
+            $this->passages->removeElement($passage);
+            // set the owning side to null (unless already changed)
+            if ($passage->getEleve() === $this) {
+                $passage->setEleve(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getPromotion(): ?Promotion
+    {
+        return $this->promotion;
+    }
+
+    public function setPromotion(?Promotion $promotion): self
+    {
+        $this->promotion = $promotion;
+
+        return $this;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \AppBundle\Entity\User $user
+     *
+     * @return Eleve
+     */
+    public function setUser(\AppBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+    
 }

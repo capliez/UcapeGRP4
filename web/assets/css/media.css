@@ -1,18 +1,57 @@
-@media only screen and (min-width: 773px) {
-    /* nav button{display: none} */
- }
+@media (max-width: 1260px) {
+    .navbar-nav{
+        margin-top: 20px; 
+        z-index: 20; 
+        background-color: whitesmoke;
+    }
+    .dropdown{display: none !important;}
+    .dropdown-menu{display: block; width: 100%; background-color: whitesmoke}
+    #panel-menu{
+        width: 100%;
+        max-height: 100%;
+        margin-top: 110px;
+    }
+    #panel-content, .content-base{
+        width: 100%;
+        padding: 25px
+    }
 
- /* Pour les écran de taille égale ou inférieur à 772px */
- @media only screen and (max-width: 772px) {
-     #header p{font-size: 13px}
-     .jumbotron{height: 150px}
-     /* nav button{margin-bottom: 10px; box-shadow: 2px 6px 2px rgba(98, 90, 90, 0.8)}
-     nav button:hover{box-shadow: 2px 6px 2px rgba(88, 84, 84, 0.8)} */
-     #content{margin-top: 10px; border-radius: 10px; box-shadow: 2px 6px 2px rgba(98, 90, 90, 0.8)}
+    #login .logo{
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+        top: 240px;
+        text-align: center;
+    }
+}
 
- }
+@media (min-width: 1260px) {
+    .navbar-nav > li > a{padding-top: 2px}
+    #panel-menu{
+        position: fixed;
+        box-shadow: 2px 2px 11px 2px #787a7f;
+        height: 615px;
+        width: 12%;
+        }
+    #panel{margin-top: 110px}
+    #panel-content, .content-base{ margin-right: 10%; padding: 40px}
+    #login{margin-right: 10% !important;}
+    .sous-menu{display: none;}
+    .navbar-fixed-top .navbar-collapse{
+        padding-right: 50px;}
+    #login .logo{
+        position: absolute;
+        left: 200px;
+        right: 0;
+        margin: 0 auto;
+        top: 140px;
+        text-align: center;
+    }
+}
 
-  /* Pour les écran de taille égale ou inférieur à 530px */
- @media only screen and (max-width: 530px) {
-     #header h1{font-size: 25px}
- }
+
+@media (max-width: 535px) {
+    #promotion .promo-th-id{display: none}
+    #promotion table td a{font-size: 10px; margin-top: 5px}
+}

@@ -5,23 +5,20 @@ security:
         AppBundle\Entity\User: sha512
 
     role_hierarchy:
-        # Un admin hérite des droits d'auteur 
-        ROLE_ADMIN:       [ROLE_USER, ROLE_CONSULTANT]
-        ROLE_CONSULTANT : ROLE_USER
+        ROLE_ADMIN:       ROLE_ADMIN
+        ROLE_CONSULTANT : ROLE_CONSULTANT
         ROLE_USER:        ROLE_USER
-        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_USER, ROLE_ALLOWED_TO_SWITCH, ROLE_CONSULTANT]
+        ROLE_ELEVE:       ROLE_ELEVE #Rôle par défaut !!
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ELEVE, ROLE_USER, ROLE_ALLOWED_TO_SWITCH, ROLE_CONSULTANT] # A ne pas utliser
 
     providers:
         main:
-            id: fos_user.user_provider.username
+            id: fos_user.user_provider.email
 
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
-        login:
-            pattern: ^/(login$|register|resetting)
-            anonymous: true    
+            security: false  
         main:
             pattern:   ^/
             provider: main
@@ -38,10 +35,18 @@ security:
                 lifetime: 604800 # 1 week in seconds
                 secret:     %secret% # %secret% est un paramètre de parameter
             switch_user:     true
+        login:
+            pattern: ^/(login$|register|resetting)
+            anonymous: true  
 
     access_control:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/register, role: ROLE_SUPER_ADMIN }
+        - { path: ^/register, role: ROLE_ADMIN } # Accessible par les administrateurs (route désactiver)
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/eleve/, role: ROLE_ELEVE } # Accessible par les éléves
+        - { path: ^/admin/, role: ROLE_ADMIN } # Accessible par les administrateurs
+        - { path: ^/consultant/, role: ROLE_CONSULTANT } # Accessible par les consultants
+
+
 
 

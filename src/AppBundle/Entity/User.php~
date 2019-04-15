@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use FOS\UserBundle\Model\User as BaseUser;
 
 /**
  * User
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  */
-class User
+class User extends BaseUser
 {
     /**
      * @var int
@@ -19,17 +20,43 @@ class User
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
 
     /**
-     * Get id
-     *
-     * @return int
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Eleve", mappedBy="user")
      */
-    public function getId()
+    private $eleve;
+
+
+    public function __construct()
     {
-        return $this->id;
+        parent::__construct();
+        // your own logic
+    }
+
+
+    /**
+     * Set eleve
+     *
+     * @param \AppBundle\Entity\Eleve $eleve
+     *
+     * @return User
+     */
+    public function setEleve(\AppBundle\Entity\Eleve $eleve = null)
+    {
+        $this->eleve = $eleve;
+
+        return $this;
+    }
+
+    /**
+     * Get eleve
+     *
+     * @return \AppBundle\Entity\Eleve
+     */
+    public function getEleve()
+    {
+        return $this->eleve;
     }
 }
-

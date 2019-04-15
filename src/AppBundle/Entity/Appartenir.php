@@ -15,37 +15,25 @@ class Appartenir
     /**
      * @var int
      *
-     * @ORM\Column(name="id_appartenir", type="integer")
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Eleve", inversedBy="appartenir")
-     * @ORM\JoinColumn(name="eleve_id", referencedColumnName="id")
-     */
-    private $eleves;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Annee", inversedBy="appartenir")
-     * @ORM\JoinColumn(name="annee_id", referencedColumnName="id")
-     */
-    private $annees;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Classe", inversedBy="appartenir")
-     * @ORM\JoinColumn(name="classe_id", referencedColumnName="id")
-     */
-    private $classes;
-
     /**
      * @var bool
      *
-     * @ORM\Column(name="a_voyage_appartenir", type="boolean")
+     * @ORM\Column(name="app_voyage", type="boolean")
      */
-    private $aVoyageAppartenir;
+    private $voyage;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="app_annee", type="date")
+     */
+    private $annee;
 
 
     /**
@@ -59,147 +47,51 @@ class Appartenir
     }
 
     /**
-     * Set aVoyageAppartenir
+     * Set voyage
      *
-     * @param boolean $aVoyageAppartenir
+     * @param boolean $voyage
      *
      * @return Appartenir
      */
-    public function setAVoyageAppartenir($aVoyageAppartenir)
+    public function setVoyage($voyage)
     {
-        $this->aVoyageAppartenir = $aVoyageAppartenir;
+        $this->voyage = $voyage;
 
         return $this;
     }
 
     /**
-     * Get aVoyageAppartenir
+     * Get voyage
      *
      * @return bool
      */
-    public function getAVoyageAppartenir()
+    public function getVoyage()
     {
-        return $this->aVoyageAppartenir;
+        return $this->voyage;
     }
 
     /**
-     * Get idAppartenir
+     * Set annee
      *
-     * @return integer
-     */
-    public function getIdAppartenir()
-    {
-        return $this->idAppartenir;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->eleves = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->annees = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->classes = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add elefe
-     *
-     * @param \AppBundle\Entity\Eleve $elefe
+     * @param \DateTime $annee
      *
      * @return Appartenir
      */
-    public function addElefe(\AppBundle\Entity\Eleve $elefe)
+    public function setAnnee($annee)
     {
-        $this->eleves[] = $elefe;
+        $this->annee = $annee;
 
         return $this;
     }
 
     /**
-     * Remove elefe
+     * Get annee
      *
-     * @param \AppBundle\Entity\Eleve $elefe
+     * @return \DateTime
      */
-    public function removeElefe(\AppBundle\Entity\Eleve $elefe)
+    public function getAnnee()
     {
-        $this->eleves->removeElement($elefe);
-    }
-
-    /**
-     * Get eleves
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getEleves()
-    {
-        return $this->eleves;
-    }
-
-    /**
-     * Add annee
-     *
-     * @param \AppBundle\Entity\Annee $annee
-     *
-     * @return Appartenir
-     */
-    public function addAnnee(\AppBundle\Entity\Annee $annee)
-    {
-        $this->annees[] = $annee;
-
-        return $this;
-    }
-
-    /**
-     * Remove annee
-     *
-     * @param \AppBundle\Entity\Annee $annee
-     */
-    public function removeAnnee(\AppBundle\Entity\Annee $annee)
-    {
-        $this->annees->removeElement($annee);
-    }
-
-    /**
-     * Get annees
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getAnnees()
-    {
-        return $this->annees;
-    }
-
-    /**
-     * Add class
-     *
-     * @param \AppBundle\Entity\Classe $class
-     *
-     * @return Appartenir
-     */
-    public function addClass(\AppBundle\Entity\Classe $class)
-    {
-        $this->classes[] = $class;
-
-        return $this;
-    }
-
-    /**
-     * Remove class
-     *
-     * @param \AppBundle\Entity\Classe $class
-     */
-    public function removeClass(\AppBundle\Entity\Classe $class)
-    {
-        $this->classes->removeElement($class);
-    }
-
-    /**
-     * Get classes
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getClasses()
-    {
-        return $this->classes;
+        return $this->annee;
     }
 }
+
