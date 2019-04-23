@@ -1,0 +1,67 @@
+{% extends '::layout.html.twig' %}
+
+{% block body %}
+    <h1>Affectation de l'élève</h1>
+    {% if choix != null %}
+        <p> Choix de l'élève : <br/>
+        {% for unChoix in choix %}
+            <strong><p>{{ unChoix.0.libelle }}</p></strong>
+        {% endfor %}
+        <h1>Decision de l'administration</h1>
+        <br/>
+        {{form_start(form)}}
+        {{form_row(form.Etablissement)}}
+        {{form_row(form.DateDepart)}}
+        {{form_row(form.DateFin)}}
+        {{form_row(form.DateFin)}}
+        <br/>
+        {{ form_row(form.save) }}
+        {{ form_end(form) }}
+        <br/>
+
+        <style>
+                table,
+                td {
+                    border: 1px solid #333;
+                }
+
+                thead,
+                tfoot {
+                    background-color: #333;
+                    color: #fff;
+                }
+
+                table {
+                    margin: 0px auto;            
+                }​
+
+        </style>
+        <h1>Historique des propositions</h1><br/>
+        <table>
+            <thead>
+                <tr>
+                    <th>Etat</th>
+                    <th>Commentaire</th>
+                    <th>Date départ</th>
+                    <th>Date fin</th>
+                    <th>Etablissement</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for uneProposition in proposition %}
+                    <tr>
+                        <td>{% if uneProposition.pro_est_acceptee == null %} Pas de réponse {% elseif uneProposition.pro_est_acceptee == 0 %} Refusée {% else %} Acceptée{% endif %}</td>
+                        <td>{{ uneProposition.pro_commentaire }}</td>
+                        <td>{{ uneProposition.pro_date_depart }}</td>
+                        <td>{{ uneProposition.pro_date_fin }}</td>
+                        <td>{{ uneProposition.etablissement_id}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>L'élève n'a pas encore fait ses choix</p>
+    {% endif %}
+    </p>
+    <a href ="{{path('eleves')}}" style="padding: 3px;" class="btn btn-secondary">Retour à la liste des élèves</a>
+{% endblock %}

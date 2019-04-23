@@ -3,7 +3,7 @@
 {% block body %}
     <div class ="row">
         <div class ="col-lg-6">
-            <h1>Eleves</h1>   
+            <h1>Elèves</h1>   
         </div>
         <div class="col-lg-6">    
             <form action="{{ path('filtre_eleve') }}" method="post">
@@ -19,6 +19,7 @@
             <div class="col-lg-6 text-center"><li>{{ item.nom }} {{item.prenom}} - {{item.classe.libelle}}</li></div>
             <div class="col-lg-6">
                 <a href ="{{path('affiche_eleve', { 'id_eleve': item.id})}}" style="padding: 3px;" class="btn btn-secondary">Consulter</a>
+                <a href ="{{path('affectation_eleve', {'id_eleve': item.id})}}" style="padding: 3px;" class="btn btn-info">Affecter</a>
                 <a href ="{{path('edit_eleve', { 'id_eleve': item.id})}}" style="padding: 3px;" class="btn btn-primary">Modifier</a>
                 <a href ="{{path('delete_eleve', { 'id_eleve': item.id})}}" style="padding: 3px;" class="btn btn-danger confirmModalLink">Supprimer</a>
             </div>

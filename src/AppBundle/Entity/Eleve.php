@@ -206,7 +206,12 @@ class Eleve
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Promotion", inversedBy="eleves")
      */
     private $promotion;
-    
+
+    /**
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\User", inversedBy="eleve", cascade={"persist", "remove"})
+     */
+    private $user;
+
     public function __construct()
     {
         $this->choix = new ArrayCollection();
@@ -777,12 +782,12 @@ class Eleve
         return $this->commentaire;
     }
 
-    public function getAVoyage(): ?bool
+    public function getAVoyage()
     {
         return $this->aVoyage;
     }
 
-    public function setAVoyage(?bool $aVoyage): self
+    public function setAVoyage($aVoyage)
     {
         $this->aVoyage = $aVoyage;
 
@@ -902,6 +907,18 @@ class Eleve
     public function setPromotion(?Promotion $promotion): self
     {
         $this->promotion = $promotion;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

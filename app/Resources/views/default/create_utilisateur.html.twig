@@ -1,0 +1,20 @@
+{% extends '::layout.html.twig' %}
+
+
+{% block body %}
+{{ form_start(form) }}
+
+<div>
+    <h2>Ajouter un utilisateur</h2>
+    {{ form_row(form.username) }}
+    {{ form_row(form.userEmail) }}
+    {{ form_row(form.userMdp) }}
+</div>
+
+{{ form_row(form.save) }}
+{{ form_end(form) }}
+<a href ="{{path('utilisateurs')}}" style="padding: 3px;" class="btn btn-secondary">Retour à la liste des utilisateurs</a>
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %} 

@@ -22,11 +22,34 @@ class User extends BaseUser
      */
     protected $id;
 
+    /**
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Eleve", mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $eleve;
+    
 
     public function __construct()
     {
         parent::__construct();
         // your own logic
+    }
+
+    public function getEleve(): ?Eleve
+    {
+        return $this->eleve;
+    }
+
+    public function setEleve(?Eleve $eleve): self
+    {
+        $this->eleve = $eleve;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newUser = $eleve === null ? null : $this;
+        if ($newUser !== $eleve->getUser()) {
+            $eleve->setUser($newUser);
+        }
+
+        return $this;
     }
 
 }

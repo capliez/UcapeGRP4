@@ -339,5 +339,9 @@ class Etablissement
 
         return $this;
     }
+    public function getEtablissementPays()
+    {
+        return $this->nom.' - '.$this->pays->getLibelle();
+    }
 }
 

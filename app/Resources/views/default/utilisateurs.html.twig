@@ -1,0 +1,22 @@
+{% extends '::layout.html.twig' %}
+
+{% block body %}
+            <h1>Utilisateurs</h1>   
+
+    <ul style="list-style:none;">
+    {% for item in paginator.currentPageResults %}
+        <div class="row" style="padding:4px;">
+            <div class="col-lg-6 text-center"><li>{{ item.username}}</li></div>
+            <div class="col-lg-6">
+                <a href ="{{path('affiche_utilisateur', { 'id_utilisateur': item.id})}}" style="padding: 3px;" class="btn btn-secondary">Consulter</a>
+                <a href ="{{path('edit_utilisateur', { 'id_utilisateur': item.id})}}" style="padding: 3px;" class="btn btn-primary">Modifier</a>
+                <a href ="{{path('delete_utilisateur', { 'id_utilisateur': item.id})}}" style="padding: 3px;" class="btn btn-danger confirmModalLink">Supprimer</a>
+            </div>
+        </div>
+    {% endfor %} 
+    </ul>
+    <div style="display:inline-block;">
+        {{pagerfanta(paginator, 'twitter_bootstrap4')}}
+        <a href ="{{path('create_utilisateur')}}" style="padding: 3px;" class="btn btn-secondary">Ajouter un utilisateur</a>
+    </div>
+{% endblock %}

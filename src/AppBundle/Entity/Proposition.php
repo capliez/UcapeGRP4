@@ -24,14 +24,14 @@ class Proposition
     /**
      * @var bool
      *
-     * @ORM\Column(name="pro_est_acceptee", type="boolean")
+     * @ORM\Column(name="pro_est_acceptee", type="boolean", nullable=true)
      */
     private $estAcceptee;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="pro_commentaire", type="text")
+     * @ORM\Column(name="pro_commentaire", type="text", nullable=true)
      */
     private $commentaire;
 

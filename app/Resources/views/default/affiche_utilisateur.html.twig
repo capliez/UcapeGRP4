@@ -1,0 +1,11 @@
+{% extends '::layout.html.twig' %}
+
+{% block body %}
+<p>Nom d'utilisateur : {{utilisateur.username}} </p>
+<p>E-mail : {{utilisateur.email}}</p>
+{% if utilisateur.eleve != null %}<p>Nom / Prénom : {{utilisateur.eleve.nom}} {{utilisateur.eleve.prenom}}</p>{% endif %}
+<p>Mot de passe : {{utilisateur.password}}</p>
+
+<a href ="{{path('utilisateurs')}}" style="padding: 3px;" class="btn btn-secondary">Retour à la liste des utilisateurs</a>
+<a href ="{{path('edit_utilisateur',{'id_utilisateur': utilisateur.id} )}}" style="padding: 3px;" class="btn btn-primary">Modifier cet utilisateur</a>
+{% endblock %}
