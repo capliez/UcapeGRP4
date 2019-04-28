@@ -11,6 +11,7 @@
 {# On affiche les messages flash que définissent les contrôleurs du bundle #}
 {% for key, messages in app.session.flashbag.all() %}
 {% for message in messages %}
+<div class="content-base">
 <div class="alert alert-{{ key }}">
     {{ message|trans({}, 'FOSUserBundle') }}
 </div>

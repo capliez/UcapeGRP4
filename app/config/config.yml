@@ -87,7 +87,7 @@ fos_user:
             enabled: true
             from_email:
                 address: capliezalexis@yahoo.fr
-                sender_name: Admin Alexis
+                sender_name: Administrateur
             template: 'email/registration.email.twig'
 
 #assetic:

@@ -56,7 +56,6 @@ class AdminController extends Controller
         }
 
 
-
         $form = $this->createForm('AppBundle\Form\PromotionType', $promo, [
             'is_edit' => true,
 
@@ -211,6 +210,38 @@ class AdminController extends Controller
         return $this->render('default/admin/promotionajout.html.twig', [
             'form' => $form->createView(),
             'erreur' => $erreur,
+        ]);
+    }
+
+
+    /**
+ * @Route("/admin/gestionEU", name="gestionEU")
+ */
+    public function gestionEUAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $lesEleves = $em->getRepository('AppBundle:Eleve')->findAll();
+
+
+        return $this->render('default/admin/gestioneu.html.twig', [
+            'lesEleves' => $lesEleves,
+        ]);
+    }
+
+    /**
+     * @Route("/admin/gestionEU/{nom}", name="gestionEUEleve")
+     */
+    public function gestionEUEleveAction(string $nom)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $eleve = $this->getDoctrine()->getRepository('AppBundle:Eleve')->findBy(['nom'=>$nom]);
+
+
+        return $this->render('default/admin/gestioneueleve.html.twig', [
+            'eleve' => $eleve[0],
+
         ]);
     }
 

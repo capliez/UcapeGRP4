@@ -1,0 +1,86 @@
+{% extends '::layout.html.twig' %}
+
+{% block body %}
+
+
+<div class="content-base">
+
+
+{#<div class="div-retour">
+<a href="{{ path('fos_user_profile_show') }}"><i class="fas fa-arrow-circle-left"></i></a>
+</div>#}
+
+       {% for message in app.flashes('Info') %}
+            <div class="flash-info flash-info-div flash-info-choix alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+
+        <div class="edit-profil-user">
+
+<div class="edit-titre">
+        <p>Informations de connexion</p>
+        <p><a href="{{ path('fos_user_profile_edit') }}" class="btn btn-default"><i class="fas fa-sync-alt"></i></a></p>
+</div>
+        {{ form_start(form) }}
+
+
+        {{ form_row(form.email) }}
+
+
+        {{ form_row(form.username, {'attr': {'disabled':'disabled'}, 'value': app.user.username}) }}
+
+        {{ form_row(form.plainPassword) }}
+
+     {{ form_row(form.submit) }}
+        <div class="form-group">
+
+            <input type="reset" class="btn-annule btn btn-default" class="form-control" name="annuler" value="Annuler">
+
+        </div>
+   
+
+
+        {{ form_end(form) }}
+</div>
+                        {% if app.user.roles[0] == "ROLE_ELEVE" %}
+
+        <div class="edit-profil-user">
+
+<div class="edit-titre">
+
+            <p>Informations personnelles</p>
+       <p> <a href="{{ path('fos_user_profile_edit') }}" class="btn btn-default"><i class="fas fa-sync-alt"></i></a></p>
+</div>
+            {{ form_start(form1) }}
+            {{ form_row(form1.nom) }}
+            {{ form_row(form1.prenom) }}
+            {{ form_row(form1.sexe, {'attr': {'disabled':'disabled'}, 'value': sexe }) }}
+            {{ form_row(form1.dateNaissance) }}
+            {{ form_row(form1.email) }}
+            {{ form_row(form1.emailParent) }}
+            {{ form_row(form1.classe, {'attr': {'disabled':'disabled'}, 'placeholder': classe }) }}
+            {{ form_row(form1.promotion, {'attr': {'disabled':'disabled'}, 'placeholder': promo }) }}
+            {{ form_row(form1.commentaireGeneral) }}
+
+            {{ form_row(form1.submit) }}
+
+        <div class="form-group">
+
+            <input type="reset" class="btn-annule btn btn-default" class="form-control" name="annuler" value="Annuler">
+
+        </div>
+   
+
+
+        {{ form_end(form1) }}
+</div>
+
+{% endif%}
+
+</div>
+
+
+
+{% endblock %}

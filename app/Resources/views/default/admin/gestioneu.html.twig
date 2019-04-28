@@ -1,0 +1,72 @@
+{% extends '::layout.html.twig' %}
+
+{% block body %}
+
+<div class="content-base">
+
+
+    <table class="table table-striped">
+        <thead >
+        <tr>
+            <th scope="col">Prénom et Nom </th>
+            <th scope="col">Classe</th>
+            <th scope="col">Note U1</th>
+            <th scope="col">Note U2</th>
+            <th scope="col">Modifier</th>
+        </tr>
+        </thead>
+        <tbody>
+
+            {% for unEleve in lesEleves %}
+            <tr class="tr-valeur">
+
+                <td>{{ unEleve.prenom }} {{ unEleve.nom }}</td>
+                <td>{{ unEleve.classe.libelle }}</td>
+                <td>
+
+                    {% if unEleve.UE1Note is not null %}
+
+                        <i title="Note existante" class="fas fa-check"></i>
+
+                    {% else %}
+
+                        <i title="Aucune note" class="fas fa-times"></i>
+
+                    {% endif %}
+
+                </td>
+                <td>
+
+                    {% if unEleve.UE2Note is not null %}
+
+                        <i title="Note existante" class="fas fa-check"></i>
+
+                    {% else %}
+
+                        <i title="Aucune note" class="fas fa-times"></i>
+
+                    {% endif %}
+
+                </td>
+                <td><a href="{{ path('gestionEUEleve', {nom: unEleve.nom}) }}" class="btn btn-default btn-sm"><i class="fas fa-pencil-alt"></i></a> </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+    </table>
+
+
+
+
+
+
+
+
+</div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}

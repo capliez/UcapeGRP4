@@ -333,7 +333,7 @@ class Eleve
      */
     public function setPromo($promo)
     {
-        $this->promo = $promo;
+        $this->promotion = $promo;
 
         return $this;
     }
@@ -345,7 +345,8 @@ class Eleve
      */
     public function getPromo()
     {
-        return $this->promo;
+        return $this->promotion;
+
     }
 
     /**

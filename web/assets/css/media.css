@@ -2,7 +2,6 @@
     .navbar-nav{
         margin-top: 20px; 
         z-index: 20; 
-        background-color: whitesmoke;
     }
     .dropdown{display: none !important;}
     .dropdown-menu{display: block; width: 100%; background-color: whitesmoke}
@@ -16,6 +15,8 @@
         padding: 25px
     }
 
+    .nom-logo{font-size: 42px;}
+
     #login .logo{
         position: absolute;
         left: 0;
@@ -24,6 +25,8 @@
         top: 240px;
         text-align: center;
     }
+    .btn{font-size: 15px; width: auto !important}
+
 }
 
 @media (min-width: 1260px) {
@@ -34,8 +37,13 @@
         height: 615px;
         width: 12%;
         }
+    #confirmModal{
+        margin-left: 10%;}
+    .nom-logo{font-size: 50px;}
     #panel{margin-top: 110px}
     #panel-content, .content-base{ margin-right: 10%; padding: 40px}
+    .content-base-fos{margin-right: 10%}
+
     #login{margin-right: 10% !important;}
     .sous-menu{display: none;}
     .navbar-fixed-top .navbar-collapse{
@@ -54,4 +62,5 @@
 @media (max-width: 535px) {
     #promotion .promo-th-id{display: none}
     #promotion table td a{font-size: 10px; margin-top: 5px}
+    .btn{font-size: 10px; width: auto !important}
 }

@@ -218,4 +218,26 @@ class EleveController extends Controller
 
         ]);
     }
+
+    /**
+     * @Route("/eleve/consultationEU", name="consultationEU")
+     */
+    public function consultationEUAction(Request $request)
+    {
+        $manager = $this->getDoctrine()->getManager();
+
+        $eleve = $this->getUser()->getEleve();
+
+        $moyenne =  ( $eleve->getUE2Note() + $eleve->getUE1Note() ) / 2;
+
+
+        return $this->render('default/eleve/consultationeu.html.twig', [
+            'submited' => !$eleve->getChoix()->isEmpty(),
+            'noteEu2' => $eleve->getUE2Note(),
+            'noteEu1' => $eleve->getUE1Note(),
+            'moyenne' => $moyenne,
+
+        ]);
+
+    }
 }

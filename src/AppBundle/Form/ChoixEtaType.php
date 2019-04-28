@@ -34,10 +34,7 @@ class ChoixEtaType extends AbstractType
 
 
         ->add('choix2', EntityType::class, [
-            'empty_data'    => 'rien',
-
             'class' => Pays::class,
-
             'choice_label' => 'libelle',
             'mapped' => false,
             'label' => "Choix 2",
@@ -52,14 +49,9 @@ class ChoixEtaType extends AbstractType
             'label' => "Choix 3",
 
         ])
-        ->add('terreDesLangues', ChoiceType::class, [
-            'choices'  => [
-                'Oui' => true,
-                'Non' => false,
-            ],
-
-            'label' => "En cas d'impossibilité d'échanges, envisagez-vous de partir avec Terre des Langues? *",
-            'required' => true,
+        ->add('terreDesLangues', CheckboxType::class, [
+            'label' => "En cas d'impossibilité d'échanges, envisagez-vous de partir avec Terre des Langues? ",
+            'required' => false,
         ])
         ->add('commentaireChoix',  TextareaType::class, [
             'label' => "Commentaire",

@@ -16,6 +16,14 @@ body{
     font-weight: 600;
 }
 
+.fa-times{color: red}
+
+.tr-valeur:hover{
+    background: rgba(255,255,255, 1);
+    box-shadow: 0px -2px 1px 0px rgba(0,0,0, 0.4);
+    font-weight: bold;
+}
+
 textarea{
     resize: none;
 }
@@ -25,6 +33,14 @@ textarea{
 #navbar .fa-user-circle{
 font-size: 40px;
 color: rgb(90, 87, 87)
+}
+
+.nom-logo{
+    margin-top: 16px;
+    font-family: 'Dancing Script', cursive;
+    font-weight: bold;
+    color: #363a41;
+    text-shadow: 2px 2px 2px rgba(0,0,0, 0.1);
 }
 
 .logo-ucapeNav {
@@ -60,10 +76,11 @@ border-bottom-right-radius: 3em
 }
 
 .sous-menu{
-text-align: center;
-padding: 10px;
-border: 2px solid white;
-border-radius: 2em;
+    text-align: center;
+    padding: 10px;
+    border: 2px solid white;
+    border-radius: 2em;
+    background: whitesmoke;
 }
 
 .sous-menu a{
@@ -71,6 +88,8 @@ text-decoration: none;
 color: black;
 padding-top: 5px;
 }
+
+.flash-info-div{margin: 10px auto}
 
 .sous-menu a:hover{
 text-decoration: none;
@@ -122,7 +141,7 @@ text-align: center
 
 #panel-content hr{margin-bottom: 30px}
 
-#panel-content, .content-base{
+#panel-content, .content-base, .content-base-fos{
 width: 67%;
 margin: 0 auto;
 text-align: center;
@@ -167,7 +186,7 @@ font-size: 2em;
     margin: auto;
 }
 
-#choix_eta_submit, .btn-annule, #appbundle_promotion_submit{
+#choix_eta_submit, .btn-maj, .btn-annule, #appbundle_promotion_submit, #appbundle_user_submit, #appbundle_eleve_submit{
     float: right;
     padding: 10px;
     width: 15%;
@@ -179,7 +198,7 @@ font-size: 2em;
     margin-bottom: 10px;
 }
 
-#choix_eta_submit, .btn-annule, #appbundle_promotion_submit{
+#choix_eta_submit, .btn-annule, #appbundle_promotion_submit, #appbundle_user_submit, #appbundle_eleve_submit{
     margin-bottom: 20px;
     margin-left: 5px;
 }
@@ -188,13 +207,56 @@ font-size: 2em;
 /* Promotion */
 
 #promotion .promo-ajouter{float: left; margin-bottom: 20px}
-#promotion .tr-valeur:hover{
-    background: rgba(255,255,255, 1);
-    box-shadow: 0px -2px 1px 0px rgba(0,0,0, 0.4);
-}
+
 
 .btn-retour{
     text-align: left;
     margin-bottom: 15px;
 }
 
+/* Profile */
+.div-retour{text-align: left}
+.div-retour .fa-arrow-circle-left, .fa-plus-circle{
+    font-size: 25px;
+    color: #363a41;
+    text-shadow: 2px 2px 2px rgba(0,0,0, 0.3);
+}
+.div-retour .fa-arrow-circle-left:hover, .fa-plus-circle:hover{ text-shadow: 2px 2px 2px rgba(255,255,255, 0.5);}
+
+.edit-profil-user{
+    padding: 10px;
+    border: 1px solid rgba(0,0,0, 0.2);
+    margin: 50px auto;
+}
+
+.edit-profil-user p{
+    text-align: left;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.edit-titre{
+    float: left;
+    width:100%;
+    display: inline-flex
+}
+
+.edit-profil-user input{
+    margin-bottom: 15px;
+}
+
+#appbundle_eleve_dateNaissance{
+    margin-top: 15px;
+}
+
+.edit-titre a{
+    font-size: 9px;
+    margin-left: 10px;
+    vertical-align: super;
+}
+
+.edit-profil-user form label{
+    float: left;
+    font-size: 13px
+}

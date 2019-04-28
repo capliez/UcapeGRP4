@@ -29,3 +29,7 @@ fos_user_security_login:
 fos_user_profile_show:
     path: /profile
     controller: AppBundle\Controller\ProfileController::showAction
+
+fos_user_profile_edit:
+    path: /profile/edition
+    controller: AppBundle\Controller\DefaultController::editAction

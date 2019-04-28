@@ -48,7 +48,9 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand logo-ucapeNav" href="{{ path('homepage') }}"><img src="{{ asset('logo.png') }}" alt="logo"></a>
+              <a class="navbar-brand logo-ucapeNav" href="{{ path('homepage') }}"><img src="{{ asset('logo.png') }}" alt="logo"></a>
+              <p class="navbar-brand nom-logo">Ucape</p>
+
           </div>
           <div id="navbar" class="navbar-collapse collapse">
 
@@ -69,7 +71,7 @@
                 </p>
                 <p>{{app.user.username}}</p>
                 <hr>
-                <a href="{{ path('fos_user_profile_show') }}">Profil</a><br/>
+                <a href="{{ path('fos_user_profile_edit') }}">Profil</a><br/>
                 <a href="{{ path('fos_user_security_logout') }}">Déconnexion</a>
                   {% endif %}
               </div>
@@ -84,7 +86,7 @@
                       {% endif %}
                       {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
 
-                      <li><a href="{{ path('fos_user_profile_show') }}">Profil</a></li>
+                      <li><a href="{{ path('fos_user_profile_edit') }}">Profil</a></li>
                     <li role="separator" class="divider"></li>
                     <li class="dropdown-header dropdown-roles">
                       {% if app.user.roles[0] == "ROLE_ELEVE" %} Élève {%  endif %}
@@ -149,7 +151,7 @@
 
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a href="#" >
+                                    <a href="{{ path('gestionEU') }}" >
                                         <i class="fas fa-tasks"></i> Gestion évaluations EU
                                     </a>
                                 </h4>
@@ -189,7 +191,7 @@
 
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a href="#" >
+                                    <a href="{{ path('consultationEU') }}" >
                                         <i class="fas fa-tasks"></i> Consultation EU
                                     </a>
                                 </h4>
@@ -233,6 +235,9 @@
        
 
         {% block body %}
+
+        <div class="content-base-fos">
+
          {# On affiche les messages flash que définissent les contrôleurs du bundle #}
         {% for key, messages in app.session.flashbag.all() %}
             {% for message in messages %}
@@ -241,6 +246,8 @@
                 </div>
             {% endfor %}
         {% endfor %}
+
+        </div>
 
         {# On définit ce block, dans lequel vont venir s'insérer les autres vues du bundle #}
         {% block fos_user_content %}

@@ -4,10 +4,9 @@
 
     <div class="content-base">
 
-        <div class="btn-retour">
 
-            <a class="btn btn-default" href="{{ path('promotion') }}">Retour</a>
-
+        <div class="div-retour">
+            <a href="{{ path('promotion') }}"><i class="fas fa-arrow-circle-left"></i></a>
         </div>
 
         {% for message in app.flashes('Info') %}
@@ -32,7 +31,7 @@
         {{ form_row(form.annee) }}
 
 
-        {{ form_row(form.submit) }}
+        {{ form_row(form.submit, {'attr': {'onclick': 'return confirm("Êtes-vous sûr ?")'}})}}
 
         <div class="form-group">
 
@@ -41,9 +40,6 @@
         </div>
 
         {{ form_end(form) }}
-
-
-
 
 
     </div>

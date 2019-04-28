@@ -22,6 +22,7 @@ class PromotionType extends AbstractType
             ->add('annee')
             ->add('submit', SubmitType::class, [
                 'label' => $options['is_edit'] ? 'Mettre à jour' : 'Valider',
+
             ]);
     }/**
      * {@inheritdoc}
