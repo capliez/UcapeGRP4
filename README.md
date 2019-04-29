@@ -1,4 +1,4 @@
-<<<<<<< UCAPE
+<<<<<<< UCAPE >>>>>>>
 ========================
 
 Ce projet est une application web, permettant de gérer les cursus Ucape et Section européenne des élèves du lycée Saint-Vincent.
