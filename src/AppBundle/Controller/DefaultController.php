@@ -90,6 +90,7 @@ class DefaultController extends Controller
                 ->add('eleEmailParent', EmailType::class , ['label' =>"Email Parent :"])
                 ->add('eleMdp', TextType::class , ['label' =>"Mot de passe :"])
                 ->add('classe', EntityType::class, ['class' => Classe::class, 'label' =>"Classe: "])
+                ->add('utilisateur', EntityType::class, ['class' => User::class, 'label' =>"Utilisateur"])
                 ->add('save', SubmitType::class , ['label' => 'Enregistrer']);
             
 
@@ -112,6 +113,7 @@ class DefaultController extends Controller
             ->setEmailParent($data["eleEmailParent"])
             ->setMdp($data["eleMdp"])
             ->setClasse($data["classe"])
+            ->setUser($data["utilisateur"])
             ;
             $entityManager->persist($eleve);
             $entityManager->flush();
@@ -209,6 +211,7 @@ class DefaultController extends Controller
                 ->add('eleEmailParent', EmailType::class , ['label' =>"Email Parent :", 'data' => $eleve->getEmailParent()])
                 ->add('eleMdp', TextType::class , ['label' =>"Mot de passe :", 'data' => $eleve->getMdp()])
                 ->add('classe',EntityType::class , ['class'=> Classe::class, 'label' =>"Classe:", 'data' => $eleve->getClasse()])
+                ->add('utilisateur', EntityType::class, ['class' => User::class, 'label' =>"Utilisateur"])
                 // ->add('eleCommentaireGeneral', TextAreaType::class , ['label' =>"Commentaire général :", 'data' => $eleve->getCommentaireGeneral()])
                 // ->add('eleTerreDesLangues' , CheckboxType::class , ['label' => 'terre des langues', 'data'=> $eleve->getTerreDesLangues()])
                 // ->add('eleCommentaireChoix', TextAreaType::class , ['label' =>"Commentaire choix :", 'data' => $eleve->getCommentaireChoix()])
@@ -243,6 +246,8 @@ class DefaultController extends Controller
             ->setEmail($data["eleEmail"])
             ->setEmailParent($data["eleEmailParent"])
             ->setMdp($data["eleMdp"])
+            ->setClasse($data["classe"])
+            ->setUser($data["utilisateur"])
             // ->setCommentaireGeneral($data["eleCommentaireGeneral"])
             // ->setTerreDesLangues($data["eleTerreDesLangues"])
             // ->setCommentaireChoix($data["eleCommentaireChoix"])
@@ -287,7 +292,7 @@ class DefaultController extends Controller
     /**
      * @Route("/choixetablissement", name="choixetablissement")
      */
-    public function choixetablissementAction(Request $request)
+    public function choixEtablissementAction(Request $request)
     {
         $builderform = $this->get('form.factory')->createBuilder(FormType::class);
 
@@ -382,10 +387,7 @@ class DefaultController extends Controller
         $builderform = $this->get('form.factory')->createBuilder(FormType::class);
         
         $builderform
-        ->add('Etablissement', EntityType::class, [
-            'class' => Etablissement::class,
-            'choice_label' => 'EtablissementPays',
-        ])
+        ->add('Etablissement', EntityType::class , ['label' => "Etablissement", 'class' => Etablissement::class, 'choice_label' => 'EtablissementPays'])
         ->add('DateDepart',  DateType::class , ['label' =>"Date départ"])
         ->add('DateFin',  DateType::class , ['label' =>"Date fin"])
         ->add('save', SubmitType::class, ['label' => 'Proposer']);
@@ -579,7 +581,7 @@ class DefaultController extends Controller
 
         if (!$user) {
             throw $this->createNotFoundException(
-                "Pas d'utiliateur ayant l'identifiant $id_utilisateur"
+                "Pas d'utilisateur ayant l'identifiant $id_utilisateur"
             );
         }
 
