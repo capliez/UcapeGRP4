@@ -1,0 +1,75 @@
+{% extends '::layout.html.twig' %}
+
+{% block body %}
+
+<div  class="content-base">
+
+    <h1>Liste des comptes utilisateurs</h1>
+
+    <div class="div-retour" style="display: flex">
+        <a href ="{{ path('ajouterutilisateur') }}" ><i class="fas fa-plus-circle"></i></a><p>Ajouter un utilisateur</p>
+
+    </div>
+
+    <table class="table table-striped">
+        <thead >
+        <tr>
+            <th scope="col">Nom d'utilisateur</th>
+            <th scope="col">Email</th>
+            <th scope="col">Options</th>
+
+        </tr>
+        </thead>
+        <tbody>
+
+
+        {% for user in paginator.currentPageResults %}
+
+            <tr class="tr-valeur">
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>
+
+                    <a href ="{{path('afficheutilisateur', { 'id_utilisateur': user.id})}}" style="padding: 3px;" class="btn btn-default">Consulter</a>
+                    <a href ="{{path('modifierutilisateur', { 'id_utilisateur': user.id})}}" style="padding: 3px;" class="btn btn-primary">Modifier</a>
+                    <a href ="{{path('supprimerutilisateur', { 'id_utilisateur': user.id})}}" style="padding: 3px;" class="confirmModalLink btn btn-danger ">Supprimer</a>
+
+                </td>
+            </tr>
+
+        {% endfor %}
+
+        </tbody>
+    </table>
+
+    <div style="display:inline-block;">
+        {{pagerfanta(paginator, 'twitter_bootstrap4')}}
+    </div>
+
+
+</div>
+    <div class="modal  fade" id="confirmModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h3>Confirmation de la suppression</h3>
+                </div>
+                <div class="modal-body">
+                    <p>Etes-vous sûr de vouloir supprimer cet élément ?</p>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn" id="confirmModalNo">Non</a>
+                    <a href="#" class="btn btn-primary" id="confirmModalYes">Oui</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}

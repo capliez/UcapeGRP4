@@ -5,6 +5,7 @@
 <div class="content-base">
 
 
+
     <table class="table table-striped">
         <thead >
         <tr>
@@ -17,7 +18,7 @@
         </thead>
         <tbody>
 
-            {% for unEleve in lesEleves %}
+        {% for unEleve in paginator.currentPageResults %}
             <tr class="tr-valeur">
 
                 <td>{{ unEleve.prenom }} {{ unEleve.nom }}</td>
@@ -59,7 +60,9 @@
 
 
 
-
+    <div style="display:inline-block;">
+        {{pagerfanta(paginator, 'twitter_bootstrap4')}}
+    </div>
 
 
 

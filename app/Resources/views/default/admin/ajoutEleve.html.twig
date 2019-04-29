@@ -1,0 +1,77 @@
+{% extends '::layout.html.twig' %}
+
+{% block body %}
+
+<div class="content-base ajoutEleve">
+    <div class="div-retour">
+        <a href="{{ path('listeeleves') }}"><i class="fas fa-arrow-circle-left"></i></a>
+    </div>
+
+
+    {% for message in app.flashes('Info') %}
+        <div class="flash-info flash-info-choix
+            {% if erreur == true %}
+            alert-danger
+{% endif %} alert-success
+">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {{ form_start(form) }}
+
+
+        <div class="row">
+            <div class="col-sm-6">
+
+                {{ form_row(form.nom) }}
+
+            </div>
+
+            <div class="col-sm-6">
+
+            {{ form_row(form.prenom) }}
+
+            </div>
+
+        </div>
+
+        {{ form_row(form.sexe) }}
+        {{ form_row(form.dateNaissance) }}
+
+        <div class="row">
+            <div class="col-sm-6">
+
+                {{ form_row(form.email) }}
+
+            </div>
+
+            <div class="col-sm-6">
+
+                {{ form_row(form.emailParent) }}
+
+            </div>
+
+        </div>
+        {{ form_row(form.classe) }}
+        {{ form_row(form.promotion) }}
+
+
+    {{ form_row(form.submit, {'attr': {'onclick': 'return confirm("Êtes-vous sûr ?")'}})}}
+
+        <div class="form-group">
+
+            <input type="reset" class="btn-annule btn btn-default" class="form-control" name="annuler" value="Annuler">
+
+        </div>
+
+    {{ form_end(form) }}
+
+
+
+</div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}

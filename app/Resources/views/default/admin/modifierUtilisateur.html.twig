@@ -1,0 +1,28 @@
+{% extends '::layout.html.twig' %}
+
+{% block body %}
+
+<div  class="content-base">
+
+    <div class="div-retour">
+        <a href="{{ path('listeutilisateur') }}"><i class="fas fa-arrow-circle-left"></i></a>
+    </div>
+
+    {{ form_start(form) }}
+
+    <div>
+        <h2>Modifier l'utilisateur {{utilisateur.username}}</h2>
+        {{ form_row(form.username) }}
+        {{ form_row(form.userEmail) }}
+        {{ form_row(form.userMdp) }}
+    </div>
+
+    {{ form_row(form.save, {'attr': {'onclick': 'return confirm("Êtes-vous sûr ?")'}})}}
+    {{ form_end(form) }}
+
+</div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}

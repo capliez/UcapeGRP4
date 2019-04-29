@@ -113,7 +113,6 @@ class EleveController extends Controller
         $eleve = $this->getUser()->getEleve();
         $form = $this->createForm(ChoixEtaType::class, $eleve);
         $choix = $eleve->getChoix();
-        $noPays = $manager->getRepository('AppBundle:Pays')->find(1);
         $choixEleve = $manager->getRepository('AppBundle:Choix')->findBy(['eleve' => $eleve]);
 
 
@@ -144,16 +143,7 @@ class EleveController extends Controller
             if ($form->isSubmitted() && $form->isValid()) {
 
 
-                if(
-                    $form->get('choix1')->getData() ==  $noPays ||
-                    $form->get('choix2')->getData() ==  $noPays ||
-                    $form->get('choix3')->getData() ==  $noPays
-                ){
-                    $this->addFlash('Info', "Merci de choisir un pays !");
-                    $erreur = true;
-
-                }
-                elseif ($form->get('choix1')->getData() == $form->get('choix3')->getData() ||
+                if ($form->get('choix1')->getData() == $form->get('choix3')->getData() ||
                     $form->get('choix1')->getData() == $form->get('choix2')->getData() ||
                     $form->get('choix2')->getData() == $form->get('choix3')->getData())
                 {

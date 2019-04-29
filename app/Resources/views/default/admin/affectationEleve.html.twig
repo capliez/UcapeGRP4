@@ -4,6 +4,9 @@
 
 <div class="content-base">
 
+    <div class="div-retour">
+        <a href="{{ path('listeeleves') }}"><i class="fas fa-arrow-circle-left"></i></a>
+    </div>
 
     <h1>Affectation de l'élève</h1>
     {% if choix != null %}
@@ -51,7 +54,6 @@
         <p>L'élève n'a pas encore fait ses choix</p>
     {% endif %}
     </p>
-    <a href ="{{path('listeeleves')}}" style="padding: 3px;" class="btn btn-secondary">Retour à la liste des élèves</a>
 
 </div>
 {% endblock %}

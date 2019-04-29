@@ -106,7 +106,7 @@ class UcapeFixtures implements FixtureInterface, ContainerAwareInterface
             $eleve = new Eleve();
             $eleve->setNom($faker->lastName());
             $eleve->setPrenom($faker->firstName());
-            $eleve->setSexe($faker->randomElement($array = array ('g','f')));
+            $eleve->setSexe($faker->randomElement($array = array ('Homme','Femme','Non binaire')));
             $eleve->setDateNaissance($faker->dateTime());
             //$eleve->setPromo($faker->year($max = 'now'));
             $eleve->setEmail($faker->email());

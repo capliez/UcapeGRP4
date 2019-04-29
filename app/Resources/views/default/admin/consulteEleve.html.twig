@@ -4,6 +4,9 @@
 
 <div class="content-base">
 
+    <div class="div-retour">
+        <a href="{{ path('listeeleves') }}"><i class="fas fa-arrow-circle-left"></i></a>
+    </div>
     <p>Nom : {{eleve.nom}} </p>
     <p>Prenom : {{eleve.prenom}}</p>
     <p>Sexe : {% if eleve.sexe == "f" %}Femme{% else %}Homme{% endif %}</p>
@@ -13,8 +16,7 @@
     <p>Promo d'entrée : {{eleve.promotion.annee}}</p>
     <p>Cursus élève : {% if eleve.type == 1 %}Ucape{% else %}Section{% endif %}</p>
 
-    <a href ="{{path('listeeleves')}}" style="padding: 3px;" class="btn btn-secondary">Retour à la liste des élèves</a>
-    <a href ="{{path('editioneleve', { 'id_eleve': eleve.id})}}" style="padding: 3px;" class="btn btn-primary">Modifier cet élève</a>
+    <a href ="{{path('editioneleve', { 'id_eleve': eleve.id})}}" style="padding: 3px;" class="btn btn-primary">Modifier les informations</a>
 
 </div>
 {% endblock %}

@@ -1,0 +1,21 @@
+{% extends '::layout.html.twig' %}
+
+{% block body %}
+
+<div  class="content-base">
+    <div class="div-retour">
+        <a href="{{ path('listeutilisateur') }}"><i class="fas fa-arrow-circle-left"></i></a>
+    </div>
+    <p>Nom d'utilisateur : {{utilisateur.username}} </p>
+    <p>E-mail : {{utilisateur.email}}</p>
+    {% if utilisateur.eleve != null %}<p>Nom / Prénom : {{utilisateur.eleve.nom}} {{utilisateur.eleve.prenom}}</p>{% endif %}
+
+    <a href ="{{path('modifierutilisateur',{'id_utilisateur': utilisateur.id} )}}" style="padding: 3px;" class="btn btn-primary">Modifier les informations</a>
+
+
+</div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}

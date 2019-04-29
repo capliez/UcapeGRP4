@@ -5,38 +5,81 @@
 <div class="content-base">
 
 
-    <div class ="row">
-        <div class ="col-lg-6">
-            <h1>Elèves</h1>
-        </div>
-        <div class="col-lg-6">
-            <form action="{{ path('listeelevesfiltre') }}" method="post">
-                <div class="row">
-                    <p>Nom / Prénom : <input type="text" name="nom_prenom"></p> <input style="height:30px;" type="submit" value="Chercher"/>
-                </div>
-            </form>
-        </div>
+    <p class="tab-pane-titre">Liste des éléves</p>
+
+
+    <div class="div-retour" style="display: flex">
+        <a href ="{{ path('ajoutereleve') }}" ><i class="fas fa-plus-circle"></i></a><p>Ajouter un éléve</p>
+
     </div>
-    <ul style="list-style:none;">
-        {% for item in paginator.currentPageResults %}
-            <div class="row" style="padding:4px;">
-                <div class="col-lg-6 text-center"><li>{{ item.nom }} {{item.prenom}} - {{item.classe.libelle}}</li></div>
-                <div class="col-lg-6">
-                    <a href ="{{path('consultereleve', { 'id_eleve': item.id})}}" style="padding: 3px;" class="btn btn-secondary">Consulter</a>
-                    <a href ="{{path('affectationeleve', {'id_eleve': item.id})}}" style="padding: 3px;" class="btn btn-info">Affecter</a>
-                    <a href ="{{path('editioneleve', { 'id_eleve': item.id})}}" style="padding: 3px;" class="btn btn-primary">Modifier</a>
-                    <a href ="{{path('supprimereleve', { 'id_eleve': item.id})}}" style="padding: 3px;" class="btn btn-danger ">Supprimer</a>
-                </div>
-            </div>
+
+    <form action="{{ path('listeelevesfiltre') }}" method="post">
+            <p>Chercher par Nom ou Prénom</p>
+        <input class="form-control" type="text" name="nom_prenom">
+                <input  class="btn btn-default btn-chercher" style="margin-top:5px" type="submit" value="Chercher"/>
+    </form>
+
+    <table class="table table-striped">
+        <thead >
+        <tr>
+            <th scope="col">Prénom et Nom </th>
+            <th scope="col">Classe</th>
+            <th scope="col">Options</th>
+
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for eleve in paginator.currentPageResults %}
+
+        <tr class="tr-valeur">
+            <td>{{ eleve.prenom }} {{ eleve.nom }}</td>
+            <td>{{ eleve.classe.libelle }} </td>
+            <td>
+
+                <a href ="{{path('consultereleve', { 'nom': eleve.nom})}}" style="padding: 3px;" class="btn btn-default">Consulter</a>
+                <a href ="{{path('affectationeleve', {'id_eleve': eleve.id})}}" style="padding: 3px;" class="btn btn-info">Affecter</a>
+                <a href ="{{path('editioneleve', { 'id_eleve': eleve.id})}}" style="padding: 3px;" class="btn btn-primary">Modifier</a>
+                <a href ="{{path('supprimereleve', { 'id_eleve': eleve.id})}}" style="padding: 3px;" class="confirmModalLink btn btn-danger ">Supprimer</a>
+
+            </td>
+
+        </tr>
+
         {% endfor %}
-    </ul>
+
+
+        </tbody>
+    </table>
+
+
+
     <div style="display:inline-block;">
         {{pagerfanta(paginator, 'twitter_bootstrap4')}}
-        <a href ="{{ path('homepage') }}" style="padding: 3px;" class="btn btn-secondary">Ajouter un élève</a>
     </div>
 
 
+
+    <div class="modal  fade" id="confirmModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h3>Confirmation de la suppression</h3>
+                </div>
+                <div class="modal-body">
+                    <p>Etes-vous sûr de vouloir supprimer cet élément ?</p>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn" id="confirmModalNo">Non</a>
+                    <a href="#" class="btn btn-primary" id="confirmModalYes">Oui</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
+
 {% endblock %}
 
 {% block stylesheets %}

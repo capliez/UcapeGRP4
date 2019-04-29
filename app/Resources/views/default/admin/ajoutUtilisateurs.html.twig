@@ -1,0 +1,25 @@
+{% extends '::layout.html.twig' %}
+
+{% block body %}
+
+<div  class="content-base">
+
+    {{ form_start(form) }}
+
+    <div>
+        <h2>Ajouter un utilisateur</h2>
+        {{ form_row(form.username) }}
+        {{ form_row(form.userEmail) }}
+        {{ form_row(form.userMdp) }}
+    </div>
+
+    {{ form_row(form.save, {'attr': {'onclick': 'return confirm("Êtes-vous sûr ?")'}})}}
+    {{ form_end(form) }}
+    <a href ="{{path('listeutilisateur')}}" style="padding: 3px;" class="btn btn-secondary">Retour à la liste des utilisateurs</a>
+
+</div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}

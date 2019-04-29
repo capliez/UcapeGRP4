@@ -5,11 +5,15 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Classe;
 use AppBundle\Entity\Promotion;
 use AppBundle\Entity\Proposition;
+use AppBundle\Form\AjoutEleve;
+use AppBundle\Form\AjoutModifEleve;
+use AppBundle\Form\ModifierEleve;
 use AppBundle\Form\PromotionType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -225,18 +229,28 @@ class AdminController extends Controller
     }
 
 
-    /**
- * @Route("/admin/gestionEU", name="gestionEU")
- */
+        /**
+     * @Route("/admin/gestionEU", name="gestionEU")
+     */
     public function gestionEUAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
         $lesEleves = $em->getRepository('AppBundle:Eleve')->findAll();
 
+        $adapter = new ArrayAdapter($lesEleves);
+        $pagerfanta = new Pagerfanta($adapter);
+        $pagerfanta->setMaxPerPage(10);
+        $pagerfanta->setCurrentPage(1);
+        if (isset($_GET["page"])) {
+            $pagerfanta->setCurrentPage($_GET["page"]);
+        }
+
+        $nbResults = $pagerfanta->getNbResults();
+        $currentPageResults = $pagerfanta->getCurrentPageResults();
 
         return $this->render('default/admin/gestioneu.html.twig', [
-            'lesEleves' => $lesEleves,
+            'paginator' => $pagerfanta ,
         ]);
     }
 
@@ -249,7 +263,6 @@ class AdminController extends Controller
 
         $eleve = $this->getDoctrine()->getRepository('AppBundle:Eleve')->findBy(['nom'=>$nom]);
 
-
         return $this->render('default/admin/gestioneueleve.html.twig', [
             'eleve' => $eleve[0],
 
@@ -257,14 +270,80 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/admin/listeeleves", name="listeeleves")
+     * @Route("/admin/eleve/ajouter", name="ajoutereleve")
+     */
+    public function ajouterEleveAction(Request $request)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $emailExistant = false;
+        $emaildejaexistant[] = null;
+
+        $listedeseleves = $entityManager->getRepository('AppBundle:Eleve')->findAll();
+
+        $erreur = false;
+        $eleve = new Eleve();
+
+
+        $form = $this->createForm(AjoutModifEleve::class, $eleve);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+
+
+
+
+            for ($i = 0 ; $i < count($listedeseleves) ; $i++)
+            {
+
+                array_push($emaildejaexistant, $listedeseleves[$i]->getEmail() );
+
+                if($form->get('email')->getData() == $listedeseleves[$i]->getEmail()){
+                    $emailExistant =  true;
+                }
+
+            }
+
+
+            if($emailExistant == true){
+                $erreur = true;
+                $this->addFlash('Info', "L'email existe dèja");
+
+            }else{
+                $eleve->setNom($form->get('nom')->getData());
+                $eleve->setPrenom($form->get('prenom')->getData());
+                $eleve->setSexe($form->get('sexe')->getData());
+                $eleve->setDateNaissance($form->get('dateNaissance')->getData());
+                $eleve->setPromotion($form->get('promotion')->getData());
+                $eleve->setEmail($form->get('email')->getData());
+                $eleve->setEmailParent($form->get('emailParent')->getData());
+                $eleve->setClasse($form->get('classe')->getData());
+                $entityManager->persist($eleve);
+                $entityManager->flush();
+
+
+
+                $this->addFlash('Info', "Bravo, l'éléve a bien été créé");
+            }
+
+        }
+
+        return $this->render('default/admin/ajoutEleve.html.twig', [
+            'form' => $form->createView(),
+            'erreur' => $erreur,
+        ]);
+
+    }
+
+    /**
+     * @Route("/admin/liste_eleves", name="listeeleves")
      */
     public function listeElevesAction(Request $request)
     {
         $eleves = $this->getDoctrine()->getRepository(Eleve::class)->findBy([], ['classe' => 'ASC']);
         $adapter = new ArrayAdapter($eleves);
         $pagerfanta = new Pagerfanta($adapter);
-        $pagerfanta->setMaxPerPage(20);
+        $pagerfanta->setMaxPerPage(10);
         $pagerfanta->setCurrentPage(1);
         if (isset($_GET["page"])) {
             $pagerfanta->setCurrentPage($_GET["page"]);
@@ -274,12 +353,13 @@ class AdminController extends Controller
         $currentPageResults = $pagerfanta->getCurrentPageResults();
 
         return $this->render('default/admin/listeeleves.html.twig', [
-            'paginator' => $pagerfanta , 'eleves' => $eleves
+            'paginator' => $pagerfanta ,
+            'eleves' => $eleves
         ]);
     }
 
     /**
-     * @Route("/admin/listeeleves/filtre", name="listeelevesfiltre")
+     * @Route("/admin/liste_eleves/filtre", name="listeelevesfiltre")
      */
     public function listeElevesFiltreAction(Request $request)
     {
@@ -287,7 +367,7 @@ class AdminController extends Controller
         $eleves = $this->getDoctrine()->getRepository(Eleve::class)->findByFilter($nom_prenom);
         $adapter = new ArrayAdapter($eleves);
         $pagerfanta = new Pagerfanta($adapter);
-        $pagerfanta->setMaxPerPage(20);
+        $pagerfanta->setMaxPerPage(10);
         $pagerfanta->setCurrentPage(1);
         if (isset($_GET["page"])) {
             $pagerfanta->setCurrentPage($_GET["page"]);
@@ -300,24 +380,24 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/admin/eleve/{id_eleve}", name="consultereleve")
+     * @Route("/admin/eleve/{nom}", name="consultereleve")
      */
-    public function consulterEleveAction(int $id_eleve)
+    public function consulterEleveAction(string $nom)
     {
 
-        $eleve = $this->getDoctrine()->getRepository('AppBundle:Eleve')->find($id_eleve);
+        $eleve = $this->getDoctrine()->getRepository('AppBundle:Eleve')->findBy(['nom' => $nom]);
         if (null === $eleve)
         {
             throw new NotFoundHttpException("désolé la page n'a pas été trouvée");
         }
 
         return $this->render('default/admin/consulteEleve.html.twig', [
-            'eleve' => $eleve
+            'eleve' => $eleve[0]
         ]);
     }
 
     /**
-     * @Route("/eleves/edit/{id_eleve}", name="editioneleve")
+     * @Route("/eleves/modifier/{id_eleve}", name="editioneleve")
      */
     public function editEleveAction(Request $request, $id_eleve)
     {
@@ -330,43 +410,18 @@ class AdminController extends Controller
             );
         }
 
-        $builder = $this->get('form.factory')->createBuilder(FormType::class);
-
-        $builder->add('eleNom',TextType::class  ,['label' =>"Nom de l'eleve :", 'data' => $eleve->getNom()])
-            ->add('elePrenom',TextType::class , ['label' =>"Prenom de l'eleve :", 'data' => $eleve->getPrenom()])
-            ->add('eleSexe',TextType::class , ['label' =>"Sexe :", 'data' => $eleve->getSexe()])
-            ->add('eleDateNaissance' , BirthdayType::class , ['label' =>"Date naissance :", 'data' => $eleve->getDateNaissance()])
-            ->add('promo',EntityType::class , ['class'=> Promotion::class, 'label' =>"Promo :", 'data' => $eleve->getPromotion()])
-            ->add('eleEmail', EmailType::class , ['label' =>"Email eleve :", 'data' => $eleve->getEmail()])
-            ->add('eleEmailParent', EmailType::class , ['label' =>"Email Parent :", 'data' => $eleve->getEmailParent()])
-            ->add('classe',EntityType::class , ['class'=> Classe::class, 'label' =>"Classe:", 'data' => $eleve->getClasse()])
-            ->add('utilisateur', EntityType::class, ['class' => User::class, 'label' =>"Utilisateur"])
-            ->add('save', SubmitType::class , ['label' => 'Enregistrer']);
-
-        $form = $builder->getForm();
+        $form = $this->createForm(AjoutModifEleve::class, $eleve,[
+            'is_edit' => true
+        ]);
 
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
 
-            $data = $form->getData();
 
-            $eleve
-                ->setNom($data["eleNom"])
-                ->setPrenom($data["elePrenom"])
-                ->setSexe($data["eleSexe"])
-                ->setDateNaissance($data["eleDateNaissance"])
-                ->setPromotion($data["promo"])
-                ->setEmail($data["eleEmail"])
-                ->setEmailParent($data["eleEmailParent"])
-                ->setMdp($data["eleMdp"])
-                ->setClasse($data["classe"])
-                ->setUser($data["utilisateur"])
-                ->setClasse($data["classe"])
-            ;
             $entityManager->flush();
 
-            return $this->redirectToRoute('listeeleves');
+            $this->addFlash('Info', "Bravo, l'éléve a bien été mis à jour");
 
         }
 
@@ -458,6 +513,156 @@ class AdminController extends Controller
         $entityManager->flush();
 
         return $this->redirectToRoute('listeeleves');
+    }
+
+    /**
+     * @Route("/admin/liste_utilisateur", name="listeutilisateur")
+     */
+    public function listeUtilisateurAction()
+    {
+        $utilisateurs = $this->getDoctrine()->getRepository(User::class)->findAll();
+        $adapter = new ArrayAdapter($utilisateurs);
+        $pagerfanta = new Pagerfanta($adapter);
+        $pagerfanta->setMaxPerPage(10);
+        $pagerfanta->setCurrentPage(1);
+        if (isset($_GET["page"])) {
+            $pagerfanta->setCurrentPage($_GET["page"]);
+        }
+
+        $nbResults = $pagerfanta->getNbResults();
+        $currentPageResults = $pagerfanta->getCurrentPageResults();
+
+        return $this->render('default/admin/listeutilisateurs.html.twig', [
+            'paginator' => $pagerfanta , 'utilisateurs' => $utilisateurs
+        ]);
+    }
+
+    /**
+     * @Route("/admin/utilisateur/ajouter", name="ajouterutilisateur")
+     */
+    public function ajoutUtilisateurAction(Request $request)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $user = new User();
+
+        $builder = $this->get('form.factory')->createBuilder(FormType::class);
+
+        $builder->add('username',TextType::class  ,['label' =>"Username :", 'data' => $user->getUsername()])
+            ->add('userEmail', EmailType::class , ['label' =>"Email utilisateur :", 'data' => $user->getEmail()])
+            ->add('userMdp', TextType::class , ['label' =>"Mot de passe utilisateur :", 'data' => $user->getPassword()])
+            ->add('save', SubmitType::class , ['label' => 'Enregistrer']);
+
+        $form = $builder->getForm();
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+
+            $data = $form->getData();
+
+            $user
+                ->setUsername($data["username"])
+                ->setEmail($data["userEmail"])
+                ->setPassword($data["userMdp"])
+                ->setRoles(['ROLE_ELEVE'])
+            ;
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('listeutilisateur');
+
+        }
+
+        return $this->render('default/admin/ajoutUtilisateurs.html.twig', [
+            'form' => $form->createView()
+        ]);
+
+    }
+
+    /**
+     * @Route("/admin/utilisateur/{id_utilisateur}", name="afficheutilisateur")
+     */
+    public function afficherUtilisateurAction(int $id_utilisateur)
+    {
+
+        $user = $this->getDoctrine()->getRepository('AppBundle:User')->find($id_utilisateur);
+        if (null === $user)
+        {
+            throw new NotFoundHttpException("désolé la page n'a pas été trouvée");
+        }
+
+        return $this->render('default/admin/afficheUtilisateur.html.twig', [
+            'utilisateur' => $user
+        ]);
+    }
+
+    /**
+     * @Route("/admin/utilisateur/modifier/{id_utilisateur}", name="modifierutilisateur")
+     */
+    public function modifierUtilisateurAction(Request $request, $id_utilisateur)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $user = $entityManager->getRepository(User::class)->find($id_utilisateur);
+
+        if (!$user) {
+            throw $this->createNotFoundException(
+                "Pas d'élève ayant l'identifiant $id_utilisateur"
+            );
+        }
+
+        $builder = $this->get('form.factory')->createBuilder(FormType::class);
+
+        $builder->add('username',TextType::class  ,['label' =>"Username :", 'data' => $user->getUsername()])
+            ->add('userEmail', EmailType::class , ['label' =>"Email utilisateur :", 'data' => $user->getEmail()])
+            ->add('userMdp', TextType::class , ['label' =>"Mot de passe utilisateur :", 'data' => $user->getPassword()])
+            ->add('save', SubmitType::class , ['label' => 'Enregistrer']);
+
+        $form = $builder->getForm();
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+
+            //$post = $form->request->get('form');
+            $data = $form->getData();
+
+            $user
+                ->setUsername($data["username"])
+                ->setEmail($data["userEmail"])
+                ->setPassword($data["userMdp"])
+            ;
+            $entityManager->flush();
+
+            return $this->redirectToRoute('listeutilisateur');
+
+        }
+
+
+        return $this->render('default/admin/modifierUtilisateur.html.twig', [
+            'form' => $form->createView(),
+            'utilisateur' => $user,
+        ]);
+
+    }
+
+    /**
+     * @Route("/admin/utilisateur/supprimer/{id_utilisateur}", name="supprimerutilisateur")
+     */
+    public function supprimerUtilisateurAction($id_utilisateur)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $user = $entityManager->getRepository(User::class)->find($id_utilisateur);
+
+        if (!$user) {
+            throw $this->createNotFoundException(
+                "Pas d'utilisateur ayant l'identifiant $id_utilisateur"
+            );
+        }
+
+        $entityManager->remove($user);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('listeutilisateur');
     }
 
 

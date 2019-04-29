@@ -26,6 +26,7 @@ class Eleve
 
     /**
      * @ORM\OneToOne(targetEntity="AppBundle\Entity\User", inversedBy="eleve")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="SET NULL", nullable=true)
      */
     private $user;
 
@@ -76,7 +77,7 @@ class Eleve
     /**
      * @var string
      *
-     * @ORM\Column(name="ele_commentaire_general", type="text", nullable = true)
+     * @ORM\Column(name="ele_commentaire_general", type="text", nullable=true)
      */
     private $commentaireGeneral;
 
@@ -89,7 +90,6 @@ class Eleve
 
     /**
      * @var string
-     * @Assert\NotBlank()
      * @Assert\Length(min=5)
      * @ORM\Column(name="ele_commentaire_choix", type="text",nullable=true)
      */
@@ -180,7 +180,7 @@ class Eleve
     private $commentaire;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
+     * @ORM\Column(type="boolean", nullable=true,nullable=true)
      */
     private $aVoyage;
 

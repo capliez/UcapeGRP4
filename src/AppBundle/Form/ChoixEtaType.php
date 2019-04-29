@@ -28,6 +28,7 @@ class ChoixEtaType extends AbstractType
             'choice_label' => 'libelle',
             'mapped' => false,
             'label' => "Choix 1",
+            'placeholder' => "-- Choisir --",
 
 
         ])
@@ -38,7 +39,7 @@ class ChoixEtaType extends AbstractType
             'choice_label' => 'libelle',
             'mapped' => false,
             'label' => "Choix 2",
-
+            'placeholder' => "-- Choisir --",
         ])
 
 
@@ -47,6 +48,7 @@ class ChoixEtaType extends AbstractType
             'choice_label' => 'libelle',
             'mapped' => false,
             'label' => "Choix 3",
+            'placeholder' => "-- Choisir --",
 
         ])
         ->add('terreDesLangues', CheckboxType::class, [

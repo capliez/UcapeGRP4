@@ -9,6 +9,14 @@ body{
   background-color: #eff1f2;
 }
 
+.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus{
+    background-color: #363a41;
+    border-color: #363a41;
+}
+
+.pagination > li > a, .pagination > li > span{
+    color: #363a41;
+}
 .glyphicon{display: none}
 
 .flash-info{
@@ -20,7 +28,6 @@ body{
 
 .tr-valeur:hover{
     background: rgba(255,255,255, 1);
-    font-weight: bold;
     color: black;
     text-shadow: 2px 2px 2px rgba(0,0,0, 0.2);
 }
@@ -187,7 +194,7 @@ font-size: 2em;
     margin: auto;
 }
 
-#choix_eta_submit, .btn-maj, .btn-annule, #appbundle_promotion_submit, #appbundle_user_submit, #appbundle_eleve_submit{
+#choix_eta_submit,.btn-chercher,#ajout_modif_eleve_submit, .btn-maj, .btn-annule, #appbundle_promotion_submit, #appbundle_user_submit, #appbundle_eleve_submit{
     float: right;
     padding: 10px;
     width: 15%;
@@ -199,7 +206,7 @@ font-size: 2em;
     margin-bottom: 10px;
 }
 
-#choix_eta_submit, .btn-annule, #appbundle_promotion_submit, #appbundle_user_submit, #appbundle_eleve_submit{
+#choix_eta_submit,.btn-chercher, .btn-annule,#ajout_modif_eleve_submit, #appbundle_promotion_submit, #appbundle_user_submit, #appbundle_eleve_submit{
     margin-bottom: 20px;
     margin-left: 5px;
 }
@@ -247,7 +254,7 @@ font-size: 2em;
     margin-bottom: 15px;
 }
 
-#appbundle_eleve_dateNaissance{
+#appbundle_eleve_dateNaissance, #ajout_eleve_dateNaissance{
     margin-top: 15px;
 }
 
@@ -257,7 +264,7 @@ font-size: 2em;
     vertical-align: super;
 }
 
-.edit-profil-user form label{
+.edit-profil-user form label, .ajoutEleve form label{
     float: left;
     font-size: 13px
 }
