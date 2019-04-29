@@ -28,7 +28,9 @@
         "symfony/assetic-bundle": "^2.7.1",
         "leafo/scssphp": "~0.6",
         "patchwork/jsqueeze": "~1.0",
-        "fzaninotto/faker": "^1.8"
+        "fzaninotto/faker": "^1.8",
+        "white-october/pagerfanta-bundle": "^1.2"
+
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

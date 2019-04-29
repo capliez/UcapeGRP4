@@ -36,41 +36,61 @@ class UcapeFixtures implements FixtureInterface, ContainerAwareInterface
 
         $faker = \Faker\Factory::create('fr_FR');
 
-        $user = $userManager->createUser();
-        $user->setUsername('admin');
-        $user->setEmail('technicien@lyceestvincent.fr');
-        $user->setPlainPassword('admin');
-        $user->setEnabled(true);
-        $user->setRoles(array('ROLE_SUPER_ADMIN'));
+        $admin = $userManager->createUser();
+        $admin->setUsername('admin');
+        $admin->setEmail('technicien@lyceestvincent.fr');
+        $admin->setPlainPassword('admin');
+        $admin->setEnabled(true);
+        $admin->setRoles(array('ROLE_ADMIN'));
 
-        $userManager->updateUser($user, true);
+        $userManager->updateUser($admin, true);
 
+        $consultant = $userManager->createUser();
+        $consultant->setUsername('consultant');
+        $consultant->setEmail('consultant@yahoo.fr');
+        $consultant->setPlainPassword('consultant');
+        $consultant->setEnabled(true);
+        $consultant->setRoles(array('ROLE_CONSULTANT'));
 
-        for ($l=1;$l <=8; $l++) {
+        $userManager->updateUser($consultant, true);
+
+        // $user = $userManager->createUser();
+        // $user->setUsername('capliez');
+        // $user->setEmail('capliezalexis@yahoo.fr');
+        // $user->setPlainPassword('alexis');
+        // $user->setEnabled(true);
+        // $user->setRoles(array('ROLE_ELEVE'));
+
+        // $userManager->updateUser($user, true);
+
+        $arrayAttributionPays = [];
+        $arrayLangue = ["Angleterre","Espagne","Allemagne", "Italie","Pays-Bas","Canada", "Autriche", "Mexique"];
+        for ($l=0;$l <8; $l++) {
             $pays = new Pays();
             $pays->setLibelle($faker->country());
+            $arrayAttributionPays[$l+1] = $pays;
 
             $manager->persist($pays);
         }
 
-        for ($x=1; $x<=8;$x++) {
+        // for ($x=0; $x<50;$x++) {
 
-            $userRandom = new User();
-            $userRandom->setUsername($faker->username());;
-            $userRandom->setEmail($faker->email());
-            $userRandom->setPlainPassword($faker->password());
-            $userRandom->setEnabled($faker->boolean());
+        //     $userRandom = new User();
+        //     $userRandom->setUsername();;
+        //     $userRandom->setEmail($faker->email());
+        //     $userRandom->setPlainPassword($faker->password());
+        //     $userRandom->setEnabled($faker->boolean());
 
-            $manager->persist($userRandom);
-        }
+        //     $manager->persist($userRandom);
+        // }
 
-        $arrayTest = [];
+        $arrayAttributionClasse = [];
         $arrayClasse = ["2nde 3", "2nde 2", "2nde 1", "1ère 3", "1ère 2", "1ère 1", "T S", "T ES", "T STMG", "T L"];
         for ($j = 0; $j < 10 ; $j++) {
             $classe = new Classe();
             $classe->setLibelle($arrayClasse[$j]);
             $manager->persist($classe);
-            $arrayTest[$j+1] = $classe;
+            $arrayAttributionClasse[$j+1] = $classe;
         }
 
         $arrayPromo = [];
@@ -81,7 +101,7 @@ class UcapeFixtures implements FixtureInterface, ContainerAwareInterface
             $manager->persist($promo);
             $arrayPromo[$j+1] = $promo;
         }
-        for ($l=1;$l <=150; $l++)
+        for ($l=0;$l <50; $l++)
         {
             $eleve = new Eleve();
             $eleve->setNom($faker->lastName());
@@ -91,7 +111,6 @@ class UcapeFixtures implements FixtureInterface, ContainerAwareInterface
             //$eleve->setPromo($faker->year($max = 'now'));
             $eleve->setEmail($faker->email());
             $eleve->setEmailParent($faker->email());
-            $eleve->setMdp($faker->password());
             $eleve->setCommentaireGeneral($faker->text($maxNbChars=60));
             $eleve->setTerreDesLangues($faker->boolean());
             $eleve->setCommentaireChoix($faker->text($maxNbChars=50));
@@ -101,9 +120,20 @@ class UcapeFixtures implements FixtureInterface, ContainerAwareInterface
             $eleve->setUE2Note($faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 20));
             $eleve->setUE2Appreciation($faker->word());
             $eleve->setType($faker->boolean());
-            $eleve->setClasse($arrayTest[rand(1,9)]);
+            $eleve->setClasse($arrayAttributionClasse[rand(1,9)]);
             $eleve->setPromotion($arrayPromo[rand(1,3)]);
             $manager->persist($eleve);
+
+            $user = $userManager->createUser();
+            $user->setUsername($eleve->getNom().$eleve->getPrenom());
+            $user->setEmail($eleve->getEmail());
+            $user->setPlainPassword($eleve->getNom());
+            $user->setEnabled(true);
+            $user->setRoles(array('ROLE_ELEVE'));
+
+            $userManager->updateUser($user, true);
+
+            $eleve->setUser($user);
 
             if ($eleve->getType() == true)
             {
@@ -125,8 +155,18 @@ class UcapeFixtures implements FixtureInterface, ContainerAwareInterface
             $etablissement->setNumero($faker->numberBetween($min=0, $max=100));
             $etablissement->setRue($faker->numberBetween($min=0, $max=100));
             $etablissement->setVille($faker->city());
-
+            $etablissement->setPays($arrayAttributionPays[rand(1,8)]);
             $manager->persist($etablissement);
+        }
+
+        $arrayAttributionLangue = [];
+        $arrayLangue = ["Anglais","Espagnol","Allemand", "Italien","Néerlandais"];
+        for ($j = 0; $j < 5 ; $j++) {
+            $langue = new Langue();
+            $langue->setLibelle($arrayLangue[$j]);
+            $arrayAttributionLangue[$j+1] = $langue;
+
+            $manager->persist($langue);
         }
 
         for ($j = 0; $j < 10 ; $j++) {
@@ -134,17 +174,11 @@ class UcapeFixtures implements FixtureInterface, ContainerAwareInterface
             $examinateur->setNom($faker->lastName());
             $examinateur->setPrenom($faker->firstName());
             $examinateur->setTelephone($faker->e164PhoneNumber());
+            $examinateur->setLangue($arrayAttributionLangue[rand(1,5)]);
 
             $manager->persist($examinateur);
         }
 
-        $arrayLangue = ["Anglais","Espagnol","Allemand", "Italien","Néerlandais"];
-        for ($j = 0; $j < 5 ; $j++) {
-            $langue = new Langue();
-            $langue->setLibelle($arrayLangue[$j]);
-
-            $manager->persist($langue);
-        }
         $manager->flush();
     }
 }

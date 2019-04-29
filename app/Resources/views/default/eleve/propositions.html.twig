@@ -1,0 +1,30 @@
+{% extends '::layout.html.twig' %}
+
+{% block body %}
+
+<div class=" text-center content-base">
+
+
+    <h1>Propositions reçues</h1>
+    {% for uneProposition in proposition %}
+        {% if uneProposition.pro_est_acceptee == null %} Pas de réponse {% elseif uneProposition.pro_est_acceptee == 0 %} Refusée {% else %} Acceptée{% endif %}</td>
+        {{ uneProposition.pro_commentaire }}
+        {{ uneProposition.pro_date_depart }}
+        {{ uneProposition.pro_date_fin }}
+        {{ uneProposition.etablissement_id}}
+        <br/>
+    {% endfor %}
+
+
+
+</div>
+
+
+
+
+
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}

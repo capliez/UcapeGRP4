@@ -42,10 +42,10 @@ class Promotion
     private $eleves;
 
     /**
-     * @ORM\Column(type="integer", length=255)
+     * @ORM\Column(type="string", length=255)
      * @Assert\Length(min=4)
      * @Assert\Length(max=4)
-     * @Assert\Type(type="integer")
+     * @Assert\Type(type="string")
      * @Assert\NotBlank()
      */
     private $annee;

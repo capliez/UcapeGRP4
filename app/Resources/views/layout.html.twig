@@ -128,25 +128,13 @@
 
                         {% if app.user.roles[0] == "ROLE_ADMIN" %}
 
+
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a href="#listeeleve" data-parent="#accordion" data-toggle="collapse" class="accordion-toggle collapsed">
+                                    <a href="{{ path('listeeleves') }}" >
                                         <i class="fas fa-user-graduate"></i> Liste des éléves
                                     </a>
                                 </h4>
-                            </div>
-
-                            <div class="panel-collapse collapse" id="listeeleve">
-                                <div class="panel-body">
-                                    <a href="#" aria-selected="false" class="list-group-item">
-                                        <i class="fas fa-plus "></i> Edition éléve
-                                    </a>
-                                </div>
-                                <div class="panel-body">
-                                    <a href="#" aria-selected="false" class="list-group-item">
-                                        <i class="fas fa-plus "></i> Affection d'un éléve
-                                    </a>
-                                </div>
                             </div>
 
                             <div class="panel-heading">
@@ -199,7 +187,7 @@
 
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a href="#" >
+                                    <a href="{{ path('propositions') }}" >
                                         <i class="fas fa-book-open"></i> Propositions
                                     </a>
                                 </h4>

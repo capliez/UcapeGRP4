@@ -1,0 +1,24 @@
+{% extends '::layout.html.twig' %}
+
+{% block body %}
+
+<div class="content-base">
+
+    <p>Nom : {{eleve.nom}} </p>
+    <p>Prenom : {{eleve.prenom}}</p>
+    <p>Sexe : {% if eleve.sexe == "f" %}Femme{% else %}Homme{% endif %}</p>
+    <p>Date de naissance : {{eleve.dateNaissance.date}}</p>
+    <p>E-mail : {{eleve.email}}</p><p>E-mail parent : {{eleve.emailParent}}</p>
+    <p>Classe actuelle : {{eleve.classe.libelle}}</p>
+    <p>Promo d'entrée : {{eleve.promotion.annee}}</p>
+    <p>Cursus élève : {% if eleve.type == 1 %}Ucape{% else %}Section{% endif %}</p>
+
+    <a href ="{{path('listeeleves')}}" style="padding: 3px;" class="btn btn-secondary">Retour à la liste des élèves</a>
+    <a href ="{{path('editioneleve', { 'id_eleve': eleve.id})}}" style="padding: 3px;" class="btn btn-primary">Modifier cet élève</a>
+
+</div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}

@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Choix;
+use AppBundle\Entity\Proposition;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -236,6 +237,25 @@ class EleveController extends Controller
             'noteEu2' => $eleve->getUE2Note(),
             'noteEu1' => $eleve->getUE1Note(),
             'moyenne' => $moyenne,
+
+        ]);
+
+    }
+
+    /**
+     * @Route("/eleve/propositions", name="propositions")
+     */
+    public function propositionsAction(Request $request)
+    {
+        $eleve = $this->getUser()->getEleve();
+
+        $user = $this->getUser();
+        $id_eleve = $user->getEleve()->getId();
+        $propositions = $this->getDoctrine()->getRepository(Proposition::class)->findByProposition($id_eleve);
+
+        return $this->render('default/eleve/propositions.html.twig',[
+            'submited' => !$eleve->getChoix()->isEmpty(),
+            'user' => $user, 'proposition' => $propositions
 
         ]);
 

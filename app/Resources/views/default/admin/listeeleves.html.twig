@@ -1,0 +1,44 @@
+{% extends '::layout.html.twig' %}
+
+{% block body %}
+
+<div class="content-base">
+
+
+    <div class ="row">
+        <div class ="col-lg-6">
+            <h1>Elèves</h1>
+        </div>
+        <div class="col-lg-6">
+            <form action="{{ path('listeelevesfiltre') }}" method="post">
+                <div class="row">
+                    <p>Nom / Prénom : <input type="text" name="nom_prenom"></p> <input style="height:30px;" type="submit" value="Chercher"/>
+                </div>
+            </form>
+        </div>
+    </div>
+    <ul style="list-style:none;">
+        {% for item in paginator.currentPageResults %}
+            <div class="row" style="padding:4px;">
+                <div class="col-lg-6 text-center"><li>{{ item.nom }} {{item.prenom}} - {{item.classe.libelle}}</li></div>
+                <div class="col-lg-6">
+                    <a href ="{{path('consultereleve', { 'id_eleve': item.id})}}" style="padding: 3px;" class="btn btn-secondary">Consulter</a>
+                    <a href ="{{path('affectationeleve', {'id_eleve': item.id})}}" style="padding: 3px;" class="btn btn-info">Affecter</a>
+                    <a href ="{{path('editioneleve', { 'id_eleve': item.id})}}" style="padding: 3px;" class="btn btn-primary">Modifier</a>
+                    <a href ="{{path('supprimereleve', { 'id_eleve': item.id})}}" style="padding: 3px;" class="btn btn-danger ">Supprimer</a>
+                </div>
+            </div>
+        {% endfor %}
+    </ul>
+    <div style="display:inline-block;">
+        {{pagerfanta(paginator, 'twitter_bootstrap4')}}
+        <a href ="{{ path('homepage') }}" style="padding: 3px;" class="btn btn-secondary">Ajouter un élève</a>
+    </div>
+
+
+</div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}

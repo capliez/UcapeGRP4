@@ -10,4 +10,38 @@ namespace AppBundle\Repository;
  */
 class EleveRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * @param $nom_prenom
+     */
+    public function findByFilter($nom_prenom)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT * FROM eleve p
+            WHERE p.ele_nom LIKE :nom_prenom
+            OR p.ele_prenom LIKE :nom_prenom
+            ';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['nom_prenom' => $nom_prenom]);
+
+        return $stmt->fetchAll();
+    }
+
+    /**
+     * @param $eleve_id
+     */
+    public function findByChoix($eleve_id)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT pays_id FROM choix p
+            WHERE p.eleve_id LIKE :eleve_id
+            ';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['eleve_id' => $eleve_id]);
+
+        return $stmt->fetchAll();
+    }
 }

@@ -1,0 +1,36 @@
+{% extends '::layout.html.twig' %}
+
+{% block body %}
+
+<div class="content-base">
+
+
+
+    {{ form_start(form) }}
+
+    <div>
+        <h2>Modifier l'élève {{eleve.nom}}</h2>
+        {{ form_row(form.eleNom) }}
+        {{ form_row(form.elePrenom) }}
+        {{ form_row(form.eleSexe) }}
+        {{ form_row(form.eleDateNaissance) }}
+        {{ form_row(form.eleEmail) }}
+        {{ form_row(form.eleEmailParent) }}
+        {{ form_row(form.promo) }}
+        {{ form_row(form.classe) }}
+        {{ form_row(form.utilisateur) }}
+    </div>
+    <br>
+
+
+    {{ form_row(form.save) }}
+    {{ form_end(form) }}
+    <a href ="{{path('listeeleves')}}" style="padding: 3px;" class="btn btn-secondary">Retour à la liste des élèves</a>
+
+
+</div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
